@@ -8,7 +8,7 @@ function App(): JSX.Element {
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <p>
-                Group Members: <br></br>Ryan Evans
+                Group Members: <br></br>Ryan Evans, Craig Barber
             </p>
         </div>
     );
