@@ -1,7 +1,7 @@
 import { Semester } from "./semester";
 
 /***
- * A representation of a students' term
+ * A representation of a student's term
  */
 export interface Plan {
     /** The user-defined name of the plan */
