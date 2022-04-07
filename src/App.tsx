@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { CourseList } from "./components/CourseList";
 
 function App(): JSX.Element {
     return (
@@ -7,6 +8,8 @@ function App(): JSX.Element {
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
+            <CourseList></CourseList>
+            <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
                 Nicholls
