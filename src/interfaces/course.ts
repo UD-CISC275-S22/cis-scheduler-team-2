@@ -12,4 +12,6 @@ export interface Course {
     credits: number;
     /** An Array containing the courses that are prereqs of this course */
     prereqs: Course[];
+    /** A text description of the course */
+    description: string;
 }
