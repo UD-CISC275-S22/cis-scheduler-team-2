@@ -9,7 +9,7 @@ export interface Semester {
     //the year of the semester
     year: number;
     //the season of the semester
-    season: number;
+    season: string;
     //an array of courses listed for this semester
     classes: Course[];
     //sum total of the credits in `classes`
