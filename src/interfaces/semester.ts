@@ -1,4 +1,4 @@
-//import { course } from "./course"
+import { Course } from "./course";
 
 /***
  * A representation of a student's semester
@@ -10,10 +10,8 @@ export interface Semester {
     year: number;
     //the season of the semester
     season: number;
-
     //an array of courses listed for this semester
-    //classes: Course[];
-
+    classes: Course[];
     //sum total of the credits in `classes`
     credits: number;
 }
