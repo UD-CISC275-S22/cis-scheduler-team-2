@@ -5,9 +5,11 @@ import { Plan } from "./interfaces/plan";
 import { AddNewPlan } from "./components/AddNewPlan";
 
 function App(): JSX.Element {
+    //this is the state containing the list of plans
     const [planList, updatePlans] = useState<Plan[]>([]);
 
     function addPlan(newPlan: Plan) {
+        //Passed to AddNewPlan, adds the new plan to the end of planList array
         const fixId = {
             ...newPlan,
             id: planList.length,
