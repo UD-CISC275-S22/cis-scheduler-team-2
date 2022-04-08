@@ -21,7 +21,7 @@ export function ListAllPlans({
             setCurrentPlan(allPlans[planIndex]);
         }
     }
-    //Dropdown box, displays all the passed in plans (allPlans, presumed state from App.tsx).
+    //Dropdown box, displays all the passed in plans (allPlans, presumed state from App.tsx)
     return (
         <div>
             <Form.Group controlId="planList">
