@@ -5,19 +5,18 @@ import { Plan } from "./interfaces/plan";
 import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
-//import { DeletePlanButton } from "./components/DeletePlan";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
     const [planList, updatePlans] = useState<Plan[]>([samplePlan]);
-    //statt to hold the active plan
+    //state to hold the active plan
     const [activePlan, setActivePlan] = useState<Plan>(planList[0]);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
         const fixId = {
             ...newPlan,
-            id: planList.length,
+            id: planList[planList.length - 1].id + 1,
             semesters: [...newPlan.semesters]
         };
         updatePlans([...planList, fixId]);
