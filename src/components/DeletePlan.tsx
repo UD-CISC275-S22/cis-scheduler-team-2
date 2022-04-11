@@ -14,7 +14,7 @@ export function DeletePlanButton({ PlanList, deleteFunct }: deleteButtonProp) {
                 disabled={PlanList.length <= 1}
                 onClick={() => deleteFunct()}
             >
-                Delete Selected Plan
+                Delete Active Plan
             </Button>
         </div>
     );
