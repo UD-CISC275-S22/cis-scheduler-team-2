@@ -5,6 +5,8 @@ import { Plan } from "./interfaces/plan";
 import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
+import { ListAllPlans } from "./components/ListAllPlans";
+import { Col, Row } from "react-bootstrap";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -31,19 +33,31 @@ function App(): JSX.Element {
         setActivePlan(newList[0]);
     }
 
+    const sampleSemester = samplePlan.semesters[0];
+
     return (
         <div className="App">
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
-            <AddNewPlan addPlan={addPlan}></AddNewPlan>
-            <hr></hr>
-            <DeletePlanButton
-                PlanList={planList}
-                deleteFunct={deletePlan}
-            ></DeletePlanButton>
-            <hr></hr>
-            <CourseList></CourseList>
+            <Row>
+                <Col>
+                    <ListAllPlans
+                        allPlans={planList}
+                        activePlan={activePlan}
+                        setActivePlan={setActivePlan}
+                    ></ListAllPlans>
+                    Active Plan: {activePlan.name}
+                    <DeletePlanButton
+                        PlanList={planList}
+                        deleteFunct={deletePlan}
+                    ></DeletePlanButton>
+                </Col>
+                <Col>
+                    <AddNewPlan addPlan={addPlan}></AddNewPlan>
+                </Col>
+                <CourseList semester={sampleSemester}></CourseList>
+            </Row>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
