@@ -3,10 +3,12 @@ import "./App.css";
 import { CourseList } from "./components/CourseList";
 import { Plan } from "./interfaces/plan";
 import { AddNewPlan } from "./components/AddNewPlan";
+import { samplePlan } from "./interfaces/placeholderPlan";
+//import { DeletePlanButton } from "./components/DeletePlan";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
-    const [planList, updatePlans] = useState<Plan[]>([]);
+    const [planList, updatePlans] = useState<Plan[]>([samplePlan]);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
@@ -17,6 +19,14 @@ function App(): JSX.Element {
         };
         updatePlans([...planList, fixId]);
     }
+
+    /*
+    function deletePlan(){
+        const newList = planList.filter((aPlan: Plan): boolean => aPlan.name !== activePlan.name);
+        updatePlans(newList);
+        setActivePlan(newList[0]);
+    }
+    */
 
     return (
         <div className="App">
