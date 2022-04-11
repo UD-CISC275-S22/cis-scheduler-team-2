@@ -28,13 +28,15 @@ function App(): JSX.Element {
     }
     */
 
+    const sampleSemester = samplePlan.semesters[0];
+
     return (
         <div className="App">
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <AddNewPlan addPlan={addPlan}></AddNewPlan>
-            <CourseList></CourseList>
+            <CourseList semester={sampleSemester}></CourseList>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
