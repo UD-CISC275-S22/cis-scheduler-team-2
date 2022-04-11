@@ -6,19 +6,19 @@ import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
 import { ListAllPlans } from "./components/ListAllPlans";
-//import { DeletePlanButton } from "./components/DeletePlan";
+import { Col, Row } from "react-bootstrap";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
     const [planList, updatePlans] = useState<Plan[]>([samplePlan]);
-    //statt to hold the active plan
+    //state to hold the active plan
     const [activePlan, setActivePlan] = useState<Plan>(planList[0]);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
         const fixId = {
             ...newPlan,
-            id: planList.length,
+            id: planList[planList.length - 1].id + 1,
             semesters: [...newPlan.semesters]
         };
         updatePlans([...planList, fixId]);
@@ -40,18 +40,24 @@ function App(): JSX.Element {
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
-            <AddNewPlan addPlan={addPlan}></AddNewPlan>
-            <ListAllPlans
-                allPlans={planList}
-                activePlan={activePlan}
-                setActivePlan={setActivePlan}
-            ></ListAllPlans>
-            <CourseList semester={sampleSemester}></CourseList>
-            <hr></hr>
-            <DeletePlanButton
-                PlanList={planList}
-                deleteFunct={deletePlan}
-            ></DeletePlanButton>
+            <Row>
+                <Col>
+                    <ListAllPlans
+                        allPlans={planList}
+                        activePlan={activePlan}
+                        setActivePlan={setActivePlan}
+                    ></ListAllPlans>
+                    Active Plan: {activePlan.name}
+                    <DeletePlanButton
+                        PlanList={planList}
+                        deleteFunct={deletePlan}
+                    ></DeletePlanButton>
+                </Col>
+                <Col>
+                    <AddNewPlan addPlan={addPlan}></AddNewPlan>
+                </Col>
+                <CourseList semester={sampleSemester}></CourseList>
+            </Row>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
