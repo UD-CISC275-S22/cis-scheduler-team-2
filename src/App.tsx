@@ -5,6 +5,7 @@ import { Plan } from "./interfaces/plan";
 import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
+import { ListAllPlans } from "./components/ListAllPlans";
 //import { DeletePlanButton } from "./components/DeletePlan";
 
 function App(): JSX.Element {
@@ -40,6 +41,11 @@ function App(): JSX.Element {
                 UD CISC275 with React Hooks and TypeScript
             </header>
             <AddNewPlan addPlan={addPlan}></AddNewPlan>
+            <ListAllPlans
+                allPlans={planList}
+                activePlan={activePlan}
+                setActivePlan={setActivePlan}
+            ></ListAllPlans>
             <CourseList semester={sampleSemester}></CourseList>
             <hr></hr>
             <DeletePlanButton
