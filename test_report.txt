@@ -2,17 +2,440 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
-PASS src/App.test.tsx
-  ✓ renders the course name somewhere (39 ms)
+FAIL src/App.test.tsx
+  ✕ renders the course name somewhere (119 ms)
 
-----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
-----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 |                   
- App.tsx  |     100 |      100 |     100 |     100 |                   
-----------|---------|----------|---------|---------|-------------------
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
+  ● renders the course name somewhere
+
+    TestingLibraryElementError: Found multiple elements with the text: /CISC275/i
+
+    Here are the matching elements:
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<header[39m
+      [33mclass[39m=[32m"App-header"[39m
+    [36m>[39m
+      [0mUD CISC275 with React Hooks and TypeScript[0m
+    [36m</header>[39m
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<th>[39m
+      [0mCISC275[0m
+    [36m</th>[39m
+
+    (If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"App"[39m
+        [36m>[39m
+          [36m<header[39m
+            [33mclass[39m=[32m"App-header"[39m
+          [36m>[39m
+            [0mUD CISC275 with React Hooks and TypeScript[0m
+          [36m</header>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"form-label"[39m
+                    [33mfor[39m=[32m"planList"[39m
+                  [36m>[39m
+                    [0mSelect A Plan[0m
+                  [36m</label>[39m
+                  [36m<select[39m
+                    [33mclass[39m=[32m"form-select"[39m
+                    [33mdata-testid[39m=[32m"plan_selection"[39m
+                    [33mid[39m=[32m"planList"[39m
+                  [36m>[39m
+                    [36m<option[39m
+                      [33mvalue[39m=[32m"0"[39m
+                    [36m>[39m
+                      [0mSample Plan[0m
+                    [36m</option>[39m
+                  [36m</select>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0mActive Plan: [0m
+              [0mSample Plan[0m
+              [36m<div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"btn btn-primary"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mDelete Active Plan[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"form-label"[39m
+                  [36m>[39m
+                    [0mPlan Name Here:[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"form-control"[39m
+                    [33mplaceholder[39m=[32m"Enter Plan Name"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"form-label"[39m
+                  [36m>[39m
+                    [0mDegree Starting Year:[0m
+                  [36m</label>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"form-control"[39m
+                    [33mplaceholder[39m=[32m"Enter Starting Year"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m""[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<label[39m
+                    [33mclass[39m=[32m"form-label"[39m
+                  [36m>[39m
+                    [36m<select[39m
+                      [33mclass[39m=[32m"form-select"[39m
+                    [36m>[39m
+                      [36m<option[39m
+                        [33mvalue[39m=[32m"Fall"[39m
+                      [36m>[39m
+                        [0mFall[0m
+                      [36m</option>[39m
+                      [36m<option[39m
+                        [33mvalue[39m=[32m"Winter"[39m
+                      [36m>[39m
+                        [0mWinter[0m
+                      [36m</option>[39m
+                      [36m<option[39m
+                        [33mvalue[39m=[32m"Spring"[39m
+                      [36m>[39m
+                        [0mSpring[0m
+                      [36m</option>[39m
+                      [36m<option[39m
+                        [33mvalue[39m=[32m"Summer"[39m
+                      [36m>[39m
+                        [0mSummer[0m
+                      [36m</option>[39m
+                    [36m</select>[39m
+                  [36m</label>[39m
+                [36m</div>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"btn btn-primary"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [0mAdd New Plan[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<hr />[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<h4>[39m
+                  [0mSample Plan's Semesters[0m
+                [36m</h4>[39m
+                [36m<ul[39m
+                  [33mstyle[39m=[32m"padding-left: 0px; list-style: none;"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<div>[39m
+                      [36m<div>[39m
+                        [36m<h4[39m
+                          [33mstyle[39m=[32m"cursor: pointer;"[39m
+                        [36m>[39m
+                          [0mSemester: [0m
+                          [0mFall[0m
+                          [0m [0m
+                          [0m2020[0m
+                        [36m</h4>[39m
+                      [36m</div>[39m
+                      [36m<table[39m
+                        [33mclass[39m=[32m"table table-striped table-bordered table-hover"[39m
+                      [36m>[39m
+                        [36m<thead>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0mCredits[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCourse Number[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCourse Title[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                        [36m</thead>[39m
+                        [36m<tbody>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0m3[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCISC275[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mIntroduction to Software Engineering[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0m3[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCISC320[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mIntroduction to Algorithms[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                        [36m</tbody>[39m
+                      [36m</table>[39m
+                    [36m</div>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<div>[39m
+                      [36m<div>[39m
+                        [36m<h4[39m
+                          [33mstyle[39m=[32m"cursor: pointer;"[39m
+                        [36m>[39m
+                          [0mSemester: [0m
+                          [0mSpring[0m
+                          [0m [0m
+                          [0m2020[0m
+                        [36m</h4>[39m
+                      [36m</div>[39m
+                      [36m<table[39m
+                        [33mclass[39m=[32m"table table-striped table-bordered table-hover"[39m
+                      [36m>[39m
+                        [36m<thead>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0mCredits[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCourse Number[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCourse Title[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                        [36m</thead>[39m
+                        [36m<tbody>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0m3[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCISC437[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mIntroduction to Database Systems[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                          [36m<tr>[39m
+                            [36m<th>[39m
+                              [0m3[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mCISC482[0m
+                            [36m</th>[39m
+                            [36m<th>[39m
+                              [0mArtificial Intelligence[0m
+                            [36m</th>[39m
+                          [36m</tr>[39m
+                        [36m</tbody>[39m
+                      [36m</table>[39m
+                    [36m</div>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"col"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<ul[39m
+                  [33mstyle[39m=[32m"list-style: none; padding-left: 0px;"[39m
+                [36m>[39m
+                  [36m<li>[39m
+                    [36m<div[39m
+                      [33mstyle[39m=[32m"justify-content: center; display: flex;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mstyle[39m=[32m"width: 50%;"[39m
+                      [36m>[39m
+                        [36m<hr />[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"row"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"col"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<h3[39m
+                                  [33mstyle[39m=[32m"cursor: pointer;"[39m
+                                [36m>[39m
+                                  [0mCISC[0m
+                                  [0m [0m
+                                  [0m275[0m
+                                  [0m:[0m
+                                  [0m [0m
+                                  [0mIntroduction to Software Engineering[0m
+                                [36m</h3>[39m
+                              [36m</div>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"col"[39m
+                                [36m/>[39m
+                              [36m</div>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"col"[39m
+                                [36m/>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</li>[39m
+                  [36m<li>[39m
+                    [36m<div[39m
+                      [33mstyle[39m=[32m"justify-content: center; display: flex;"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mstyle[39m=[32m"width: 50%;"[39m
+                      [36m>[39m
+                        [36m<hr />[39m
+                        [36m<div[39m
+                          [33mclass[39m=[32m"container"[39m
+                        [36m>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"row"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"col"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<h3[39m
+                                  [33mstyle[39m=[32m"cursor: pointer;"[39m
+                                [36m>[39m
+                                  [0mCISC[0m
+                                  [0m [0m
+                                  [0m320[0m
+                                  [0m:[0m
+                                  [0m [0m
+                                  [0mIntroduction to Algorithms[0m
+                                [36m</h3>[39m
+                              [36m</div>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"col"[39m
+                                [36m/>[39m
+                              [36m</div>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"row"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"col"[39m
+                                [36m/>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</div>[39m
+                      [36m</div>[39m
+                    [36m</div>[39m
+                  [36m</li>[39m
+                [36m</ul>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<hr />[39m
+          [36m<p>[39m
+            [0mGroup Members: [0m
+            [36m<br />[39m
+            [0mRyan Evans, Craig Barber, Joshua Nicholls[0m
+          [36m</p>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+       5 | test("renders the course name somewhere", () => {
+       6 |     render(<App />);
+    >  7 |     const linkElement = screen.getByText(/CISC275/i);
+         |                                ^
+       8 |     expect(linkElement).toBeInTheDocument();
+       9 | });
+      10 |
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at getElementError (node_modules/@testing-library/dom/dist/query-helpers.js:25:35)
+      at getMultipleElementsFoundError (node_modules/@testing-library/dom/dist/query-helpers.js:29:10)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:66:13
+      at getByText (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
+      at Object.<anonymous> (src/App.test.tsx:7:32)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+---------------------|---------|----------|---------|---------|-----------------------
+File                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s     
+---------------------|---------|----------|---------|---------|-----------------------
+All files            |   44.44 |    31.81 |   53.57 |   44.44 |                       
+ src                 |      40 |      100 |      25 |      40 |                       
+  App.tsx            |      40 |      100 |      25 |      40 | 20-34                 
+ src/components      |   44.23 |    31.81 |   58.33 |   44.23 |                       
+  AddNewPlan.tsx     |   29.03 |       25 |    37.5 |   29.03 | 35-61,66-67,74-81,126 
+  CourseList.tsx     |     100 |      100 |     100 |     100 |                       
+  CourseTable.tsx    |      75 |      100 |   66.66 |      75 | 10                    
+  CourseView.tsx     |   66.66 |       50 |      50 |   66.66 | 9                     
+  DeletePlan.tsx     |      50 |      100 |      50 |      50 | 15                    
+  ListAllPlans.tsx   |   33.33 |        0 |      50 |   33.33 | 19-23                 
+  SemesterTable.tsx  |     100 |      100 |     100 |     100 |                       
+ src/interfaces      |     100 |      100 |     100 |     100 |                       
+  course.ts          |       0 |        0 |       0 |       0 |                       
+  placeholderPlan.ts |     100 |      100 |     100 |     100 |                       
+  plan.ts            |       0 |        0 |       0 |       0 |                       
+  semester.ts        |       0 |        0 |       0 |       0 |                       
+---------------------|---------|----------|---------|---------|-----------------------
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        1.705 s
+Time:        2.883 s
 Ran all test suites.
