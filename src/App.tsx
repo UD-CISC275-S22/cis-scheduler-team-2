@@ -7,7 +7,7 @@ import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
 import { ListAllPlans } from "./components/ListAllPlans";
 import { Col, Row } from "react-bootstrap";
-import { CourseTable } from "./components/CourseTable";
+import { SemesterTable } from "./components/SemesterTable";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -57,7 +57,7 @@ function App(): JSX.Element {
                 <Col>
                     <AddNewPlan addPlan={addPlan}></AddNewPlan>
                 </Col>
-                <CourseTable semester={sampleSemester}></CourseTable>
+                <SemesterTable plan={samplePlan}></SemesterTable>
                 <CourseList semester={sampleSemester}></CourseList>
             </Row>
             <hr></hr>
