@@ -57,7 +57,7 @@ function App(): JSX.Element {
                 <Col>
                     <AddNewPlan addPlan={addPlan}></AddNewPlan>
                 </Col>
-                <SemesterTable plan={samplePlan}></SemesterTable>
+                <SemesterTable plan={activePlan}></SemesterTable>
                 <CourseList semester={sampleSemester}></CourseList>
             </Row>
             <hr></hr>
