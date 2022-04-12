@@ -57,8 +57,15 @@ function App(): JSX.Element {
                 <Col>
                     <AddNewPlan addPlan={addPlan}></AddNewPlan>
                 </Col>
-                <SemesterTable plan={samplePlan}></SemesterTable>
-                <CourseList semester={sampleSemester}></CourseList>
+            </Row>
+            <hr></hr>
+            <Row>
+                <Col>
+                    <SemesterTable plan={activePlan}></SemesterTable>
+                </Col>
+                <Col>
+                    <CourseList semester={sampleSemester}></CourseList>
+                </Col>
             </Row>
             <hr></hr>
             <p>
