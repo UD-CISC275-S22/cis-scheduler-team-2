@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 //import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
-import { SemesterTable } from "./SemesterTable";
+//import { SemesterTable } from "./SemesterTable";
 
 interface clearSemesterProp {
     PlanID: number;
