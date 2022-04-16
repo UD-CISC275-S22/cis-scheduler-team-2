@@ -8,6 +8,7 @@ import { DeletePlanButton } from "./components/DeletePlan";
 import { ListAllPlans } from "./components/ListAllPlans";
 import { Col, Row } from "react-bootstrap";
 import { SemesterTable } from "./components/SemesterTable";
+import { EmptySemestersButton } from "./components/ClearAllSemesters";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -62,6 +63,12 @@ function App(): JSX.Element {
             <Row>
                 <Col>
                     <SemesterTable plan={activePlan}></SemesterTable>
+                    <EmptySemestersButton
+                        allPlans={planList}
+                        updatePlans={updatePlans}
+                        activePlan={activePlan}
+                        setActivePlan={setActivePlan}
+                    ></EmptySemestersButton>
                 </Col>
                 <Col>
                     <CourseList semester={sampleSemester}></CourseList>
