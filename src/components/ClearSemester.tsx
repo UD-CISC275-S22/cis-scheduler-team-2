@@ -18,6 +18,7 @@ export function ClearSemesterButton({
     return (
         <div>
             <Button
+                disabled={thisSem.classes.length <= 0}
                 onClick={() => clearFunct(PlanID, thisSem.year, thisSem.season)}
             >
                 Clear This Semester
