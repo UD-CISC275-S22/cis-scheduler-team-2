@@ -10,6 +10,8 @@ import { Col, Row } from "react-bootstrap";
 import { SemesterTable } from "./components/SemesterTable";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
+import { AddCourseToSemester } from "./components/AddCourseToSemester";
+import { Course } from "./interfaces/course";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -60,6 +62,48 @@ function App(): JSX.Element {
         updatePlans(fixedList);
     }
 
+    function addCourse(newCourse: Course, semYear: number, semSeas: string) {
+        //adds a new Course to the active plan, given a specified semester to insert to, and the details of the course
+        const actPlan = activePlan;
+        const actSems = actPlan.semesters.filter(
+            (aSem: Semester): boolean =>
+                aSem.season === semSeas && aSem.year === semYear
+        );
+        if (actSems.length >= 1) {
+            actSems[0].classes = [...actSems[0].classes, newCourse];
+            actSems[0].credits += newCourse.credits;
+            const replaceSem = actPlan.semesters.map(
+                (aSem: Semester): Semester =>
+                    aSem.season === semSeas && aSem.year === semYear
+                        ? { ...actSems[0] }
+                        : { ...aSem }
+            );
+            actPlan.semesters = replaceSem;
+            const fixedList = planList.map(
+                (aPlan: Plan): Plan =>
+                    aPlan.id === actPlan.id ? { ...actPlan } : { ...aPlan }
+            );
+            setActivePlan(actPlan);
+            updatePlans(fixedList);
+        } else {
+            const newSem = {
+                id: 0,
+                year: semYear,
+                season: semSeas,
+                classes: [newCourse],
+                credits: newCourse.credits
+            };
+            //NOTE: add a way to sort the semester into place
+            actPlan.semesters = [...actPlan.semesters, newSem];
+            const fixedList = planList.map(
+                (aPlan: Plan): Plan =>
+                    aPlan.id === actPlan.id ? { ...actPlan } : { ...aPlan }
+            );
+            setActivePlan(actPlan);
+            updatePlans(fixedList);
+        }
+    }
+
     const sampleSemester = samplePlan.semesters[0];
 
     return (
@@ -102,6 +146,8 @@ function App(): JSX.Element {
                     <CourseList semester={sampleSemester}></CourseList>
                 </Col>
             </Row>
+            <hr></hr>
+            <AddCourseToSemester courseAdder={addCourse}></AddCourseToSemester>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
