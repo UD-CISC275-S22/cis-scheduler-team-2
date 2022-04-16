@@ -68,6 +68,7 @@ function App(): JSX.Element {
         semSeas: string
     ): boolean {
         //adds a new Course to the active plan, given a specified semester to insert to, and the details of the course
+        //passed to AddSourceToSemester component
         const actPlan = activePlan;
         const actSems = actPlan.semesters.filter(
             (aSem: Semester): boolean =>

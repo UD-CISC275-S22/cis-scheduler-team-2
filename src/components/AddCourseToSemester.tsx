@@ -21,22 +21,28 @@ interface addCourseToSemesterProp {
 export function AddCourseToSemester({
     courseAdder
 }: addCourseToSemesterProp): JSX.Element {
+    //enumerates the seasons
     const seasons = ["Fall", "Winter", "Spring", "Summer"];
+    //for making sure text contains no specail characters or numbers
     const specialChars = /[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~1234567890]/;
 
+    //states for the semester the course is being added to
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
     const [yearBox, changeYear] = useState<string>("");
+    //list of prerequisites to be added in the new course
     const [reqsList, newPre] = useState<string[]>([]);
+    //state for seeing if the selected semester can be added to
     const [validSem, swapValid] = useState<boolean>(true);
 
+    //state setters for the semester information
     function updateSeason(event: ChangeEvent) {
         changeSeason(event.target.value);
     }
-
     function updateYear(event: ChangeEvent) {
         changeYear(event.target.value);
     }
 
+    //state holding the new course to be added
     const [newCourse, updateCourse] = useState<Course>({
         department: "",
         courseCode: 0,
@@ -136,6 +142,7 @@ export function AddCourseToSemester({
     }
 
     function remReq(courseName: string) {
+        //state setter for the course name
         const rem = newCourse.prereqs.filter(
             (aCourse: string): boolean => aCourse !== courseName
         );
@@ -145,6 +152,7 @@ export function AddCourseToSemester({
     }
 
     function isValidCode(): boolean {
+        //checks if the course code is a valid string for a course, i.e., CISC275
         if (reqsBox.length === 7) {
             const dept = reqsBox.substring(0, 4);
             const code = reqsBox.substring(4);
@@ -156,6 +164,7 @@ export function AddCourseToSemester({
     }
 
     function updateDesc(event: ChangeEvent) {
+        //state setter for the course description
         if (event.target.value !== "") {
             const newDesc = {
                 ...newCourse,
@@ -167,6 +176,7 @@ export function AddCourseToSemester({
     }
 
     function addCourse() {
+        //adds the new course to the proper semester, if it already exists, and resets all fields
         if (courseAdder(newCourse, Number(yearBox), startSeason)) {
             changeSeason(seasons[0]);
             changeCode("");
