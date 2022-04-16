@@ -9,6 +9,7 @@ import { ListAllPlans } from "./components/ListAllPlans";
 import { Col, Row } from "react-bootstrap";
 import { SemesterTable } from "./components/SemesterTable";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
+import { Semester } from "./interfaces/semester";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -33,6 +34,30 @@ function App(): JSX.Element {
         );
         updatePlans(newList);
         setActivePlan(newList[0]);
+    }
+
+    function clearSemester(planID: number, semYear: number, semSeas: string) {
+        //passed to the ClearSemesterButton
+        //gets the plan
+        const toFix = planList.filter(
+            (aPlan: Plan): boolean => aPlan.id === planID
+        );
+        //array of semseters from that plan
+        const semMap = toFix[0].semesters;
+        //clears the proper semester
+        const clearSem = semMap.map(
+            (aSem: Semester): Semester =>
+                aSem.season === semSeas && aSem.year === semYear
+                    ? { ...aSem, classes: [] }
+                    : { ...aSem }
+        );
+        const fixedPlan = { ...toFix[0], semesters: [...clearSem] };
+        const fixedList = planList.map(
+            (aPlan: Plan): Plan =>
+                aPlan.id === planID ? { ...fixedPlan } : { ...aPlan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedList);
     }
 
     const sampleSemester = samplePlan.semesters[0];
@@ -62,7 +87,10 @@ function App(): JSX.Element {
             <hr></hr>
             <Row>
                 <Col>
-                    <SemesterTable plan={activePlan}></SemesterTable>
+                    <SemesterTable
+                        plan={activePlan}
+                        clearSem={clearSemester}
+                    ></SemesterTable>
                     <EmptySemestersButton
                         allPlans={planList}
                         updatePlans={updatePlans}
