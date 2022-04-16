@@ -14,7 +14,7 @@ describe("App Testing Examples", () => {
     beforeEach(() => {
         render(<App />);
     });
-    //Specific Example:
+    //Specific Example of testing multiple components:
     test("User can add new plan view it delete it and return back to original starter plan", () => {
         const select = screen.getByRole("combobox");
         const newPlanEntryArr = screen.getAllByRole("textbox"); //Gets the 2 textboxes
@@ -29,8 +29,9 @@ describe("App Testing Examples", () => {
     });
 });
 
-//Generic test templates, non-functional
-test("The component renders template", () => {
+//Some generic test templates, non-functional
+/**
+test("Some component renders template", () => {
     expect(screen.getByText("Text Only In That Component")).toBeInTheDocument();
 });
 
@@ -57,3 +58,4 @@ test("Interacting with a text entry box", () => {
     userEvent.type(textbox, "stuff to enter in textbox");
     expect(textbox);
 });
+*/
