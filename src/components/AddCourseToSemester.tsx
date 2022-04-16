@@ -11,7 +11,11 @@ type ChangeEvent = React.ChangeEvent<
 >;
 
 interface addCourseToSemesterProp {
-    courseAdder: (newCourse: Course, semYear: number, semSeas: string) => void;
+    courseAdder: (
+        newCourse: Course,
+        semYear: number,
+        semSeas: string
+    ) => boolean;
 }
 
 export function AddCourseToSemester({
@@ -23,6 +27,7 @@ export function AddCourseToSemester({
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
     const [yearBox, changeYear] = useState<string>("");
     const [reqsList, newPre] = useState<string[]>([]);
+    const [validSem, swapValid] = useState<boolean>(true);
 
     function updateSeason(event: ChangeEvent) {
         changeSeason(event.target.value);
@@ -155,15 +160,19 @@ export function AddCourseToSemester({
     }
 
     function addCourse() {
-        courseAdder(newCourse, Number(yearBox), startSeason);
-        changeSeason(seasons[0]);
-        changeCode("");
-        changeTitle("");
-        changeCreds("");
-        changeReqs("");
-        newPre([]);
-        changeDesc("");
-        changeYear("");
+        if (courseAdder(newCourse, Number(yearBox), startSeason)) {
+            changeSeason(seasons[0]);
+            changeCode("");
+            changeTitle("");
+            changeCreds("");
+            changeReqs("");
+            newPre([]);
+            changeDesc("");
+            changeYear("");
+            swapValid(true);
+        } else {
+            swapValid(false);
+        }
     }
 
     return (
@@ -265,6 +274,12 @@ export function AddCourseToSemester({
                     <Button disabled={!enableAdd()} onClick={addCourse}>
                         Add Course to Plan
                     </Button>
+                    <div>
+                        {!enableAdd() && <div>Please Fill All Fields</div>}
+                    </div>
+                    <div>
+                        {!validSem && <div>Please Select a Valid Semester</div>}
+                    </div>
                 </Col>
             </Row>
         </div>

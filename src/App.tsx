@@ -62,7 +62,11 @@ function App(): JSX.Element {
         updatePlans(fixedList);
     }
 
-    function addCourse(newCourse: Course, semYear: number, semSeas: string) {
+    function addCourse(
+        newCourse: Course,
+        semYear: number,
+        semSeas: string
+    ): boolean {
         //adds a new Course to the active plan, given a specified semester to insert to, and the details of the course
         const actPlan = activePlan;
         const actSems = actPlan.semesters.filter(
@@ -85,9 +89,14 @@ function App(): JSX.Element {
             );
             setActivePlan(actPlan);
             updatePlans(fixedList);
+            return true;
         } else {
+            return false;
+            //This was for creating a new semester, although did not put it in the right spot
+            //Would need to write a sorter/comparator for it
+            /*
             const newSem = {
-                id: 0,
+                id: actPlan.id,
                 year: semYear,
                 season: semSeas,
                 classes: [newCourse],
@@ -101,6 +110,7 @@ function App(): JSX.Element {
             );
             setActivePlan(actPlan);
             updatePlans(fixedList);
+            */
         }
     }
 
