@@ -46,6 +46,7 @@ export function AddCourseToSemester({
         description: ""
     });
 
+    //states holding the values in each of the boxes
     const [codeBox, changeCode] = useState<string>("");
     const [titleBox, changeTitle] = useState<string>("");
     const [credsBox, changeCreds] = useState<string>("");
@@ -53,6 +54,7 @@ export function AddCourseToSemester({
     const [descBox, changeDesc] = useState<string>("");
 
     function enableAdd() {
+        //checks if all fields are legal
         const dept = codeBox.substring(0, 4);
         const code = codeBox.substring(4);
         return (
@@ -69,6 +71,7 @@ export function AddCourseToSemester({
     }
 
     function updateCode(event: ChangeEvent) {
+        //updates the code fields in the new course
         if (event.target.value.length === 7) {
             const dept = event.target.value.substring(0, 4);
             const code = event.target.value.substring(4);
@@ -85,6 +88,7 @@ export function AddCourseToSemester({
     }
 
     function updateTitle(event: ChangeEvent) {
+        //updates the title of the course to be added
         if (event.target.value !== "") {
             const newTitle = {
                 ...newCourse,
@@ -96,6 +100,7 @@ export function AddCourseToSemester({
     }
 
     function updateCreds(event: ChangeEvent) {
+        //updates the credits of the course to be added
         if (!isNaN(Number(event.target.value))) {
             if (Number(event.target.value) > 0) {
                 const newCreds = {
@@ -109,10 +114,12 @@ export function AddCourseToSemester({
     }
 
     function updateReqs(event: ChangeEvent) {
+        //updates the text in the prerequisite box
         changeReqs(event.target.value);
     }
 
     function addReq() {
+        //adds the typed prerequisite to the list of prerequisites
         if (reqsBox.length === 7) {
             const dept = reqsBox.substring(0, 4);
             const code = reqsBox.substring(4);
@@ -236,12 +243,12 @@ export function AddCourseToSemester({
                     </Button>
                     {reqsList.map(
                         (aReq: string): JSX.Element => (
-                            <div key={aReq}>
+                            <li key={aReq}>
                                 {aReq}
                                 <Button onClick={() => remReq(aReq)}>
                                     Remove Prerequisite
                                 </Button>
-                            </div>
+                            </li>
                         )
                     )}
                 </Col>
