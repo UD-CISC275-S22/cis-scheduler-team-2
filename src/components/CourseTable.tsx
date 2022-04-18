@@ -2,8 +2,19 @@ import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 import { Course } from "../interfaces/course";
 import { Semester } from "../interfaces/semester";
+import { DeleteCourseButton } from "./DeleteCourseButton";
 
-export function CourseTable({ semester }: { semester: Semester }): JSX.Element {
+export function CourseTable({
+    semester,
+    delCourseFunct
+}: {
+    semester: Semester;
+    delCourseFunct: (
+        courseDept: string,
+        courseCode: number,
+        semID: string
+    ) => void;
+}): JSX.Element {
     const [isVisible, setIsVisible] = useState<boolean>(true);
 
     function toggleVis(): void {
@@ -25,6 +36,7 @@ export function CourseTable({ semester }: { semester: Semester }): JSX.Element {
                             <th>Credits</th>
                             <th>Course Number</th>
                             <th>Course Title</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +45,13 @@ export function CourseTable({ semester }: { semester: Semester }): JSX.Element {
                                 <th>{course.credits}</th>
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
+                                <th>
+                                    <DeleteCourseButton
+                                        course={course}
+                                        semester={semester}
+                                        delFunct={delCourseFunct}
+                                    ></DeleteCourseButton>
+                                </th>
                             </tr>
                         ))}
                     </tbody>

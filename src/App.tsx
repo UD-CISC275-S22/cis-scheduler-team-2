@@ -130,6 +130,44 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
+    function deleteCourse(
+        courseDept: string,
+        courseCode: number,
+        semID: string
+    ) {
+        //deletes the specific course from the active plan, properly updating Semester credits also
+        const toFix = activePlan.semesters.filter(
+            (aSem: Semester): boolean => aSem.id === semID
+        );
+        const getClass = toFix[0].classes.filter(
+            (aCourse: Course): boolean =>
+                aCourse.department === courseDept &&
+                aCourse.courseCode === courseCode
+        )[0];
+        const fixCreds = toFix[0].credits - getClass.credits;
+        const fixCourse = toFix[0].classes.filter(
+            (aCourse: Course): boolean =>
+                !(
+                    aCourse.department === courseDept &&
+                    aCourse.courseCode === courseCode
+                )
+        );
+        const fixedPlan = {
+            ...activePlan,
+            semesters: activePlan.semesters.map(
+                (aSem: Semester): Semester =>
+                    aSem.id === semID
+                        ? { ...aSem, classes: fixCourse, credits: fixCreds }
+                        : { ...aSem }
+            )
+        };
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -160,6 +198,7 @@ function App(): JSX.Element {
                         clearSem={clearSemester}
                         deleteSemester={deleteSemester}
                         courseAdder={addCourse}
+                        delCourseFunct={deleteCourse}
                     ></SemesterTable>
                     <hr />
                     <Button onClick={handleShowInsertSemesterModal}>

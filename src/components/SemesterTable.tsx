@@ -15,12 +15,18 @@ export function SemesterTable({
     plan,
     clearSem,
     deleteSemester,
-    courseAdder
+    courseAdder,
+    delCourseFunct
 }: {
     plan: Plan;
     clearSem: (planID: number, semYear: number, semSeas: string) => void;
     deleteSemester: (semesterId: string) => void;
     courseAdder: (newCourse: Course, semID: string) => void;
+    delCourseFunct: (
+        courseDept: string,
+        courseCode: number,
+        semID: string
+    ) => void;
 }): JSX.Element {
     return (
         <div>
@@ -29,7 +35,10 @@ export function SemesterTable({
             <ul style={{ paddingLeft: "0", listStyle: "none" }}>
                 {plan.semesters.map((semester: Semester) => (
                     <li key={semester.id}>
-                        <CourseTable semester={semester}></CourseTable>
+                        <CourseTable
+                            semester={semester}
+                            delCourseFunct={delCourseFunct}
+                        ></CourseTable>
                         <Row>
                             <Col>
                                 <ClearSemesterButton

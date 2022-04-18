@@ -239,7 +239,7 @@ export function AddCourseToSemester({
                         />
                     </Form.Group>
                     <Button disabled={!isValidCode()} onClick={addReq}>
-                        Add This Prerequisite to {semID}
+                        Add This Prerequisite
                     </Button>
                     {reqsList.map(
                         (aReq: string): JSX.Element => (
