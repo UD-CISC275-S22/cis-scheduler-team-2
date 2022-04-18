@@ -93,9 +93,8 @@ function App(): JSX.Element {
             return true;
         } else {
             return false;
-            //This was for creating a new semester, although did not put it in the right spot
-            //Would need to write a sorter/comparator for it
-            /*
+            /*This was for creating a new semester, although did not put it in the right spot
+               Would need to write a sorter/comparator for it
             const newSem = {
                 id: actPlan.id,
                 year: semYear,
@@ -158,7 +157,10 @@ function App(): JSX.Element {
                 </Col>
             </Row>
             <hr></hr>
-            <AddCourseToSemester courseAdder={addCourse}></AddCourseToSemester>
+            <AddCourseToSemester
+                actPlan={activePlan}
+                courseAdder={addCourse}
+            ></AddCourseToSemester>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua

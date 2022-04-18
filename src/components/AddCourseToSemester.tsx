@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Course } from "../interfaces/course";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { Semester } from "../interfaces/semester";
+import { Plan } from "../interfaces/plan";
 
-//add ability to push semester changes (double-check all fields are valid)
-//add state for prereqs list
-//map prereqs to allow them to be deleted if needed
+//fix issue with swappin plans not fixing the selected
 
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
 
 interface addCourseToSemesterProp {
+    actPlan: Plan;
     courseAdder: (
         newCourse: Course,
         semYear: number,
@@ -19,27 +20,30 @@ interface addCourseToSemesterProp {
 }
 
 export function AddCourseToSemester({
+    actPlan,
     courseAdder
 }: addCourseToSemesterProp): JSX.Element {
-    //enumerates the seasons
-    const seasons = ["Fall", "Winter", "Spring", "Summer"];
+    const semList = [...actPlan.semesters];
+    const firstSem = actPlan.semesters[0];
     //for making sure text contains no specail characters or numbers
     const specialChars = /[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~1234567890]/;
 
     //states for the semester the course is being added to
-    const [startSeason, changeSeason] = useState<string>(seasons[0]);
-    const [yearBox, changeYear] = useState<string>("");
+    const [startSem, changeSem] = useState<Semester>(firstSem);
+
     //list of prerequisites to be added in the new course
     const [reqsList, newPre] = useState<string[]>([]);
     //state for seeing if the selected semester can be added to
     const [validSem, swapValid] = useState<boolean>(true);
 
-    //state setters for the semester information
-    function updateSeason(event: ChangeEvent) {
-        changeSeason(event.target.value);
-    }
-    function updateYear(event: ChangeEvent) {
-        changeYear(event.target.value);
+    //state setter for the semester time information
+    function updateSem(event: ChangeEvent) {
+        const semInfo = event.target.value.split(" ");
+        const rightSem = semList.filter(
+            (aSem: Semester): boolean =>
+                aSem.season === semInfo[0] && aSem.year === Number(semInfo[1])
+        );
+        changeSem(rightSem[0]);
     }
 
     //state holding the new course to be added
@@ -70,9 +74,7 @@ export function AddCourseToSemester({
             descBox !== "" &&
             codeBox.length === 7 &&
             !specialChars.test(dept) &&
-            !isNaN(Number(code)) &&
-            !isNaN(Number(yearBox)) &&
-            yearBox !== ""
+            !isNaN(Number(code))
         );
     }
 
@@ -177,15 +179,39 @@ export function AddCourseToSemester({
 
     function addCourse() {
         //adds the new course to the proper semester, if it already exists, and resets all fields
-        if (courseAdder(newCourse, Number(yearBox), startSeason)) {
-            changeSeason(seasons[0]);
+        const fixOnPlanSwap = actPlan.semesters.filter(
+            (aSem: Semester): boolean =>
+                aSem.season === startSem.season && aSem.year === startSem.year
+        );
+        if (
+            fixOnPlanSwap.length === 0 ||
+            courseAdder(newCourse, startSem.year, startSem.season)
+        ) {
+            if (fixOnPlanSwap.length === 0) {
+                //covers for the edge case of not being able to swap???
+                //NOT A PERMANENT SOLUTION, FAILS IF SWAPPING BACK TO THE OTHER COURSE
+                console.log("testing");
+                courseAdder(
+                    newCourse,
+                    actPlan.semesters[0].year,
+                    actPlan.semesters[0].season
+                );
+            }
+            changeSem(semList[0]);
             changeCode("");
             changeTitle("");
             changeCreds("");
             changeReqs("");
             newPre([]);
             changeDesc("");
-            changeYear("");
+            updateCourse({
+                department: "",
+                courseCode: 0,
+                title: "",
+                credits: 0,
+                prereqs: [],
+                description: ""
+            });
             swapValid(true);
         } else {
             swapValid(false);
@@ -266,27 +292,23 @@ export function AddCourseToSemester({
                     <Form.Group>
                         <Form.Label>
                             <Form.Select
-                                value={startSeason}
-                                onChange={updateSeason}
+                                value={startSem.season + " " + startSem.year}
+                                onChange={updateSem}
                             >
-                                {seasons.map(
-                                    (season: string): JSX.Element => (
-                                        <option key={season} value={season}>
-                                            {season}
+                                {semList.map(
+                                    (aSem: Semester): JSX.Element => (
+                                        <option
+                                            key={aSem.season + " " + aSem.year}
+                                            value={
+                                                aSem.season + " " + aSem.year
+                                            }
+                                        >
+                                            {aSem.season + " " + aSem.year}
                                         </option>
                                     )
                                 )}
                             </Form.Select>
                         </Form.Label>
-                        <Form.Group>
-                            <Form.Label>Semester Year Here:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Semester Year"
-                                value={yearBox}
-                                onChange={updateYear}
-                            />
-                        </Form.Group>
                     </Form.Group>
                     <Button disabled={!enableAdd()} onClick={addCourse}>
                         Add Course to Plan
@@ -297,6 +319,7 @@ export function AddCourseToSemester({
                     <div>
                         {!validSem && <div>Please Select a Valid Semester</div>}
                     </div>
+                    {startSem.season} + {startSem.year}
                 </Col>
             </Row>
         </div>
