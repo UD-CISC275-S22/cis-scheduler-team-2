@@ -5,7 +5,7 @@ import { Course } from "./course";
  */
 export interface Semester {
     //the id of the plan, generated upon creation
-    id: number;
+    id: string;
     //the year of the semester
     year: number;
     //the season of the semester

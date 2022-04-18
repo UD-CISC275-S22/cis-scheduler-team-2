@@ -5,7 +5,7 @@ const samplePlan: Plan = {
     id: 0,
     semesters: [
         {
-            id: 0,
+            id: "0",
             season: "Fall",
             year: 2020,
             classes: [
@@ -29,7 +29,7 @@ const samplePlan: Plan = {
             credits: 6
         },
         {
-            id: 1,
+            id: "1",
             season: "Spring",
             year: 2020,
             classes: [

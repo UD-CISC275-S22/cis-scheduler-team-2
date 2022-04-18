@@ -19,7 +19,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
     const [newPlan, updatePlan] = useState<Plan>({
         name: "",
         semesters: [
-            { id: 0, year: 0, season: "Fall", classes: [], credits: 0 }
+            { id: "0", year: 0, season: "Fall", classes: [], credits: 0 }
         ],
         //remember to auto-update the id
         id: 0
@@ -81,7 +81,13 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
             updatePlan({
                 name: "",
                 semesters: [
-                    { id: 0, year: 0, season: "Fall", classes: [], credits: 0 }
+                    {
+                        id: "0",
+                        year: 0,
+                        season: "Fall",
+                        classes: [],
+                        credits: 0
+                    }
                 ],
                 id: 0
             });

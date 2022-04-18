@@ -32,10 +32,10 @@ export function EmptySemestersButton({
         const newPlanList = [...allPlans];
         const clearedPlanList = newPlanList.map(
             (plan: Plan): Plan =>
-                plan !== activePlan ? plan : emptyPlanSemesters(plan)
+                plan.id !== activePlan.id ? plan : emptyPlanSemesters(plan)
         );
         const currentPlanIndex = allPlans.findIndex(
-            (plan: Plan) => plan === activePlan
+            (plan: Plan) => plan.id === activePlan.id
         );
         if (currentPlanIndex != -1) {
             console.log(clearedPlanList);
