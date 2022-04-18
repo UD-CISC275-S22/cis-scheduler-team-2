@@ -6,8 +6,9 @@ import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
 import { DeletePlanButton } from "./components/DeletePlan";
 import { ListAllPlans } from "./components/ListAllPlans";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { SemesterTable } from "./components/SemesterTable";
+import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 
@@ -16,6 +17,9 @@ function App(): JSX.Element {
     const [planList, updatePlans] = useState<Plan[]>([samplePlan]);
     //state to hold the active plan
     const [activePlan, setActivePlan] = useState<Plan>(planList[0]);
+
+    // State that handles add semester modal
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
@@ -62,6 +66,29 @@ function App(): JSX.Element {
 
     const sampleSemester = samplePlan.semesters[0];
 
+    const handleShowInsertSemesterModal = () => setShowModal(true);
+    const handleCloseInsertSemesterModal = () => setShowModal(false);
+
+    function addSemester(newSemester: Semester): void {
+        const existing = activePlan.semesters.find(
+            (semester: Semester): boolean => semester.id === newSemester.id
+        );
+
+        if (existing === undefined) {
+            const fixedPlan = {
+                id: activePlan.id,
+                name: activePlan.name,
+                semesters: [...activePlan.semesters, newSemester]
+            };
+            const fixedPlanList = planList.map((plan: Plan) =>
+                plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+            );
+            setActivePlan(fixedPlan);
+            updatePlans(fixedPlanList);
+        }
+        return;
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -91,6 +118,11 @@ function App(): JSX.Element {
                         plan={activePlan}
                         clearSem={clearSemester}
                     ></SemesterTable>
+                    <hr />
+                    <Button onClick={handleShowInsertSemesterModal}>
+                        Add Semester
+                    </Button>
+                    <hr />
                     <EmptySemestersButton
                         allPlans={planList}
                         updatePlans={updatePlans}
@@ -107,6 +139,12 @@ function App(): JSX.Element {
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
                 Nicholls
             </p>
+            <hr></hr>
+            <InsertSemesterModal
+                showModal={showModal}
+                addSemester={addSemester}
+                closeModal={handleCloseInsertSemesterModal}
+            ></InsertSemesterModal>
         </div>
     );
 }

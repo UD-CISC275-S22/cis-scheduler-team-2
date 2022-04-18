@@ -17,6 +17,7 @@ export function SemesterTable({
     return (
         <div>
             <h4>{`${plan.name}'s Semesters`}</h4>
+
             <ul style={{ paddingLeft: "0", listStyle: "none" }}>
                 {plan.semesters.map((semester: Semester) => (
                     <li key={semester.id}>
