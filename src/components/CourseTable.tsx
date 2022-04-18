@@ -13,6 +13,7 @@ export function CourseTable({ semester }: { semester: Semester }): JSX.Element {
     return (
         <div>
             <div>
+                <hr></hr>
                 <h4 onClick={toggleVis} style={{ cursor: "pointer" }}>
                     Semester: {semester.season} {semester.year}
                 </h4>
