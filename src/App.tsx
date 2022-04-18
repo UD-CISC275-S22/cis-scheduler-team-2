@@ -11,6 +11,7 @@ import { SemesterTable } from "./components/SemesterTable";
 import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
+import { Course } from "./interfaces/course";
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -64,6 +65,31 @@ function App(): JSX.Element {
         updatePlans(fixedList);
     }
 
+    function addCourse(newCourse: Course, semID: string) {
+        //adds a new Course to the active plan, given a specified semester to insert to, and the details of the course
+        //passed to AddSourceToSemester component
+        const actPlan = activePlan;
+        const actSems = actPlan.semesters.filter(
+            (aSem: Semester): boolean => aSem.id === semID
+        );
+        if (actSems.length >= 1) {
+            actSems[0].classes = [...actSems[0].classes, newCourse];
+            actSems[0].credits += newCourse.credits;
+            const replaceSem = actPlan.semesters.map(
+                (aSem: Semester): Semester =>
+                    aSem.id === semID ? { ...actSems[0] } : { ...aSem }
+            );
+            actPlan.semesters = replaceSem;
+            const fixedList = planList.map(
+                (aPlan: Plan): Plan =>
+                    aPlan.id === actPlan.id ? { ...actPlan } : { ...aPlan }
+            );
+            setActivePlan(actPlan);
+            updatePlans(fixedList);
+            return true;
+        }
+    }
+
     const sampleSemester = samplePlan.semesters[0];
 
     const handleShowInsertSemesterModal = () => setShowModal(true);
@@ -89,7 +115,7 @@ function App(): JSX.Element {
         return;
     }
 
-    function deleteSemester(planId: number, semesterId: string) {
+    function deleteSemester(semesterId: string) {
         const fixedPlan = {
             id: activePlan.id,
             name: activePlan.name,
@@ -133,6 +159,7 @@ function App(): JSX.Element {
                         plan={activePlan}
                         clearSem={clearSemester}
                         deleteSemester={deleteSemester}
+                        courseAdder={addCourse}
                     ></SemesterTable>
                     <hr />
                     <Button onClick={handleShowInsertSemesterModal}>
