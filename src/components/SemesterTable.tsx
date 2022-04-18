@@ -1,7 +1,9 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
+import { AddCourseButton } from "./AddCourseButton";
 import { ClearSemesterButton } from "./ClearSemester";
 import { CourseTable } from "./CourseTable";
 import { DeleteSemesterButton } from "./DeleteSemesterButton";
@@ -12,11 +14,13 @@ import { DeleteSemesterButton } from "./DeleteSemesterButton";
 export function SemesterTable({
     plan,
     clearSem,
-    deleteSemester
+    deleteSemester,
+    courseAdder
 }: {
     plan: Plan;
     clearSem: (planID: number, semYear: number, semSeas: string) => void;
-    deleteSemester: (planId: number, semesterId: string) => void;
+    deleteSemester: (semesterId: string) => void;
+    courseAdder: (newCourse: Course, semID: string) => void;
 }): JSX.Element {
     return (
         <div>
@@ -33,6 +37,12 @@ export function SemesterTable({
                                     thisSem={semester}
                                     clearFunct={clearSem}
                                 ></ClearSemesterButton>
+                            </Col>
+                            <Col>
+                                <AddCourseButton
+                                    semester={semester}
+                                    courseAdder={courseAdder}
+                                ></AddCourseButton>
                             </Col>
                             <Col>
                                 <DeleteSemesterButton

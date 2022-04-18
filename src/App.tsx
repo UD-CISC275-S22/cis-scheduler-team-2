@@ -11,7 +11,6 @@ import { SemesterTable } from "./components/SemesterTable";
 import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
-import { AddCourseToSemester } from "./components/AddCourseToSemester";
 import { Course } from "./interfaces/course";
 
 function App(): JSX.Element {
@@ -66,26 +65,19 @@ function App(): JSX.Element {
         updatePlans(fixedList);
     }
 
-    function addCourse(
-        newCourse: Course,
-        semYear: number,
-        semSeas: string
-    ): boolean {
+    function addCourse(newCourse: Course, semID: string) {
         //adds a new Course to the active plan, given a specified semester to insert to, and the details of the course
         //passed to AddSourceToSemester component
         const actPlan = activePlan;
         const actSems = actPlan.semesters.filter(
-            (aSem: Semester): boolean =>
-                aSem.season === semSeas && aSem.year === semYear
+            (aSem: Semester): boolean => aSem.id === semID
         );
         if (actSems.length >= 1) {
             actSems[0].classes = [...actSems[0].classes, newCourse];
             actSems[0].credits += newCourse.credits;
             const replaceSem = actPlan.semesters.map(
                 (aSem: Semester): Semester =>
-                    aSem.season === semSeas && aSem.year === semYear
-                        ? { ...actSems[0] }
-                        : { ...aSem }
+                    aSem.id === semID ? { ...actSems[0] } : { ...aSem }
             );
             actPlan.semesters = replaceSem;
             const fixedList = planList.map(
@@ -95,26 +87,6 @@ function App(): JSX.Element {
             setActivePlan(actPlan);
             updatePlans(fixedList);
             return true;
-        } else {
-            return false;
-            /*This was for creating a new semester, although did not put it in the right spot
-               Would need to write a sorter/comparator for it
-            const newSem = {
-                id: actPlan.id,
-                year: semYear,
-                season: semSeas,
-                classes: [newCourse],
-                credits: newCourse.credits
-            };
-            //NOTE: add a way to sort the semester into place
-            actPlan.semesters = [...actPlan.semesters, newSem];
-            const fixedList = planList.map(
-                (aPlan: Plan): Plan =>
-                    aPlan.id === actPlan.id ? { ...actPlan } : { ...aPlan }
-            );
-            setActivePlan(actPlan);
-            updatePlans(fixedList);
-            */
         }
     }
 
@@ -143,7 +115,7 @@ function App(): JSX.Element {
         return;
     }
 
-    function deleteSemester(planId: number, semesterId: string) {
+    function deleteSemester(semesterId: string) {
         const fixedPlan = {
             id: activePlan.id,
             name: activePlan.name,
@@ -187,6 +159,7 @@ function App(): JSX.Element {
                         plan={activePlan}
                         clearSem={clearSemester}
                         deleteSemester={deleteSemester}
+                        courseAdder={addCourse}
                     ></SemesterTable>
                     <hr />
                     <Button onClick={handleShowInsertSemesterModal}>
@@ -204,11 +177,6 @@ function App(): JSX.Element {
                     <CourseList semester={sampleSemester}></CourseList>
                 </Col>
             </Row>
-            <hr></hr>
-            <AddCourseToSemester
-                actPlan={activePlan}
-                courseAdder={addCourse}
-            ></AddCourseToSemester>
             <hr></hr>
             <p>
                 Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
