@@ -89,6 +89,21 @@ function App(): JSX.Element {
         return;
     }
 
+    function deleteSemester(planId: number, semesterId: string) {
+        const fixedPlan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: activePlan.semesters.filter(
+                (semester: Semester): boolean => semester.id !== semesterId
+            )
+        };
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -117,6 +132,7 @@ function App(): JSX.Element {
                     <SemesterTable
                         plan={activePlan}
                         clearSem={clearSemester}
+                        deleteSemester={deleteSemester}
                     ></SemesterTable>
                     <hr />
                     <Button onClick={handleShowInsertSemesterModal}>
