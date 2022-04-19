@@ -92,30 +92,45 @@ function App(): JSX.Element {
 
     const sampleSemester = samplePlan.semesters[0];
 
+    // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);
 
+    /**
+     * Adds a new semester to the currently selected plan
+     *
+     * @param newSemester The semester that will be added to the plan
+     */
     function addSemester(newSemester: Semester): void {
+        // Checking if the new semester already exists
         const existing = activePlan.semesters.find(
             (semester: Semester): boolean => semester.id === newSemester.id
         );
-
+        // If the semester doesn't exist, crete a new plan with an updated semesters array
         if (existing === undefined) {
             const fixedPlan = {
                 id: activePlan.id,
                 name: activePlan.name,
                 semesters: [...activePlan.semesters, newSemester]
             };
+            // Creating a list that replaces the active plan with the fixed plan
             const fixedPlanList = planList.map((plan: Plan) =>
                 plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
             );
+            // Updating the active plan and the plan list to both contain the updated plan that contains the new semester
             setActivePlan(fixedPlan);
             updatePlans(fixedPlanList);
         }
         return;
     }
 
+    /**
+     * Removes a given semester from the currently active plan.
+     *
+     * @param semesterId The id of the semester to be deleted
+     */
     function deleteSemester(semesterId: string) {
+        // Creating a new plan with an updated semesters array that contains every plan besides the one being removed
         const fixedPlan = {
             id: activePlan.id,
             name: activePlan.name,
@@ -123,9 +138,11 @@ function App(): JSX.Element {
                 (semester: Semester): boolean => semester.id !== semesterId
             )
         };
+        // Creating a list of plans that replaces the active plan with the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
         );
+        // Updating the active plan and plan list to both contain the updated plan with the semester removed.
         setActivePlan(fixedPlan);
         updatePlans(fixedPlanList);
     }
