@@ -4,7 +4,7 @@ import { Course } from "./course";
  * A representation of a student's semester
  */
 export interface Semester {
-    //the id of the plan, generated upon creation
+    // Unique id representing the semester, generated upon creation of semester
     id: string;
     //the year of the semester
     year: number;
