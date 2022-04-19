@@ -3,439 +3,77 @@
 > react-scripts test "--coverage"
 
 FAIL src/App.test.tsx
-  ✕ renders the course name somewhere (119 ms)
+  ● Test suite failed to run
 
-  ● renders the course name somewhere
+    Jest encountered an unexpected token
 
-    TestingLibraryElementError: Found multiple elements with the text: /CISC275/i
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
 
-    Here are the matching elements:
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
 
-    Ignored nodes: comments, <script />, <style />
-    [36m<header[39m
-      [33mclass[39m=[32m"App-header"[39m
-    [36m>[39m
-      [0mUD CISC275 with React Hooks and TypeScript[0m
-    [36m</header>[39m
+    By default "node_modules" folder is ignored by transformers.
 
-    Ignored nodes: comments, <script />, <style />
-    [36m<th>[39m
-      [0mCISC275[0m
-    [36m</th>[39m
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
 
-    (If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
 
-    Ignored nodes: comments, <script />, <style />
-    [36m<body>[39m
-      [36m<div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"App"[39m
-        [36m>[39m
-          [36m<header[39m
-            [33mclass[39m=[32m"App-header"[39m
-          [36m>[39m
-            [0mUD CISC275 with React Hooks and TypeScript[0m
-          [36m</header>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"row"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"col"[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<div>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"form-label"[39m
-                    [33mfor[39m=[32m"planList"[39m
-                  [36m>[39m
-                    [0mSelect A Plan[0m
-                  [36m</label>[39m
-                  [36m<select[39m
-                    [33mclass[39m=[32m"form-select"[39m
-                    [33mdata-testid[39m=[32m"plan_selection"[39m
-                    [33mid[39m=[32m"planList"[39m
-                  [36m>[39m
-                    [36m<option[39m
-                      [33mvalue[39m=[32m"0"[39m
-                    [36m>[39m
-                      [0mSample Plan[0m
-                    [36m</option>[39m
-                  [36m</select>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [0mActive Plan: [0m
-              [0mSample Plan[0m
-              [36m<div>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"btn btn-primary"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [0mDelete Active Plan[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"col"[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<div>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"form-label"[39m
-                  [36m>[39m
-                    [0mPlan Name Here:[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mclass[39m=[32m"form-control"[39m
-                    [33mplaceholder[39m=[32m"Enter Plan Name"[39m
-                    [33mtype[39m=[32m"text"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"form-label"[39m
-                  [36m>[39m
-                    [0mDegree Starting Year:[0m
-                  [36m</label>[39m
-                  [36m<input[39m
-                    [33mclass[39m=[32m"form-control"[39m
-                    [33mplaceholder[39m=[32m"Enter Starting Year"[39m
-                    [33mtype[39m=[32m"text"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"form-label"[39m
-                  [36m>[39m
-                    [36m<select[39m
-                      [33mclass[39m=[32m"form-select"[39m
-                    [36m>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"Fall"[39m
-                      [36m>[39m
-                        [0mFall[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"Winter"[39m
-                      [36m>[39m
-                        [0mWinter[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"Spring"[39m
-                      [36m>[39m
-                        [0mSpring[0m
-                      [36m</option>[39m
-                      [36m<option[39m
-                        [33mvalue[39m=[32m"Summer"[39m
-                      [36m>[39m
-                        [0mSummer[0m
-                      [36m</option>[39m
-                    [36m</select>[39m
-                  [36m</label>[39m
-                [36m</div>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"btn btn-primary"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [0mAdd New Plan[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<hr />[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"row"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"col"[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<h4>[39m
-                  [0mSample Plan's Semesters[0m
-                [36m</h4>[39m
-                [36m<ul[39m
-                  [33mstyle[39m=[32m"padding-left: 0px; list-style: none;"[39m
-                [36m>[39m
-                  [36m<li>[39m
-                    [36m<div>[39m
-                      [36m<div>[39m
-                        [36m<h4[39m
-                          [33mstyle[39m=[32m"cursor: pointer;"[39m
-                        [36m>[39m
-                          [0mSemester: [0m
-                          [0mFall[0m
-                          [0m [0m
-                          [0m2020[0m
-                        [36m</h4>[39m
-                      [36m</div>[39m
-                      [36m<table[39m
-                        [33mclass[39m=[32m"table table-striped table-bordered table-hover"[39m
-                      [36m>[39m
-                        [36m<thead>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0mCredits[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCourse Number[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCourse Title[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                        [36m</thead>[39m
-                        [36m<tbody>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0m3[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCISC275[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mIntroduction to Software Engineering[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0m3[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCISC320[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mIntroduction to Algorithms[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                        [36m</tbody>[39m
-                      [36m</table>[39m
-                    [36m</div>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<div>[39m
-                      [36m<div>[39m
-                        [36m<h4[39m
-                          [33mstyle[39m=[32m"cursor: pointer;"[39m
-                        [36m>[39m
-                          [0mSemester: [0m
-                          [0mSpring[0m
-                          [0m [0m
-                          [0m2020[0m
-                        [36m</h4>[39m
-                      [36m</div>[39m
-                      [36m<table[39m
-                        [33mclass[39m=[32m"table table-striped table-bordered table-hover"[39m
-                      [36m>[39m
-                        [36m<thead>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0mCredits[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCourse Number[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCourse Title[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                        [36m</thead>[39m
-                        [36m<tbody>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0m3[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCISC437[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mIntroduction to Database Systems[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                          [36m<tr>[39m
-                            [36m<th>[39m
-                              [0m3[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mCISC482[0m
-                            [36m</th>[39m
-                            [36m<th>[39m
-                              [0mArtificial Intelligence[0m
-                            [36m</th>[39m
-                          [36m</tr>[39m
-                        [36m</tbody>[39m
-                      [36m</table>[39m
-                    [36m</div>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"col"[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<ul[39m
-                  [33mstyle[39m=[32m"list-style: none; padding-left: 0px;"[39m
-                [36m>[39m
-                  [36m<li>[39m
-                    [36m<div[39m
-                      [33mstyle[39m=[32m"justify-content: center; display: flex;"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mstyle[39m=[32m"width: 50%;"[39m
-                      [36m>[39m
-                        [36m<hr />[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"container"[39m
-                        [36m>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"row"[39m
-                          [36m>[39m
-                            [36m<div[39m
-                              [33mclass[39m=[32m"col"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<h3[39m
-                                  [33mstyle[39m=[32m"cursor: pointer;"[39m
-                                [36m>[39m
-                                  [0mCISC[0m
-                                  [0m [0m
-                                  [0m275[0m
-                                  [0m:[0m
-                                  [0m [0m
-                                  [0mIntroduction to Software Engineering[0m
-                                [36m</h3>[39m
-                              [36m</div>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<div[39m
-                                  [33mclass[39m=[32m"col"[39m
-                                [36m/>[39m
-                              [36m</div>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<div[39m
-                                  [33mclass[39m=[32m"col"[39m
-                                [36m/>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</li>[39m
-                  [36m<li>[39m
-                    [36m<div[39m
-                      [33mstyle[39m=[32m"justify-content: center; display: flex;"[39m
-                    [36m>[39m
-                      [36m<div[39m
-                        [33mstyle[39m=[32m"width: 50%;"[39m
-                      [36m>[39m
-                        [36m<hr />[39m
-                        [36m<div[39m
-                          [33mclass[39m=[32m"container"[39m
-                        [36m>[39m
-                          [36m<div[39m
-                            [33mclass[39m=[32m"row"[39m
-                          [36m>[39m
-                            [36m<div[39m
-                              [33mclass[39m=[32m"col"[39m
-                            [36m>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<h3[39m
-                                  [33mstyle[39m=[32m"cursor: pointer;"[39m
-                                [36m>[39m
-                                  [0mCISC[0m
-                                  [0m [0m
-                                  [0m320[0m
-                                  [0m:[0m
-                                  [0m [0m
-                                  [0mIntroduction to Algorithms[0m
-                                [36m</h3>[39m
-                              [36m</div>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<div[39m
-                                  [33mclass[39m=[32m"col"[39m
-                                [36m/>[39m
-                              [36m</div>[39m
-                              [36m<div[39m
-                                [33mclass[39m=[32m"row"[39m
-                              [36m>[39m
-                                [36m<div[39m
-                                  [33mclass[39m=[32m"col"[39m
-                                [36m/>[39m
-                              [36m</div>[39m
-                            [36m</div>[39m
-                          [36m</div>[39m
-                        [36m</div>[39m
-                      [36m</div>[39m
-                    [36m</div>[39m
-                  [36m</li>[39m
-                [36m</ul>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<hr />[39m
-          [36m<p>[39m
-            [0mGroup Members: [0m
-            [36m<br />[39m
-            [0mRyan Evans, Craig Barber, Joshua Nicholls[0m
-          [36m</p>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</body>[39m
+    Details:
 
-       5 | test("renders the course name somewhere", () => {
-       6 |     render(<App />);
-    >  7 |     const linkElement = screen.getByText(/CISC275/i);
-         |                                ^
-       8 |     expect(linkElement).toBeInTheDocument();
-       9 | });
-      10 |
+    /home/runner/work/cis-scheduler-team-2/cis-scheduler-team-2/node_modules/react-bootstrap/esm/ModalHeader.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import classNames from 'classnames';
+                                                                                      ^^^^^^
 
-      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
-      at getElementError (node_modules/@testing-library/dom/dist/query-helpers.js:25:35)
-      at getMultipleElementsFoundError (node_modules/@testing-library/dom/dist/query-helpers.js:29:10)
-      at node_modules/@testing-library/dom/dist/query-helpers.js:66:13
-      at getByText (node_modules/@testing-library/dom/dist/query-helpers.js:111:19)
-      at Object.<anonymous> (src/App.test.tsx:7:32)
-      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
-      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
-      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
-      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+    SyntaxError: Cannot use import statement outside a module
 
----------------------|---------|----------|---------|---------|-----------------------
-File                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s     
----------------------|---------|----------|---------|---------|-----------------------
-All files            |   44.44 |    31.81 |   53.57 |   44.44 |                       
- src                 |      40 |      100 |      25 |      40 |                       
-  App.tsx            |      40 |      100 |      25 |      40 | 20-34                 
- src/components      |   44.23 |    31.81 |   58.33 |   44.23 |                       
-  AddNewPlan.tsx     |   29.03 |       25 |    37.5 |   29.03 | 35-61,66-67,74-81,126 
-  CourseList.tsx     |     100 |      100 |     100 |     100 |                       
-  CourseTable.tsx    |      75 |      100 |   66.66 |      75 | 10                    
-  CourseView.tsx     |   66.66 |       50 |      50 |   66.66 | 9                     
-  DeletePlan.tsx     |      50 |      100 |      50 |      50 | 15                    
-  ListAllPlans.tsx   |   33.33 |        0 |      50 |   33.33 | 19-23                 
-  SemesterTable.tsx  |     100 |      100 |     100 |     100 |                       
- src/interfaces      |     100 |      100 |     100 |     100 |                       
-  course.ts          |       0 |        0 |       0 |       0 |                       
-  placeholderPlan.ts |     100 |      100 |     100 |     100 |                       
-  plan.ts            |       0 |        0 |       0 |       0 |                       
-  semester.ts        |       0 |        0 |       0 |       0 |                       
----------------------|---------|----------|---------|---------|-----------------------
+      1 | import React from "react";
+      2 | import { Modal, ModalTitle } from "react-bootstrap";
+    > 3 | import ModalHeader from "react-bootstrap/esm/ModalHeader";
+        | ^
+      4 | import { AddCourseToSemester } from "./AddCourseToSemester";
+      5 | import { Course } from "../interfaces/course";
+      6 | import { Semester } from "../interfaces/semester";
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (src/components/AddCourseModal.tsx:3:1)
+
+---------------------------|---------|----------|---------|---------|-------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------------|---------|----------|---------|---------|-------------------
+All files                  |       0 |        0 |       0 |       0 |                   
+ src                       |       0 |        0 |       0 |       0 |                   
+  App.tsx                  |       0 |        0 |       0 |       0 | 18-188            
+ src/components            |       0 |        0 |       0 |       0 |                   
+  AddCourseButton.tsx      |       0 |      100 |       0 |       0 | 19-23             
+  AddCourseModal.tsx       |       0 |      100 |       0 |       0 | 21                
+  AddCourseToSemester.tsx  |       0 |        0 |       0 |       0 | 25-248            
+  AddNewPlan.tsx           |       0 |        0 |       0 |       0 | 17-132            
+  ClearAllSemesters.tsx    |       0 |        0 |       0 |       0 | 22-53             
+  ClearSemester.tsx        |       0 |      100 |       0 |       0 | 18-22             
+  CourseList.tsx           |       0 |      100 |       0 |       0 | 29-36             
+  CourseTable.tsx          |       0 |        0 |       0 |       0 | 18-44             
+  CourseView.tsx           |       0 |        0 |       0 |       0 | 6-12              
+  DeleteCourseButton.tsx   |       0 |      100 |       0 |       0 | 18-23             
+  DeletePlan.tsx           |       0 |      100 |       0 |       0 | 11-15             
+  DeleteSemesterButton.tsx |       0 |      100 |       0 |       0 | 12-14             
+  InsertSemesterModal.tsx  |       0 |        0 |       0 |       0 | 16-61             
+  ListAllPlans.tsx         |       0 |        0 |       0 |       0 | 19-37             
+  SemesterTable.tsx        |       0 |      100 |       0 |       0 | 31-37             
+ src/interfaces            |       0 |      100 |     100 |       0 |                   
+  course.ts                |       0 |        0 |       0 |       0 |                   
+  placeholderPlan.ts       |       0 |      100 |     100 |       0 | 3                 
+  plan.ts                  |       0 |        0 |       0 |       0 |                   
+  semester.ts              |       0 |        0 |       0 |       0 |                   
+---------------------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 failed, 1 total
-Tests:       1 failed, 1 total
+Tests:       0 total
 Snapshots:   0 total
-Time:        2.883 s
+Time:        5.011 s
 Ran all test suites.
