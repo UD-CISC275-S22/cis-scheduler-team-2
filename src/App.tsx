@@ -209,7 +209,7 @@ function App(): JSX.Element {
             </Row>
             <hr></hr>
             <Row>
-                <Col>
+                <Col sm={7}>
                     <SemesterTable
                         plan={activePlan}
                         clearSem={clearSemester}
@@ -229,7 +229,7 @@ function App(): JSX.Element {
                         setActivePlan={setActivePlan}
                     ></EmptySemestersButton>
                 </Col>
-                <Col>
+                <Col sm={5}>
                     <CourseList semester={sampleSemester}></CourseList>
                 </Col>
             </Row>
