@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { DeleteCourseButton } from "./DeleteCourseButton";
+import { MoveCourseButton } from "./MoveCourseButton";
 
 export function CourseTable({
     semester,
+    plan,
     delCourseFunct
 }: {
     semester: Semester;
+    plan: Plan;
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
@@ -46,11 +50,20 @@ export function CourseTable({
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
                                 <th>
-                                    <DeleteCourseButton
-                                        course={course}
-                                        semester={semester}
-                                        delFunct={delCourseFunct}
-                                    ></DeleteCourseButton>
+                                    <Row>
+                                        <Col>
+                                            <DeleteCourseButton
+                                                course={course}
+                                                semester={semester}
+                                                delFunct={delCourseFunct}
+                                            ></DeleteCourseButton>
+                                        </Col>
+                                        <Col>
+                                            <MoveCourseButton
+                                                plan={plan}
+                                            ></MoveCourseButton>
+                                        </Col>
+                                    </Row>
                                 </th>
                             </tr>
                         ))}

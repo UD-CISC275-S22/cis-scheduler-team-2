@@ -37,6 +37,7 @@ export function SemesterTable({
                     <li key={semester.id}>
                         <CourseTable
                             semester={semester}
+                            plan={plan}
                             delCourseFunct={delCourseFunct}
                         ></CourseTable>
                         <Row>
