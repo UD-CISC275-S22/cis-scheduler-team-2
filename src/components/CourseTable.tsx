@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { DeleteCourseButton } from "./DeleteCourseButton";
+import { MoveCourseButton } from "./MoveCourseButton";
 
 export function CourseTable({
     semester,
-    delCourseFunct
+    plan,
+    delCourseFunct,
+    moveCourse
 }: {
     semester: Semester;
+    plan: Plan;
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
         semID: string
+    ) => void;
+    moveCourse: (
+        courseToMove: Course,
+        fromSemester: Semester,
+        toSemester: Semester
     ) => void;
 }): JSX.Element {
     const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -46,11 +56,23 @@ export function CourseTable({
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
                                 <th>
-                                    <DeleteCourseButton
-                                        course={course}
-                                        semester={semester}
-                                        delFunct={delCourseFunct}
-                                    ></DeleteCourseButton>
+                                    <Row>
+                                        <Col>
+                                            <DeleteCourseButton
+                                                course={course}
+                                                semester={semester}
+                                                delFunct={delCourseFunct}
+                                            ></DeleteCourseButton>
+                                        </Col>
+                                        <Col>
+                                            <MoveCourseButton
+                                                currentSemester={semester}
+                                                course={course}
+                                                plan={plan}
+                                                moveCourse={moveCourse}
+                                            ></MoveCourseButton>
+                                        </Col>
+                                    </Row>
                                 </th>
                             </tr>
                         ))}
