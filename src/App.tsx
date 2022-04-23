@@ -195,6 +195,7 @@ function App(): JSX.Element {
         fromSemester: Semester,
         toSemester: Semester
     ) {
+        // As long as the course isn't being moved to the same semester, move it
         if (toSemester !== fromSemester) {
             addCourse(courseToMove, toSemester.id);
             deleteCourse(

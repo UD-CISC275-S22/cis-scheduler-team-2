@@ -7,6 +7,9 @@ import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 
+/**
+ * Dropdown button to handle swithcing courses between semesters
+ */
 export function MoveCourseButton({
     plan,
     currentSemester,
