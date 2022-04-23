@@ -183,6 +183,28 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
+    /**
+     * Moves a course from one semester to another (as long as they aren't the same semester)
+     *
+     * @param courseToMove The course object that will be relocated
+     * @param fromSemester The semester that currently contains the to-be-relocated course
+     * @param toSemester The semester that the course will be relocated to
+     */
+    function moveCourse(
+        courseToMove: Course,
+        fromSemester: Semester,
+        toSemester: Semester
+    ) {
+        if (toSemester !== fromSemester) {
+            addCourse(courseToMove, toSemester.id);
+            deleteCourse(
+                courseToMove.department,
+                courseToMove.courseCode,
+                fromSemester.id
+            );
+        }
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -214,6 +236,7 @@ function App(): JSX.Element {
                         deleteSemester={deleteSemester}
                         courseAdder={addCourse}
                         delCourseFunct={deleteCourse}
+                        moveCourse={moveCourse}
                     ></SemesterTable>
                     <hr />
                     <Button onClick={handleShowInsertSemesterModal}>

@@ -9,7 +9,8 @@ import { MoveCourseButton } from "./MoveCourseButton";
 export function CourseTable({
     semester,
     plan,
-    delCourseFunct
+    delCourseFunct,
+    moveCourse
 }: {
     semester: Semester;
     plan: Plan;
@@ -17,6 +18,11 @@ export function CourseTable({
         courseDept: string,
         courseCode: number,
         semID: string
+    ) => void;
+    moveCourse: (
+        courseToMove: Course,
+        fromSemester: Semester,
+        toSemester: Semester
     ) => void;
 }): JSX.Element {
     const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -60,7 +66,10 @@ export function CourseTable({
                                         </Col>
                                         <Col>
                                             <MoveCourseButton
+                                                currentSemester={semester}
+                                                course={course}
                                                 plan={plan}
+                                                moveCourse={moveCourse}
                                             ></MoveCourseButton>
                                         </Col>
                                     </Row>
