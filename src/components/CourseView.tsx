@@ -17,18 +17,18 @@ export function CourseView({ course }: { course: Course }): JSX.Element {
                     <Row>
                         <Col>
                             <Row>
-                                <h3
+                                <h4
                                     onClick={flipVis}
                                     style={{ cursor: "pointer" }}
                                 >
                                     {course.department} {course.courseCode}:{" "}
                                     {course.title}
-                                </h3>
+                                </h4>
                             </Row>
                             <Row>
                                 <Col>
                                     {descriptionVis && (
-                                        <h4>({course.credits} credits)</h4>
+                                        <h5>({course.credits} credits)</h5>
                                     )}
                                 </Col>
                             </Row>
