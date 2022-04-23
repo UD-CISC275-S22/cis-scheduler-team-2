@@ -90,8 +90,6 @@ function App(): JSX.Element {
         }
     }
 
-    const sampleSemester = samplePlan.semesters[0];
-
     // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);
@@ -230,7 +228,7 @@ function App(): JSX.Element {
                     ></EmptySemestersButton>
                 </Col>
                 <Col sm={5}>
-                    <CourseList semester={sampleSemester}></CourseList>
+                    <CourseList plan={activePlan}></CourseList>
                 </Col>
             </Row>
             <hr></hr>

@@ -11,7 +11,7 @@ export function CourseView({ course }: { course: Course }): JSX.Element {
 
     return (
         <div style={{ justifyContent: "center", display: "flex" }}>
-            <div style={{ width: "50%" }}>
+            <div style={{ width: "90%" }}>
                 <hr></hr>
                 <Container>
                     <Row>

@@ -1,43 +1,42 @@
 import React from "react";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { CourseView } from "./CourseView";
 
-export function CourseList({ semester }: { semester: Semester }): JSX.Element {
-    /** Old test data */
-    // const INITIAL_COURSES: Course[] = [
-    //     {
-    //         department: "CISC",
-    //         courseCode: 108,
-    //         title: "Introduction to Computer Science I",
-    //         credits: 3,
-    //         prereqs: [],
-    //         description:
-    //             "Computing and principles of programming with an emphasis on systematic program design. Topics include functional programming, data abstraction, procedural abstraction, use of control and state, recursion, testing, and object-oriented programming concepts. Requires no prior programming experience, open to any major, but intended primarily for majors and minors in computer science or mathematics."
-    //     },
-    //     {
-    //         department: "CISC",
-    //         courseCode: 181,
-    //         title: "Introduction to Computer Science II",
-    //         credits: 3,
-    //         prereqs: ["CISC-108"],
-    //         description:
-    //             "Principles of computer science illustrated and applied through programming in an object oriented language. Programming projects illustrate computational problems, styles and issues that arise in computer systems development and in all application areas of computation."
-    //     }
-    // ];
-
-    const SEM_COURSES: Course[] = semester.classes.map(
-        (course: Course) => course
+export function CourseList({ plan }: { plan: Plan }): JSX.Element {
+    /** Array with the passsed in plan's semesters */
+    const PLAN_SEMESTERS: Semester[] = plan.semesters.map(
+        (semester: Semester) => semester
     );
+
+    /** Array containing the courses array of every semester */
+    const SEM_COURSES: Course[][] = PLAN_SEMESTERS.map(
+        (semester: Semester) => semester.classes
+    );
+
+    /** Creating an array containing every course from every semester in the plan (Only if there are semesters in the plan) */
+    if (SEM_COURSES.length > 0) {
+        const allCourses: Course[] = SEM_COURSES.reduce(
+            (currResult, currItem) => currResult.concat(currItem)
+        );
+        return (
+            <div>
+                <h4>Course Pool</h4>
+                <ul style={{ listStyle: "none", paddingLeft: "0" }}>
+                    {allCourses.map((course: Course) => (
+                        <li key={course.courseCode}>
+                            <CourseView course={course}></CourseView>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
     return (
         <div>
-            <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                {SEM_COURSES.map((course: Course) => (
-                    <li key={course.courseCode}>
-                        <CourseView course={course}></CourseView>
-                    </li>
-                ))}
-            </ul>
+            <h4>Course Pool</h4>
         </div>
     );
 }
