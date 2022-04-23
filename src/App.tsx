@@ -230,7 +230,7 @@ function App(): JSX.Element {
                     ></EmptySemestersButton>
                 </Col>
                 <Col sm={5}>
-                    <CourseList semester={sampleSemester}></CourseList>
+                    <CourseList plan={activePlan}></CourseList>
                 </Col>
             </Row>
             <hr></hr>
