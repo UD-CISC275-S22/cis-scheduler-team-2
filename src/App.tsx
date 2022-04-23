@@ -90,8 +90,6 @@ function App(): JSX.Element {
         }
     }
 
-    const sampleSemester = samplePlan.semesters[0];
-
     // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);

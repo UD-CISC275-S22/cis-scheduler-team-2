@@ -15,21 +15,28 @@ export function CourseList({ plan }: { plan: Plan }): JSX.Element {
         (semester: Semester) => semester.classes
     );
 
-    /** Single array containing every course from every semester in the plan */
-    const allCourses: Course[] = SEM_COURSES.reduce((currResult, currItem) =>
-        currResult.concat(currItem)
-    );
+    /** Creating an array containing every course from every semester in the plan (Only if there are semesters in the plan) */
+    if (SEM_COURSES.length > 0) {
+        const allCourses: Course[] = SEM_COURSES.reduce(
+            (currResult, currItem) => currResult.concat(currItem)
+        );
+        return (
+            <div>
+                <h4>Course Pool</h4>
+                <ul style={{ listStyle: "none", paddingLeft: "0" }}>
+                    {allCourses.map((course: Course) => (
+                        <li key={course.courseCode}>
+                            <CourseView course={course}></CourseView>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
 
     return (
         <div>
             <h4>Course Pool</h4>
-            <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                {allCourses.map((course: Course) => (
-                    <li key={course.courseCode}>
-                        <CourseView course={course}></CourseView>
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 }
