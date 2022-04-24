@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
+import { Semester } from "../interfaces/semester";
+import { MoveFromPool } from "./MoveFromPool";
 
-export function CourseView({ course }: { course: Course }): JSX.Element {
+export function CourseView({
+    course,
+    plan,
+    moveCourseFromPool
+}: {
+    course: Course;
+    plan: Plan;
+    moveCourseFromPool: (courseToMove: Course, toSemester: Semester) => void;
+}): JSX.Element {
     const [descriptionVis, setDescriptionVis] = useState<boolean>(false);
 
     function flipVis(): void {
@@ -36,6 +47,19 @@ export function CourseView({ course }: { course: Course }): JSX.Element {
                                 <Col>
                                     {descriptionVis && (
                                         <p>{course.description}</p>
+                                    )}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    {descriptionVis && (
+                                        <MoveFromPool
+                                            plan={plan}
+                                            course={course}
+                                            moveCourseFromPool={
+                                                moveCourseFromPool
+                                            }
+                                        ></MoveFromPool>
                                     )}
                                 </Col>
                             </Row>
