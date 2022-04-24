@@ -5,6 +5,8 @@ import { Plan } from "../interfaces/plan";
 /**Takes in the state allPlans, an array of plans as well as activePlan and setActivePlan,
  * the state and state setter for the currently displayed plan
  */
+
+//Dropdown's testid: plan_selection
 export function ListAllPlans({
     allPlans,
     activePlan,

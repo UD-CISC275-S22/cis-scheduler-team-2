@@ -12,6 +12,7 @@ import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
+//"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -240,7 +241,10 @@ function App(): JSX.Element {
                         moveCourse={moveCourse}
                     ></SemesterTable>
                     <hr />
-                    <Button onClick={handleShowInsertSemesterModal}>
+                    <Button
+                        onClick={handleShowInsertSemesterModal}
+                        data-testid="add_semester_button"
+                    >
                         Add Semester
                     </Button>
                     <hr />
