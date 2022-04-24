@@ -14,7 +14,8 @@ export function MoveCourseButton({
     plan,
     currentSemester,
     course,
-    moveCourse
+    moveCourse,
+    moveCourseToPool
 }: {
     plan: Plan;
     course: Course;
@@ -24,6 +25,7 @@ export function MoveCourseButton({
         fromSemester: Semester,
         toSemester: Semester
     ) => void;
+    moveCourseToPool: (courseToMove: Course, fromSemester: Semester) => void;
 }): JSX.Element {
     return (
         <div>
@@ -49,7 +51,14 @@ export function MoveCourseButton({
                             );
                         }
                     })}
-                    <DropdownItem>Course Pool</DropdownItem>
+                    <DropdownItem
+                        onClick={() =>
+                            moveCourseToPool(course, currentSemester)
+                        }
+                        eventKey={"coursePool"}
+                    >
+                        Course Pool
+                    </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

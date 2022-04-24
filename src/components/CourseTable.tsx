@@ -10,7 +10,8 @@ export function CourseTable({
     semester,
     plan,
     delCourseFunct,
-    moveCourse
+    moveCourse,
+    moveCourseToPool
 }: {
     semester: Semester;
     plan: Plan;
@@ -24,6 +25,7 @@ export function CourseTable({
         fromSemester: Semester,
         toSemester: Semester
     ) => void;
+    moveCourseToPool: (courseToMove: Course, fromSemester: Semester) => void;
 }): JSX.Element {
     const [isVisible, setIsVisible] = useState<boolean>(true);
 
@@ -70,6 +72,9 @@ export function CourseTable({
                                                 course={course}
                                                 plan={plan}
                                                 moveCourse={moveCourse}
+                                                moveCourseToPool={
+                                                    moveCourseToPool
+                                                }
                                             ></MoveCourseButton>
                                         </Col>
                                     </Row>

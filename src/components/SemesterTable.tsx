@@ -17,7 +17,8 @@ export function SemesterTable({
     deleteSemester,
     courseAdder,
     delCourseFunct,
-    moveCourse
+    moveCourse,
+    moveCourseToPool
 }: {
     plan: Plan;
     clearSem: (planID: number, semYear: number, semSeas: string) => void;
@@ -33,6 +34,7 @@ export function SemesterTable({
         fromSemester: Semester,
         toSemester: Semester
     ) => void;
+    moveCourseToPool: (courseToMove: Course, fromSemester: Semester) => void;
 }): JSX.Element {
     return (
         <div>
@@ -46,6 +48,7 @@ export function SemesterTable({
                             plan={plan}
                             delCourseFunct={delCourseFunct}
                             moveCourse={moveCourse}
+                            moveCourseToPool={moveCourseToPool}
                         ></CourseTable>
                         <Row>
                             <Col>
