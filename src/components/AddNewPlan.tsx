@@ -5,6 +5,8 @@ import { Button, Form } from "react-bootstrap";
 //Add passer function that does [...planArray, newPlan] inside of App.tsx, this should also give the Plan an ID
 //Add functionality to clear the textboxes once the plan is added
 
+//Test IDs of format add_plan_(something)
+//i.e button to add the plan is called add_plan_button
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
@@ -103,6 +105,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     placeholder="Enter Plan Name"
                     value={nameBox}
                     onChange={updateName}
+                    data-testid="add_plan_name"
                 />
             </Form.Group>
             <Form.Group>
@@ -112,11 +115,16 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     placeholder="Enter Starting Year"
                     value={yearBox}
                     onChange={updateYear}
+                    data-testid="add_plan_year"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>
-                    <Form.Select value={startSeason} onChange={updateSeason}>
+                    <Form.Select
+                        value={startSeason}
+                        onChange={updateSeason}
+                        data-testid="add_plan_season"
+                    >
                         {seasons.map(
                             (season: string): JSX.Element => (
                                 <option key={season} value={season}>
@@ -130,6 +138,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
             <Button
                 disabled={!allPlanFieldsFull()}
                 onClick={() => addPlanFinal()}
+                data-testid="add_plan_button"
             >
                 Add New Plan
             </Button>

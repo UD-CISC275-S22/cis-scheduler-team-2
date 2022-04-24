@@ -6,6 +6,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 
 //fix issue with swappin plans not fixing the selected
 
+//Test IDs of format add_course_(something)
+//i.e add_course_prereq for the textbox to type in prerequistites.
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
@@ -193,6 +195,7 @@ export function AddCourseToSemester({
                             placeholder="Enter Department Code"
                             value={codeBox}
                             onChange={updateCode}
+                            data-testid="add_course_department"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -205,6 +208,7 @@ export function AddCourseToSemester({
                             placeholder="Enter Course Name"
                             value={titleBox}
                             onChange={updateTitle}
+                            data-testid="add_course_name"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -214,6 +218,7 @@ export function AddCourseToSemester({
                             placeholder="Enter Number of Credits"
                             value={credsBox}
                             onChange={updateCreds}
+                            data-testid="add_course_credits"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -223,6 +228,7 @@ export function AddCourseToSemester({
                             placeholder="Enter Course Description"
                             value={descBox}
                             onChange={updateDesc}
+                            data-testid="add_course_description"
                         />
                     </Form.Group>
                 </Col>
@@ -236,9 +242,14 @@ export function AddCourseToSemester({
                             placeholder="Enter Prerequisite Here"
                             value={reqsBox}
                             onChange={updateReqs}
+                            data-testid="add_course_prereq"
                         />
                     </Form.Group>
-                    <Button disabled={!isValidCode()} onClick={addReq}>
+                    <Button
+                        disabled={!isValidCode()}
+                        onClick={addReq}
+                        data-testid="add_course_prereq_button"
+                    >
                         Add This Prerequisite
                     </Button>
                     {reqsList.map(
@@ -260,7 +271,11 @@ export function AddCourseToSemester({
                     </Button>
                 </Col>
                 <Col>
-                    <Button disabled={!enableAdd()} onClick={addCourse}>
+                    <Button
+                        disabled={!enableAdd()}
+                        onClick={addCourse}
+                        data-testid="add_course_button"
+                    >
                         Add Course to Plan
                     </Button>
                     <div>

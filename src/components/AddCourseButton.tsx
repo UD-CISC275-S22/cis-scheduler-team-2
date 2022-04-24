@@ -5,7 +5,7 @@ import { Semester } from "../interfaces/semester";
 import { AddCourseModal } from "./AddCourseModal";
 
 //This handles the buttons to add a course to any given semester of the active course
-
+//Button testid: add_new_course
 interface AddButtonProp {
     semester: Semester;
     courseAdder: (newCourse: Course, semID: string) => void;
@@ -22,7 +22,12 @@ export function AddCourseButton({
 
     return (
         <div>
-            <Button onClick={handleShowAddCourseModal}>Add a New Course</Button>
+            <Button
+                onClick={handleShowAddCourseModal}
+                data-testid="add_new_course"
+            >
+                Add a New Course
+            </Button>
             <AddCourseModal
                 showModal={showModal}
                 semester={semester}
