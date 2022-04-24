@@ -30,17 +30,26 @@ export function MoveCourseButton({
             <Dropdown>
                 <DropdownToggle>Move to...</DropdownToggle>
                 <DropdownMenu>
-                    {plan.semesters.map((semester: Semester) => (
-                        <DropdownItem
-                            onClick={() =>
-                                moveCourse(course, currentSemester, semester)
-                            }
-                            key={semester.id}
-                            eventKey={semester.id}
-                        >
-                            {`${semester.season} ${semester.year}`}
-                        </DropdownItem>
-                    ))}
+                    {plan.semesters.map((semester: Semester) => {
+                        if (semester.id !== currentSemester.id) {
+                            return (
+                                <DropdownItem
+                                    onClick={() =>
+                                        moveCourse(
+                                            course,
+                                            currentSemester,
+                                            semester
+                                        )
+                                    }
+                                    key={semester.id}
+                                    eventKey={semester.id}
+                                >
+                                    {`${semester.season} ${semester.year}`}
+                                </DropdownItem>
+                            );
+                        }
+                    })}
+                    <DropdownItem>Course Pool</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
