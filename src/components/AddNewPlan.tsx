@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Plan } from "../interfaces/plan";
 import { Button, Form } from "react-bootstrap";
+import { Course } from "../interfaces/course";
+import cisc from "../assets/cisc.json";
 
 //Add passer function that does [...planArray, newPlan] inside of App.tsx, this should also give the Plan an ID
 //Add functionality to clear the textboxes once the plan is added
 
+//Test IDs of format add_plan_(something)
+//i.e button to add the plan is called add_plan_button
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
@@ -12,6 +16,20 @@ type ChangeEvent = React.ChangeEvent<
 interface addPlanProp {
     addPlan: (newPlan: Plan) => void;
 }
+
+const course_keys: string[] = Object.keys(cisc.CISC);
+const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
+    const currCourse = cisc.CISC[key as keyof typeof cisc.CISC];
+    const newCourse: Course = {
+        department: currCourse.code.substring(0, 4),
+        courseCode: parseInt(currCourse.code.substring(5)),
+        title: currCourse.name,
+        credits: parseInt(currCourse.credits),
+        prereqs: [currCourse.preReq],
+        description: currCourse.descr
+    };
+    return newCourse;
+});
 
 export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
     const seasons = ["Fall", "Winter", "Spring", "Summer"];
@@ -22,7 +40,8 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
             { id: "0", year: 0, season: "Fall", classes: [], credits: 0 }
         ],
         //remember to auto-update the id
-        id: 0
+        id: 0,
+        coursePool: [...CISC_COURSES]
     });
 
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
@@ -89,7 +108,8 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                         credits: 0
                     }
                 ],
-                id: 0
+                id: 0,
+                coursePool: [...CISC_COURSES]
             });
         }
     }
@@ -103,6 +123,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     placeholder="Enter Plan Name"
                     value={nameBox}
                     onChange={updateName}
+                    data-testid="add_plan_name"
                 />
             </Form.Group>
             <Form.Group>
@@ -112,11 +133,16 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     placeholder="Enter Starting Year"
                     value={yearBox}
                     onChange={updateYear}
+                    data-testid="add_plan_year"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>
-                    <Form.Select value={startSeason} onChange={updateSeason}>
+                    <Form.Select
+                        value={startSeason}
+                        onChange={updateSeason}
+                        data-testid="add_plan_season"
+                    >
                         {seasons.map(
                             (season: string): JSX.Element => (
                                 <option key={season} value={season}>
@@ -130,6 +156,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
             <Button
                 disabled={!allPlanFieldsFull()}
                 onClick={() => addPlanFinal()}
+                data-testid="add_plan_button"
             >
                 Add New Plan
             </Button>

@@ -1,4 +1,20 @@
+import { Course } from "./course";
 import { Plan } from "./plan";
+import cisc from "../assets/cisc.json";
+
+const course_keys: string[] = Object.keys(cisc.CISC);
+const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
+    const currCourse = cisc.CISC[key as keyof typeof cisc.CISC];
+    const newCourse: Course = {
+        department: currCourse.code.substring(0, 4),
+        courseCode: parseInt(currCourse.code.substring(5)),
+        title: currCourse.name,
+        credits: parseInt(currCourse.credits),
+        prereqs: [currCourse.preReq],
+        description: currCourse.descr
+    };
+    return newCourse;
+});
 
 const samplePlan: Plan = {
     name: "Sample Plan",
@@ -52,7 +68,14 @@ const samplePlan: Plan = {
             ],
             credits: 6
         }
-    ]
+    ],
+    coursePool: CISC_COURSES.filter(
+        (course: Course) =>
+            course.courseCode !== 275 &&
+            course.courseCode !== 320 &&
+            course.courseCode !== 437 &&
+            course.courseCode !== 482
+    )
 };
 
 export { samplePlan };

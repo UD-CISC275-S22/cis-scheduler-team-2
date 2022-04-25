@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
+import { Semester } from "../interfaces/semester";
+import { MoveFromPool } from "./MoveFromPool";
 
-export function CourseView({ course }: { course: Course }): JSX.Element {
+export function CourseView({
+    course,
+    plan,
+    moveCourseFromPool
+}: {
+    course: Course;
+    plan: Plan;
+    moveCourseFromPool: (courseToMove: Course, toSemester: Semester) => void;
+}): JSX.Element {
     const [descriptionVis, setDescriptionVis] = useState<boolean>(false);
 
     function flipVis(): void {
@@ -11,24 +22,24 @@ export function CourseView({ course }: { course: Course }): JSX.Element {
 
     return (
         <div style={{ justifyContent: "center", display: "flex" }}>
-            <div style={{ width: "50%" }}>
+            <div style={{ width: "90%" }}>
                 <hr></hr>
                 <Container>
                     <Row>
                         <Col>
                             <Row>
-                                <h3
+                                <h4
                                     onClick={flipVis}
                                     style={{ cursor: "pointer" }}
                                 >
                                     {course.department} {course.courseCode}:{" "}
                                     {course.title}
-                                </h3>
+                                </h4>
                             </Row>
                             <Row>
                                 <Col>
                                     {descriptionVis && (
-                                        <h4>({course.credits} credits)</h4>
+                                        <h5>({course.credits} credits)</h5>
                                     )}
                                 </Col>
                             </Row>
@@ -36,6 +47,19 @@ export function CourseView({ course }: { course: Course }): JSX.Element {
                                 <Col>
                                     {descriptionVis && (
                                         <p>{course.description}</p>
+                                    )}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    {descriptionVis && (
+                                        <MoveFromPool
+                                            plan={plan}
+                                            course={course}
+                                            moveCourseFromPool={
+                                                moveCourseFromPool
+                                            }
+                                        ></MoveFromPool>
                                     )}
                                 </Col>
                             </Row>

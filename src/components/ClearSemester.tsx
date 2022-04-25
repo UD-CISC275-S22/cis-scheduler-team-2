@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { Semester } from "../interfaces/semester";
 //import { SemesterTable } from "./SemesterTable";
 
+//Test-id: clear_semester_button
 interface clearSemesterProp {
     PlanID: number;
     thisSem: Semester;
@@ -20,6 +21,7 @@ export function ClearSemesterButton({
             <Button
                 disabled={thisSem.classes.length <= 0}
                 onClick={() => clearFunct(PlanID, thisSem.year, thisSem.season)}
+                data-testid="clear_semester_button"
             >
                 Clear This Semester
             </Button>

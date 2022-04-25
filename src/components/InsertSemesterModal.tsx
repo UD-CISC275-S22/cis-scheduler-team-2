@@ -16,6 +16,9 @@ export function InsertSemesterModal({
     const [year, setYear] = useState<number>(2022);
     const [season, setSeason] = useState<string>("Fall");
 
+    /**
+     * Passes a new semester into the addSemester function and closes the modal view
+     */
     function saveChanges() {
         addSemester({
             id: uuidv4(),
