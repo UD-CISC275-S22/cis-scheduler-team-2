@@ -4,12 +4,14 @@ import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { DeleteCourseButton } from "./DeleteCourseButton";
+import { EditCourseButton } from "./EditCourseButton";
 import { MoveCourseButton } from "./MoveCourseButton";
 
 export function CourseTable({
     semester,
     plan,
     delCourseFunct,
+    editCourseFunct,
     moveCourse,
     moveCourseToPool
 }: {
@@ -18,6 +20,11 @@ export function CourseTable({
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
+        semID: string
+    ) => void;
+    editCourseFunct: (
+        oldCourse: Course,
+        newCourse: Course,
         semID: string
     ) => void;
     moveCourse: (
@@ -58,7 +65,14 @@ export function CourseTable({
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
                                 <th>
-                                    <Row>
+                                    <Row sm={3}>
+                                        <Col>
+                                            <EditCourseButton
+                                                semester={semester}
+                                                course={course}
+                                                courseEditor={editCourseFunct}
+                                            ></EditCourseButton>
+                                        </Col>
                                         <Col>
                                             <DeleteCourseButton
                                                 course={course}
