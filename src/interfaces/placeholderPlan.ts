@@ -31,7 +31,9 @@ const samplePlan: Plan = {
                     title: "Introduction to Software Engineering",
                     credits: 3,
                     prereqs: ["CISC181", "CISC210"],
-                    description: "Basically web development"
+                    description: "Basically web development",
+                    prereqsFilled: [],
+                    degreeReqsFilled: []
                 },
                 {
                     department: "CISC",
@@ -39,7 +41,9 @@ const samplePlan: Plan = {
                     title: "Introduction to Algorithms",
                     credits: 3,
                     prereqs: ["CISC181", "CISC210"],
-                    description: "Computers go burr"
+                    description: "Computers go burr",
+                    prereqsFilled: [],
+                    degreeReqsFilled: []
                 }
             ],
             credits: 6
@@ -55,7 +59,9 @@ const samplePlan: Plan = {
                     title: "Introduction to Database Systems",
                     credits: 3,
                     prereqs: ["CISC181", "CISC210"],
-                    description: "SQL go burr"
+                    description: "SQL go burr",
+                    prereqsFilled: [],
+                    degreeReqsFilled: []
                 },
                 {
                     department: "CISC",
@@ -63,7 +69,9 @@ const samplePlan: Plan = {
                     title: "Artificial Intelligence",
                     credits: 3,
                     prereqs: ["CISC181", "CISC210"],
-                    description: "Computers be thinkin"
+                    description: "Computers be thinkin",
+                    prereqsFilled: [],
+                    degreeReqsFilled: []
                 }
             ],
             credits: 6

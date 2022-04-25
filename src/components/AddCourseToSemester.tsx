@@ -36,7 +36,9 @@ export function AddCourseToSemester({
         title: "",
         credits: 0,
         prereqs: [],
-        description: ""
+        description: "",
+        prereqsFilled: [],
+        degreeReqsFilled: []
     });
 
     //states holding the values in each of the boxes
