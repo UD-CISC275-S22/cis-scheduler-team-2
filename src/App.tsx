@@ -95,6 +95,35 @@ function App(): JSX.Element {
         }
     }
 
+    function editCourse(oldCourse: Course, newCourse: Course, semID: string) {
+        //FIX THIS
+        const actPlan = activePlan;
+        const getSem = actPlan.semesters.filter(
+            (aSem: Semester): boolean => aSem.id === semID
+        );
+        const fixCourse = getSem[0].classes.map(
+            (aCourse: Course): Course =>
+                aCourse.department === oldCourse.department &&
+                aCourse.courseCode === oldCourse.courseCode
+                    ? { ...newCourse }
+                    : { ...aCourse }
+        );
+        getSem[0] = { ...getSem[0], classes: fixCourse };
+        const fixPlan = {
+            ...activePlan,
+            semesters: activePlan.semesters.map(
+                (aSem: Semester): Semester =>
+                    aSem.id === semID ? { ...getSem[0] } : { ...aSem }
+            )
+        };
+        const fixedList = planList.map(
+            (aPlan: Plan): Plan =>
+                aPlan.id === fixPlan.id ? { ...fixPlan } : { ...aPlan }
+        );
+        setActivePlan(fixPlan);
+        updatePlans(fixedList);
+    }
+
     // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);
@@ -169,8 +198,9 @@ function App(): JSX.Element {
             (aCourse: Course): boolean =>
                 aCourse.department === courseDept &&
                 aCourse.courseCode === courseCode
-        )[0];
-        const fixCreds = toFix[0].credits - getClass.credits;
+        );
+        const fixCreds =
+            toFix[0].credits - getClass[0].credits * getClass.length;
         const fixCourse = toFix[0].classes.filter(
             (aCourse: Course): boolean =>
                 !(
@@ -321,6 +351,7 @@ function App(): JSX.Element {
                         deleteSemester={deleteSemester}
                         courseAdder={addCourse}
                         delCourseFunct={deleteCourse}
+                        editCourseFunct={editCourse}
                         moveCourse={moveCourse}
                         moveCourseToPool={moveCourseToPool}
                     ></SemesterTable>
