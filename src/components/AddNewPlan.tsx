@@ -26,7 +26,9 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         title: currCourse.name,
         credits: parseInt(currCourse.credits),
         prereqs: [currCourse.preReq],
-        description: currCourse.descr
+        description: currCourse.descr,
+        prereqsFilled: [],
+        degreeReqsFilled: []
     };
     return newCourse;
 });

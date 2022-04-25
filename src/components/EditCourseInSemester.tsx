@@ -36,7 +36,9 @@ export function EditCourseInSemester({
         title: course.title,
         credits: course.credits,
         prereqs: [...course.prereqs],
-        description: course.description
+        description: course.description,
+        prereqsFilled: course.prereqsFilled,
+        degreeReqsFilled: course.degreeReqsFilled
     });
 
     //states holding the values in each of the boxes
