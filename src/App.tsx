@@ -12,6 +12,7 @@ import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
+import { WelcomeMessage } from "./components/WelcomeMessage";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
@@ -22,6 +23,9 @@ function App(): JSX.Element {
 
     // State that handles add semester modal
     const [showModal, setShowModal] = useState<boolean>(false);
+
+    // State that handles welcome message modal
+    const [showWelcome, setShowWelcome] = useState<boolean>(true);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
@@ -94,6 +98,10 @@ function App(): JSX.Element {
     // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);
+
+    // Opens and closes the welcome message modal view
+    //const handleShowWelcomeModal = () => setShowWelcome(true);
+    const handleCloseWelcomeModal = () => setShowWelcome(false);
 
     /**
      * Adds a new semester to the currently selected plan
@@ -283,6 +291,10 @@ function App(): JSX.Element {
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
+            <WelcomeMessage
+                showModal={showWelcome}
+                closeModal={handleCloseWelcomeModal}
+            ></WelcomeMessage>
             <Row>
                 <Col>
                     <ListAllPlans
