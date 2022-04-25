@@ -17,6 +17,7 @@ export function SemesterTable({
     deleteSemester,
     courseAdder,
     delCourseFunct,
+    editCourseFunct,
     moveCourse,
     moveCourseToPool
 }: {
@@ -27,6 +28,11 @@ export function SemesterTable({
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
+        semID: string
+    ) => void;
+    editCourseFunct: (
+        oldCourse: Course,
+        newCourse: Course,
         semID: string
     ) => void;
     moveCourse: (
@@ -47,6 +53,7 @@ export function SemesterTable({
                             semester={semester}
                             plan={plan}
                             delCourseFunct={delCourseFunct}
+                            editCourseFunct={editCourseFunct}
                             moveCourse={moveCourse}
                             moveCourseToPool={moveCourseToPool}
                         ></CourseTable>
