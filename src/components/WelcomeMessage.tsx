@@ -19,9 +19,8 @@ export function WelcomeMessage({
             <Modal.Body>
                 Create a new plan on the right, then add your semesters in the
                 plan viewing area on the left. Existing courses can be added to
-                added to added to added to added to semesters from the pool on
-                the left at anytime clicking on the name of the course and then
-                clicking [Add to...]
+                semesters from the pool on the left at anytime clicking on the
+                name of the course and then clicking [Add to...]
             </Modal.Body>
             <Modal.Footer>
                 A new course can also be created and added to any semester using
