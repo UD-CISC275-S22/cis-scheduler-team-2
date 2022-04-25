@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import { Course } from "../interfaces/course";
 import { Semester } from "../interfaces/semester";
 import { DeleteCourseButton } from "./DeleteCourseButton";
+import { EditCourseButton } from "./EditCourseButton";
 
 export function CourseTable({
     semester,
-    delCourseFunct
+    delCourseFunct,
+    editCourseFunct
 }: {
     semester: Semester;
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
+        semID: string
+    ) => void;
+    editCourseFunct: (
+        oldCourse: Course,
+        newCourse: Course,
         semID: string
     ) => void;
 }): JSX.Element {
@@ -46,11 +53,22 @@ export function CourseTable({
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
                                 <th>
-                                    <DeleteCourseButton
-                                        course={course}
-                                        semester={semester}
-                                        delFunct={delCourseFunct}
-                                    ></DeleteCourseButton>
+                                    <Row sm={2}>
+                                        <Col>
+                                            <EditCourseButton
+                                                semester={semester}
+                                                course={course}
+                                                courseEditor={editCourseFunct}
+                                            ></EditCourseButton>
+                                        </Col>
+                                        <Col>
+                                            <DeleteCourseButton
+                                                course={course}
+                                                semester={semester}
+                                                delFunct={delCourseFunct}
+                                            ></DeleteCourseButton>
+                                        </Col>
+                                    </Row>
                                 </th>
                             </tr>
                         ))}
