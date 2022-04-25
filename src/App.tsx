@@ -110,7 +110,8 @@ function App(): JSX.Element {
             const fixedPlan = {
                 id: activePlan.id,
                 name: activePlan.name,
-                semesters: [...activePlan.semesters, newSemester]
+                semesters: [...activePlan.semesters, newSemester],
+                coursePool: activePlan.coursePool
             };
             // Creating a list that replaces the active plan with the fixed plan
             const fixedPlanList = planList.map((plan: Plan) =>
@@ -135,7 +136,8 @@ function App(): JSX.Element {
             name: activePlan.name,
             semesters: activePlan.semesters.filter(
                 (semester: Semester): boolean => semester.id !== semesterId
-            )
+            ),
+            coursePool: activePlan.coursePool
         };
         // Creating a list of plans that replaces the active plan with the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -207,6 +209,75 @@ function App(): JSX.Element {
         }
     }
 
+    /**
+     * Moves a course from the course pool to the selected semester & removes it from the course pool
+     *
+     * @param courseToMove The course that will be added to the chosen semester
+     * @param toSemester The semester that will have the course added
+     */
+    function moveCourseFromPool(courseToMove: Course, toSemester: Semester) {
+        addCourse(courseToMove, toSemester.id);
+        deleteCourseFromPool(courseToMove);
+    }
+
+    /**
+     * Removes a specified course from the course pool
+     *
+     * @param courseToDelete The course that will be removed from the course pool
+     */
+    function deleteCourseFromPool(courseToDelete: Course) {
+        // Creating a new course pool without the specified course
+        const newCoursePool = activePlan.coursePool.filter(
+            (course: Course) => course.title !== courseToDelete.title
+        );
+        // Creating a new plan that contains the updated course pool
+        const fixedPlan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: activePlan.semesters,
+            coursePool: [...newCoursePool]
+        };
+        // Creating a new plan list that contains the updated plan
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        // Updating the plan and plan list
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
+    /**
+     * Moves a course from a semester to the course pool
+     *
+     * @param courseToMove The course that will be moved to the course pool
+     * @param fromSemester The semester that currently contains the course being moved
+     */
+    function moveCourseToPool(courseToMove: Course, fromSemester: Semester) {
+        const courseForPool: Course = { ...courseToMove };
+        const newCoursePool = [courseForPool, ...activePlan.coursePool];
+        const fixedSemester = {
+            ...fromSemester,
+            classes: fromSemester.classes.filter(
+                (course: Course) => courseToMove.title !== course.title
+            )
+        };
+        const fixedSemesters = activePlan.semesters.map((semester: Semester) =>
+            semester.id === fromSemester.id ? fixedSemester : semester
+        );
+
+        const fixedPlan: Plan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: fixedSemesters,
+            coursePool: [...newCoursePool]
+        };
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -231,7 +302,7 @@ function App(): JSX.Element {
             </Row>
             <hr></hr>
             <Row>
-                <Col sm={7}>
+                <Col sm={8}>
                     <SemesterTable
                         plan={activePlan}
                         clearSem={clearSemester}
@@ -239,6 +310,7 @@ function App(): JSX.Element {
                         courseAdder={addCourse}
                         delCourseFunct={deleteCourse}
                         moveCourse={moveCourse}
+                        moveCourseToPool={moveCourseToPool}
                     ></SemesterTable>
                     <hr />
                     <Button
@@ -255,8 +327,12 @@ function App(): JSX.Element {
                         setActivePlan={setActivePlan}
                     ></EmptySemestersButton>
                 </Col>
-                <Col sm={5}>
-                    <CourseList plan={activePlan}></CourseList>
+                <Col sm={4}>
+                    <CourseList
+                        plan={activePlan}
+                        moveCourseFromPool={moveCourseFromPool}
+                        moveCourseToPool={moveCourseToPool}
+                    ></CourseList>
                 </Col>
             </Row>
             <hr></hr>

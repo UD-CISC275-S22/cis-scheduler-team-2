@@ -14,7 +14,8 @@ export function MoveCourseButton({
     plan,
     currentSemester,
     course,
-    moveCourse
+    moveCourse,
+    moveCourseToPool
 }: {
     plan: Plan;
     course: Course;
@@ -24,23 +25,40 @@ export function MoveCourseButton({
         fromSemester: Semester,
         toSemester: Semester
     ) => void;
+    moveCourseToPool: (courseToMove: Course, fromSemester: Semester) => void;
 }): JSX.Element {
     return (
         <div>
             <Dropdown>
                 <DropdownToggle>Move to...</DropdownToggle>
                 <DropdownMenu>
-                    {plan.semesters.map((semester: Semester) => (
-                        <DropdownItem
-                            onClick={() =>
-                                moveCourse(course, currentSemester, semester)
-                            }
-                            key={semester.id}
-                            eventKey={semester.id}
-                        >
-                            {`${semester.season} ${semester.year}`}
-                        </DropdownItem>
-                    ))}
+                    {plan.semesters.map((semester: Semester) => {
+                        if (semester.id !== currentSemester.id) {
+                            return (
+                                <DropdownItem
+                                    onClick={() =>
+                                        moveCourse(
+                                            course,
+                                            currentSemester,
+                                            semester
+                                        )
+                                    }
+                                    key={semester.id}
+                                    eventKey={semester.id}
+                                >
+                                    {`${semester.season} ${semester.year}`}
+                                </DropdownItem>
+                            );
+                        }
+                    })}
+                    <DropdownItem
+                        onClick={() =>
+                            moveCourseToPool(course, currentSemester)
+                        }
+                        eventKey={"coursePool"}
+                    >
+                        Course Pool
+                    </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

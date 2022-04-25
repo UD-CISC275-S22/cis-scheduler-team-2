@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Plan } from "../interfaces/plan";
 import { Button, Form } from "react-bootstrap";
+import { Course } from "../interfaces/course";
+import cisc from "../assets/cisc.json";
 
 //Add passer function that does [...planArray, newPlan] inside of App.tsx, this should also give the Plan an ID
 //Add functionality to clear the textboxes once the plan is added
@@ -15,6 +17,20 @@ interface addPlanProp {
     addPlan: (newPlan: Plan) => void;
 }
 
+const course_keys: string[] = Object.keys(cisc.CISC);
+const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
+    const currCourse = cisc.CISC[key as keyof typeof cisc.CISC];
+    const newCourse: Course = {
+        department: currCourse.code.substring(0, 4),
+        courseCode: parseInt(currCourse.code.substring(5)),
+        title: currCourse.name,
+        credits: parseInt(currCourse.credits),
+        prereqs: [currCourse.preReq],
+        description: currCourse.descr
+    };
+    return newCourse;
+});
+
 export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
     const seasons = ["Fall", "Winter", "Spring", "Summer"];
 
@@ -24,7 +40,8 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
             { id: "0", year: 0, season: "Fall", classes: [], credits: 0 }
         ],
         //remember to auto-update the id
-        id: 0
+        id: 0,
+        coursePool: [...CISC_COURSES]
     });
 
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
@@ -91,7 +108,8 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                         credits: 0
                     }
                 ],
-                id: 0
+                id: 0,
+                coursePool: [...CISC_COURSES]
             });
         }
     }
