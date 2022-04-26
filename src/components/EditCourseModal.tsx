@@ -24,7 +24,8 @@ export function EditCourseModal({
         <Modal show={showModal} onHide={closeModal} animation={false} size="lg">
             <ModalHeader closeButton>
                 <ModalTitle>
-                    Add Course to {semester.season} {semester.year}
+                    Edit Course {course.department + course.courseCode} in{" "}
+                    {semester.season} {semester.year}
                 </ModalTitle>
             </ModalHeader>
             <Modal.Body>
