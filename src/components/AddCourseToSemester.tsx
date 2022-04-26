@@ -256,8 +256,8 @@ export function AddCourseToSemester({
                     </Button>
                     {reqsList.map(
                         (aReq: string): JSX.Element => (
-                            <li key={aReq}>
-                                {aReq}
+                            <li key={aReq} style={{ margin: "5px" }}>
+                                {aReq + " "}
                                 <Button onClick={() => remReq(aReq)}>
                                     Remove Prerequisite
                                 </Button>

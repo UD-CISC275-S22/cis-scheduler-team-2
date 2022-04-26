@@ -233,28 +233,19 @@ export function EditCourseInSemester({
                     </Button>
                     {reqsList.map(
                         (aReq: string): JSX.Element => (
-                            <li
-                                key={aReq}
-                                style={{
-                                    listStyle: "none",
-                                    paddingLeft: "0"
-                                }}
-                            >
-                                <div>
-                                    <Row sm={2}>
-                                        <span style={{ textAlign: "center" }}>
-                                            {aReq}
-                                        </span>
-                                        <Button onClick={() => remReq(aReq)}>
-                                            Remove Prerequisite
-                                        </Button>
-                                    </Row>
-                                </div>
+                            <li key={aReq} style={{ margin: "5px" }}>
+                                <span style={{ textAlign: "center" }}>
+                                    {aReq + " "}
+                                </span>
+                                <Button onClick={() => remReq(aReq)}>
+                                    Remove Prerequisite
+                                </Button>
                             </li>
                         )
                     )}
                 </Col>
             </Row>
+            <br />
             <Row>
                 <Col>
                     <Button variant="secondary" onClick={closeModal}>
