@@ -64,7 +64,7 @@ All files                  |       0 |        0 |       0 |       0 |
   DeletePlan.tsx           |       0 |      100 |       0 |       0 | 12-16             
   DeleteSemesterButton.tsx |       0 |      100 |       0 |       0 | 12-14             
   EditCourseButton.tsx     |       0 |      100 |       0 |       0 | 21-25             
-  EditCourseInSemester.tsx |       0 |        0 |       0 |       0 | 27-238            
+  EditCourseInSemester.tsx |       0 |        0 |       0 |       0 | 27-248            
   EditCourseModal.tsx      |       0 |      100 |       0 |       0 | 23                
   InsertSemesterModal.tsx  |       0 |        0 |       0 |       0 | 16-61             
   ListAllPlans.tsx         |       0 |        0 |       0 |       0 | 21-39             
@@ -74,12 +74,12 @@ All files                  |       0 |        0 |       0 |       0 |
   WelcomeMessage.tsx       |       0 |      100 |       0 |       0 | 14                
  src/interfaces            |       0 |        0 |       0 |       0 |                   
   course.ts                |       0 |        0 |       0 |       0 |                   
-  placeholderPlan.ts       |       0 |        0 |       0 |       0 | 5-84              
+  placeholderPlan.ts       |       0 |        0 |       0 |       0 | 5-85              
   plan.ts                  |       0 |        0 |       0 |       0 |                   
   semester.ts              |       0 |        0 |       0 |       0 |                   
 ---------------------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 failed, 1 total
 Tests:       0 total
 Snapshots:   0 total
-Time:        4.583 s
+Time:        3.868 s
 Ran all test suites.
