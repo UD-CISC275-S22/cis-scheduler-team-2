@@ -21,7 +21,7 @@ export function EditCourseModal({
     courseEditor: (oldCourse: Course, newCourse: Course, semID: string) => void;
 }): JSX.Element {
     return (
-        <Modal show={showModal} onHide={closeModal} animation={false}>
+        <Modal show={showModal} onHide={closeModal} animation={false} size="lg">
             <ModalHeader closeButton>
                 <ModalTitle>
                     Add Course to {semester.season} {semester.year}

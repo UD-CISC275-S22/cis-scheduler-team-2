@@ -79,6 +79,7 @@ const samplePlan: Plan = {
             credits: 6
         }
     ],
+    // Filtering out the courses that come in the template plan out of the course pool.
     coursePool: CISC_COURSES.filter(
         (course: Course) =>
             course.courseCode !== 275 &&
