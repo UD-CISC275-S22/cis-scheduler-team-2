@@ -1,3 +1,4 @@
+import { Course } from "./course";
 import { Semester } from "./semester";
 
 /***
@@ -10,4 +11,6 @@ export interface Plan {
     semesters: Semester[];
     /** The id of a plan, generated upon creation  */
     id: number;
+    /** Pool of courses for this plan */
+    coursePool: Course[];
 }

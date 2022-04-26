@@ -14,4 +14,8 @@ export interface Course {
     prereqs: string[];
     /** A text description of the course */
     description: string;
+    /**An Array containing DeptName-CourseCode that are the prereqs this cours fulfills */
+    prereqsFilled: string[];
+    /**An Array containing the College-Category that are the degree requirement(s) this course fulfills */
+    degreeReqsFilled: string[];
 }

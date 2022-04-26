@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
-
+//Button testid: empty_semesters
 /**Takes in the state allPlans, an array of plans as well as activePlan and setActivePlan,
  * the state and state setter for the currently displayed plan
  */
@@ -52,7 +52,7 @@ export function EmptySemestersButton({
     //Returns a button within a div, which when clicked clears out the courses.
     return (
         <div>
-            <Button onClick={clearSemesters} data-testid="clear_all_semesters">
+            <Button onClick={clearSemesters} data-testid="empty_semesters">
                 Clear Courses From All Semesters
             </Button>
         </div>

@@ -1,19 +1,38 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 import { Course } from "../interfaces/course";
+import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { DeleteCourseButton } from "./DeleteCourseButton";
+import { EditCourseButton } from "./EditCourseButton";
+import { MoveCourseButton } from "./MoveCourseButton";
 
 export function CourseTable({
     semester,
-    delCourseFunct
+    plan,
+    delCourseFunct,
+    editCourseFunct,
+    moveCourse,
+    moveCourseToPool
 }: {
     semester: Semester;
+    plan: Plan;
     delCourseFunct: (
         courseDept: string,
         courseCode: number,
         semID: string
     ) => void;
+    editCourseFunct: (
+        oldCourse: Course,
+        newCourse: Course,
+        semID: string
+    ) => void;
+    moveCourse: (
+        courseToMove: Course,
+        fromSemester: Semester,
+        toSemester: Semester
+    ) => void;
+    moveCourseToPool: (courseToMove: Course, fromSemester: Semester) => void;
 }): JSX.Element {
     const [isVisible, setIsVisible] = useState<boolean>(true);
 
@@ -46,11 +65,33 @@ export function CourseTable({
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
                                 <th>
-                                    <DeleteCourseButton
-                                        course={course}
-                                        semester={semester}
-                                        delFunct={delCourseFunct}
-                                    ></DeleteCourseButton>
+                                    <Row sm={3}>
+                                        <Col>
+                                            <EditCourseButton
+                                                semester={semester}
+                                                course={course}
+                                                courseEditor={editCourseFunct}
+                                            ></EditCourseButton>
+                                        </Col>
+                                        <Col>
+                                            <DeleteCourseButton
+                                                course={course}
+                                                semester={semester}
+                                                delFunct={delCourseFunct}
+                                            ></DeleteCourseButton>
+                                        </Col>
+                                        <Col>
+                                            <MoveCourseButton
+                                                currentSemester={semester}
+                                                course={course}
+                                                plan={plan}
+                                                moveCourse={moveCourse}
+                                                moveCourseToPool={
+                                                    moveCourseToPool
+                                                }
+                                            ></MoveCourseButton>
+                                        </Col>
+                                    </Row>
                                 </th>
                             </tr>
                         ))}

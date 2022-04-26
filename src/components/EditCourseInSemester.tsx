@@ -6,47 +6,49 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 
 //fix issue with swappin plans not fixing the selected
 
-//Test IDs of format add_course_(something)
-//i.e add_course_prereq for the textbox to type in prerequistites.
 type ChangeEvent = React.ChangeEvent<
     HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
 >;
 
 interface addCourseToSemesterProp {
     semID: string;
-    courseAdder: (newCourse: Course, semID: string) => void;
+    course: Course;
+    courseEditor: (oldCourse: Course, newCourse: Course, semID: string) => void;
     closeModal: () => void;
 }
 
-export function AddCourseToSemester({
+export function EditCourseInSemester({
     semID,
-    courseAdder,
+    course,
+    courseEditor,
     closeModal
 }: addCourseToSemesterProp): JSX.Element {
     //for making sure text contains no specail characters or numbers
     const specialChars = /[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~1234567890]/;
 
     //list of prerequisites to be added in the new course
-    const [reqsList, newPre] = useState<string[]>([]);
+    const [reqsList, newPre] = useState<string[]>([...course.prereqs]);
 
     //state holding the new course to be added
     const [newCourse, updateCourse] = useState<Course>({
-        department: "",
-        courseCode: 0,
-        title: "",
-        credits: 0,
-        prereqs: [],
-        description: "",
-        prereqsFilled: [],
-        degreeReqsFilled: []
+        department: course.department,
+        courseCode: course.courseCode,
+        title: course.title,
+        credits: course.credits,
+        prereqs: [...course.prereqs],
+        description: course.description,
+        prereqsFilled: course.prereqsFilled,
+        degreeReqsFilled: course.degreeReqsFilled
     });
 
     //states holding the values in each of the boxes
-    const [codeBox, changeCode] = useState<string>("");
-    const [titleBox, changeTitle] = useState<string>("");
-    const [credsBox, changeCreds] = useState<string>("");
+    const [codeBox, changeCode] = useState<string>(
+        course.department + course.courseCode
+    );
+    const [titleBox, changeTitle] = useState<string>(course.title);
+    const [credsBox, changeCreds] = useState<string>(String(course.credits));
     const [reqsBox, changeReqs] = useState<string>("");
-    const [descBox, changeDesc] = useState<string>("");
+    const [descBox, changeDesc] = useState<string>(course.description);
 
     function enableAdd() {
         //checks if all fields are legal
@@ -163,25 +165,9 @@ export function AddCourseToSemester({
     }
 
     function addCourse() {
-        //adds the new course to the proper semeste
-        courseAdder(newCourse, semID);
+        //adds the new course to the proper semester
+        courseEditor(course, newCourse, semID);
         closeModal();
-        /*
-        changeCode("");
-        changeTitle("");
-        changeCreds("");
-        changeReqs("");
-        newPre([]);
-        changeDesc("");
-        updateCourse({
-            department: "",
-            courseCode: 0,
-            title: "",
-            credits: 0,
-            prereqs: [],
-            description: ""
-        });
-        */
     }
 
     return (
@@ -197,7 +183,6 @@ export function AddCourseToSemester({
                             placeholder="Enter Department Code"
                             value={codeBox}
                             onChange={updateCode}
-                            data-testid="add_course_department"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -210,7 +195,6 @@ export function AddCourseToSemester({
                             placeholder="Enter Course Name"
                             value={titleBox}
                             onChange={updateTitle}
-                            data-testid="add_course_name"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -220,7 +204,6 @@ export function AddCourseToSemester({
                             placeholder="Enter Number of Credits"
                             value={credsBox}
                             onChange={updateCreds}
-                            data-testid="add_course_credits"
                         />
                     </Form.Group>
                     <Form.Group>
@@ -230,7 +213,6 @@ export function AddCourseToSemester({
                             placeholder="Enter Course Description"
                             value={descBox}
                             onChange={updateDesc}
-                            data-testid="add_course_description"
                         />
                     </Form.Group>
                 </Col>
@@ -244,14 +226,9 @@ export function AddCourseToSemester({
                             placeholder="Enter Prerequisite Here"
                             value={reqsBox}
                             onChange={updateReqs}
-                            data-testid="add_course_prereq"
                         />
                     </Form.Group>
-                    <Button
-                        disabled={!isValidCode()}
-                        onClick={addReq}
-                        data-testid="add_course_prereq_button"
-                    >
+                    <Button disabled={!isValidCode()} onClick={addReq}>
                         Add This Prerequisite
                     </Button>
                     {reqsList.map(
@@ -269,16 +246,12 @@ export function AddCourseToSemester({
             <Row>
                 <Col>
                     <Button variant="secondary" onClick={closeModal}>
-                        Close
+                        Discard Edits
                     </Button>
                 </Col>
                 <Col>
-                    <Button
-                        disabled={!enableAdd()}
-                        onClick={addCourse}
-                        data-testid="add_course_button"
-                    >
-                        Add Course to Plan
+                    <Button disabled={!enableAdd()} onClick={addCourse}>
+                        Save Edits
                     </Button>
                     <div>
                         {!enableAdd() && <div>Please Fill All Fields</div>}

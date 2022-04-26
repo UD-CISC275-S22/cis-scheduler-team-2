@@ -12,6 +12,8 @@ import { InsertSemesterModal } from "./components/InsertSemesterModal";
 import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
+import { WelcomeMessage } from "./components/WelcomeMessage";
+//"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -21,6 +23,9 @@ function App(): JSX.Element {
 
     // State that handles add semester modal
     const [showModal, setShowModal] = useState<boolean>(false);
+
+    // State that handles welcome message modal
+    const [showWelcome, setShowWelcome] = useState<boolean>(true);
 
     function addPlan(newPlan: Plan) {
         //Passed to AddNewPlan, adds the new plan to the end of planList array
@@ -90,11 +95,42 @@ function App(): JSX.Element {
         }
     }
 
-    const sampleSemester = samplePlan.semesters[0];
+    function editCourse(oldCourse: Course, newCourse: Course, semID: string) {
+        //FIX THIS
+        const actPlan = activePlan;
+        const getSem = actPlan.semesters.filter(
+            (aSem: Semester): boolean => aSem.id === semID
+        );
+        const fixCourse = getSem[0].classes.map(
+            (aCourse: Course): Course =>
+                aCourse.department === oldCourse.department &&
+                aCourse.courseCode === oldCourse.courseCode
+                    ? { ...newCourse }
+                    : { ...aCourse }
+        );
+        getSem[0] = { ...getSem[0], classes: fixCourse };
+        const fixPlan = {
+            ...activePlan,
+            semesters: activePlan.semesters.map(
+                (aSem: Semester): Semester =>
+                    aSem.id === semID ? { ...getSem[0] } : { ...aSem }
+            )
+        };
+        const fixedList = planList.map(
+            (aPlan: Plan): Plan =>
+                aPlan.id === fixPlan.id ? { ...fixPlan } : { ...aPlan }
+        );
+        setActivePlan(fixPlan);
+        updatePlans(fixedList);
+    }
 
     // Opens and closes the insertSemester modal view
     const handleShowInsertSemesterModal = () => setShowModal(true);
     const handleCloseInsertSemesterModal = () => setShowModal(false);
+
+    // Opens and closes the welcome message modal view
+    //const handleShowWelcomeModal = () => setShowWelcome(true);
+    const handleCloseWelcomeModal = () => setShowWelcome(false);
 
     /**
      * Adds a new semester to the currently selected plan
@@ -111,7 +147,8 @@ function App(): JSX.Element {
             const fixedPlan = {
                 id: activePlan.id,
                 name: activePlan.name,
-                semesters: [...activePlan.semesters, newSemester]
+                semesters: [...activePlan.semesters, newSemester],
+                coursePool: activePlan.coursePool
             };
             // Creating a list that replaces the active plan with the fixed plan
             const fixedPlanList = planList.map((plan: Plan) =>
@@ -136,7 +173,8 @@ function App(): JSX.Element {
             name: activePlan.name,
             semesters: activePlan.semesters.filter(
                 (semester: Semester): boolean => semester.id !== semesterId
-            )
+            ),
+            coursePool: activePlan.coursePool
         };
         // Creating a list of plans that replaces the active plan with the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -160,8 +198,9 @@ function App(): JSX.Element {
             (aCourse: Course): boolean =>
                 aCourse.department === courseDept &&
                 aCourse.courseCode === courseCode
-        )[0];
-        const fixCreds = toFix[0].credits - getClass.credits;
+        );
+        const fixCreds =
+            toFix[0].credits - getClass[0].credits * getClass.length;
         const fixCourse = toFix[0].classes.filter(
             (aCourse: Course): boolean =>
                 !(
@@ -185,11 +224,107 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
+    /**
+     * Moves a course from one semester to another (as long as they aren't the same semester)
+     *
+     * @param courseToMove The course object that will be relocated
+     * @param fromSemester The semester that currently contains the to-be-relocated course
+     * @param toSemester The semester that the course will be relocated to
+     */
+    function moveCourse(
+        courseToMove: Course,
+        fromSemester: Semester,
+        toSemester: Semester
+    ) {
+        // As long as the course isn't being moved to the same semester, move it
+        if (toSemester !== fromSemester) {
+            addCourse(courseToMove, toSemester.id);
+            deleteCourse(
+                courseToMove.department,
+                courseToMove.courseCode,
+                fromSemester.id
+            );
+        }
+    }
+
+    /**
+     * Moves a course from the course pool to the selected semester & removes it from the course pool
+     *
+     * @param courseToMove The course that will be added to the chosen semester
+     * @param toSemester The semester that will have the course added
+     */
+    function moveCourseFromPool(courseToMove: Course, toSemester: Semester) {
+        addCourse(courseToMove, toSemester.id);
+        deleteCourseFromPool(courseToMove);
+    }
+
+    /**
+     * Removes a specified course from the course pool
+     *
+     * @param courseToDelete The course that will be removed from the course pool
+     */
+    function deleteCourseFromPool(courseToDelete: Course) {
+        // Creating a new course pool without the specified course
+        const newCoursePool = activePlan.coursePool.filter(
+            (course: Course) => course.title !== courseToDelete.title
+        );
+        // Creating a new plan that contains the updated course pool
+        const fixedPlan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: activePlan.semesters,
+            coursePool: [...newCoursePool]
+        };
+        // Creating a new plan list that contains the updated plan
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        // Updating the plan and plan list
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
+    /**
+     * Moves a course from a semester to the course pool
+     *
+     * @param courseToMove The course that will be moved to the course pool
+     * @param fromSemester The semester that currently contains the course being moved
+     */
+    function moveCourseToPool(courseToMove: Course, fromSemester: Semester) {
+        const courseForPool: Course = { ...courseToMove };
+        const newCoursePool = [courseForPool, ...activePlan.coursePool];
+        const fixedSemester = {
+            ...fromSemester,
+            classes: fromSemester.classes.filter(
+                (course: Course) => courseToMove.title !== course.title
+            )
+        };
+        const fixedSemesters = activePlan.semesters.map((semester: Semester) =>
+            semester.id === fromSemester.id ? fixedSemester : semester
+        );
+
+        const fixedPlan: Plan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: fixedSemesters,
+            coursePool: [...newCoursePool]
+        };
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
     return (
         <div className="App">
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
+            <WelcomeMessage
+                showModal={showWelcome}
+                closeModal={handleCloseWelcomeModal}
+            ></WelcomeMessage>
             <Row>
                 <Col>
                     <ListAllPlans
@@ -209,16 +344,22 @@ function App(): JSX.Element {
             </Row>
             <hr></hr>
             <Row>
-                <Col>
+                <Col sm={8}>
                     <SemesterTable
                         plan={activePlan}
                         clearSem={clearSemester}
                         deleteSemester={deleteSemester}
                         courseAdder={addCourse}
                         delCourseFunct={deleteCourse}
+                        editCourseFunct={editCourse}
+                        moveCourse={moveCourse}
+                        moveCourseToPool={moveCourseToPool}
                     ></SemesterTable>
                     <hr />
-                    <Button onClick={handleShowInsertSemesterModal}>
+                    <Button
+                        onClick={handleShowInsertSemesterModal}
+                        data-testid="add_semester_button"
+                    >
                         Add Semester
                     </Button>
                     <hr />
@@ -229,8 +370,12 @@ function App(): JSX.Element {
                         setActivePlan={setActivePlan}
                     ></EmptySemestersButton>
                 </Col>
-                <Col>
-                    <CourseList semester={sampleSemester}></CourseList>
+                <Col sm={4}>
+                    <CourseList
+                        plan={activePlan}
+                        moveCourseFromPool={moveCourseFromPool}
+                        moveCourseToPool={moveCourseToPool}
+                    ></CourseList>
                 </Col>
             </Row>
             <hr></hr>

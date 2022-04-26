@@ -1,36 +1,39 @@
 import React from "react";
 import { Modal, ModalTitle } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import { AddCourseToSemester } from "./AddCourseToSemester";
 import { Course } from "../interfaces/course";
 import { Semester } from "../interfaces/semester";
+import { EditCourseInSemester } from "./EditCourseInSemester";
 
 //holds the modal and brings up the AddCourseToSemester UI in a pop-up window
 
-export function AddCourseModal({
+export function EditCourseModal({
     showModal,
     semester,
+    course,
     closeModal,
-    courseAdder
+    courseEditor
 }: {
     showModal: boolean;
     semester: Semester;
+    course: Course;
     closeModal: () => void;
-    courseAdder: (newCourse: Course, semID: string) => void;
+    courseEditor: (oldCourse: Course, newCourse: Course, semID: string) => void;
 }): JSX.Element {
     return (
-        <Modal show={showModal} onHide={closeModal} animation={false} size="lg">
+        <Modal show={showModal} onHide={closeModal} animation={false}>
             <ModalHeader closeButton>
                 <ModalTitle>
                     Add Course to {semester.season} {semester.year}
                 </ModalTitle>
             </ModalHeader>
             <Modal.Body>
-                <AddCourseToSemester
+                <EditCourseInSemester
                     semID={semester.id}
-                    courseAdder={courseAdder}
+                    course={course}
+                    courseEditor={courseEditor}
                     closeModal={closeModal}
-                ></AddCourseToSemester>
+                ></EditCourseInSemester>
             </Modal.Body>
             <Modal.Footer></Modal.Footer>
         </Modal>
