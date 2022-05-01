@@ -6,7 +6,6 @@ import { Semester } from "../interfaces/semester";
 
 //Test-id: clear_semester_button
 interface clearSemesterProp {
-    PlanID: number;
     thisSem: Semester;
     clearFunct: (semesterId: string) => void;
 }

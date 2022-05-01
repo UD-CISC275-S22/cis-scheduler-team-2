@@ -60,7 +60,6 @@ export function SemesterTable({
                         <Row>
                             <Col>
                                 <ClearSemesterButton
-                                    PlanID={plan.id}
                                     thisSem={semester}
                                     clearFunct={clearSem}
                                 ></ClearSemesterButton>
