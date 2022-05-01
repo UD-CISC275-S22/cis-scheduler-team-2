@@ -28,6 +28,7 @@ export function AddCourseToSemester({
 
     //list of prerequisites to be added in the new course
     const [reqsList, newPre] = useState<string[]>([]);
+    const [postreqsList, newPost] = useState<string[]>([]);
 
     //state holding the new course to be added
     const [newCourse, updateCourse] = useState<Course>({
@@ -46,6 +47,7 @@ export function AddCourseToSemester({
     const [titleBox, changeTitle] = useState<string>("");
     const [credsBox, changeCreds] = useState<string>("");
     const [reqsBox, changeReqs] = useState<string>("");
+    const [fillsReqsBox, changeFillsReqs] = useState<string>("");
     const [descBox, changeDesc] = useState<string>("");
 
     function enableAdd() {
@@ -111,6 +113,11 @@ export function AddCourseToSemester({
         changeReqs(event.target.value);
     }
 
+    function updateFillsReqs(event: ChangeEvent) {
+        //updates the fullfills reqs for box
+        changeFillsReqs(event.target.value);
+    }
+
     function addReq() {
         //adds the typed prerequisite to the list of prerequisites
         if (reqsBox.length === 7) {
@@ -128,6 +135,23 @@ export function AddCourseToSemester({
         }
     }
 
+    function addFillsReq() {
+        //adds the typed course to the courses this class serves as a prerequisite for
+        if (fillsReqsBox.length === 7) {
+            const dept = fillsReqsBox.substring(0, 4);
+            const code = fillsReqsBox.substring(4);
+            if (!specialChars.test(dept) && !isNaN(Number(code))) {
+                const addReq = {
+                    ...newCourse,
+                    prereqsFilled: [...newCourse.prereqsFilled, fillsReqsBox]
+                };
+                updateCourse(addReq);
+                newPost([...postreqsList, fillsReqsBox]);
+                changeFillsReqs("");
+            }
+        }
+    }
+
     function remReq(courseName: string) {
         //state setter for the course name
         const rem = newCourse.prereqs.filter(
@@ -138,11 +162,20 @@ export function AddCourseToSemester({
         newPre([...rem]);
     }
 
-    function isValidCode(): boolean {
+    function remPostReq(courseName: string) {
+        const rem = newCourse.prereqsFilled.filter(
+            (aCourse: string): boolean => aCourse !== courseName
+        );
+        const fixCourse = { ...newCourse, prereqsFilled: [...rem] };
+        updateCourse(fixCourse);
+        newPost([...rem]);
+    }
+
+    function isValidCode(aCode: string): boolean {
         //checks if the course code is a valid string for a course, i.e., CISC275
-        if (reqsBox.length === 7) {
-            const dept = reqsBox.substring(0, 4);
-            const code = reqsBox.substring(4);
+        if (aCode.length === 7) {
+            const dept = aCode.substring(0, 4);
+            const code = aCode.substring(4);
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
                 return true;
             }
@@ -248,7 +281,7 @@ export function AddCourseToSemester({
                         />
                     </Form.Group>
                     <Button
-                        disabled={!isValidCode()}
+                        disabled={!isValidCode(reqsBox)}
                         onClick={addReq}
                         data-testid="add_course_prereq_button"
                     >
@@ -260,6 +293,38 @@ export function AddCourseToSemester({
                                 {aReq + " "}
                                 <Button onClick={() => remReq(aReq)}>
                                     Remove Prerequisite
+                                </Button>
+                            </li>
+                        )
+                    )}
+                </Col>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>
+                            Enter Postrequisites Here: (i.e., CISC181 For
+                            CISC106)
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Postrequisite Here"
+                            value={fillsReqsBox}
+                            onChange={updateFillsReqs}
+                        />
+                    </Form.Group>
+                    <Button
+                        disabled={!isValidCode(fillsReqsBox)}
+                        onClick={addFillsReq}
+                    >
+                        Add This Postrequisite
+                    </Button>
+                    {postreqsList.map(
+                        (aReq: string): JSX.Element => (
+                            <li key={aReq} style={{ margin: "5px" }}>
+                                <span style={{ textAlign: "center" }}>
+                                    {aReq + " "}
+                                </span>
+                                <Button onClick={() => remPostReq(aReq)}>
+                                    Remove Postrequisite
                                 </Button>
                             </li>
                         )
