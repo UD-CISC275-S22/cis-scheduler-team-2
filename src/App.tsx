@@ -46,28 +46,49 @@ function App(): JSX.Element {
         setActivePlan(newList[0]);
     }
 
-    function clearSemester(planID: number, semYear: number, semSeas: string) {
-        //passed to the ClearSemesterButton
-        //gets the plan
-        const toFix = planList.filter(
-            (aPlan: Plan): boolean => aPlan.id === planID
+    /**
+     * Function that takes all of the courses from a given semester and places them in the course pool.
+     *
+     * @param semesterId The ID of the semester that contains the courses to be moved
+     */
+    function clearSemester(semesterId: string) {
+        // Getting the semester that will have its courses moved to the pool.
+        const currentSemester = activePlan.semesters.filter(
+            (semester: Semester) => semester.id === semesterId
         );
-        //array of semseters from that plan
-        const semMap = toFix[0].semesters;
-        //clears the proper semester
-        const clearSem = semMap.map(
-            (aSem: Semester): Semester =>
-                aSem.season === semSeas && aSem.year === semYear
-                    ? { ...aSem, classes: [] }
-                    : { ...aSem }
+        // Getting the courses from the semester that is having its courses moved.
+        const semestersCourses: Course[] = currentSemester[0].classes.map(
+            (course: Course) => course
         );
-        const fixedPlan = { ...toFix[0], semesters: [...clearSem] };
-        const fixedList = planList.map(
-            (aPlan: Plan): Plan =>
-                aPlan.id === planID ? { ...fixedPlan } : { ...aPlan }
+        /** Course pool that the semesters courses will get added to */
+        let modifiedCoursePool: Course[] = [...activePlan.coursePool];
+        // Adding each course to the new course pool
+        semestersCourses.map((course: Course) => {
+            modifiedCoursePool = [course, ...modifiedCoursePool];
+        });
+        // Removing all the courses from the semester's classes array
+        const updatedSemester: Semester = {
+            ...currentSemester[0],
+            classes: []
+        };
+        /** Fixed semester array that replaces the current semester with the updated semester */
+        const fixedSemesters = activePlan.semesters.map((semester: Semester) =>
+            semester.id === currentSemester[0].id ? updatedSemester : semester
         );
+        /** Plan that contains the updated semesters array and the updated course pool */
+        const fixedPlan: Plan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: fixedSemesters,
+            coursePool: [...modifiedCoursePool]
+        };
+        /** Array of plans that replaces the current active plan with the fixed plan */
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        // Setting the state to reflect the changes
         setActivePlan(fixedPlan);
-        updatePlans(fixedList);
+        updatePlans(fixedPlanList);
     }
 
     function addCourse(newCourse: Course, semID: string) {
