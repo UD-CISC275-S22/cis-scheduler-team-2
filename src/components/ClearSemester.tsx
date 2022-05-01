@@ -8,11 +8,10 @@ import { Semester } from "../interfaces/semester";
 interface clearSemesterProp {
     PlanID: number;
     thisSem: Semester;
-    clearFunct: (planID: number, semYear: number, semSeas: string) => void;
+    clearFunct: (semesterId: string) => void;
 }
 
 export function ClearSemesterButton({
-    PlanID,
     thisSem,
     clearFunct
 }: clearSemesterProp) {
@@ -20,7 +19,7 @@ export function ClearSemesterButton({
         <div>
             <Button
                 disabled={thisSem.classes.length <= 0}
-                onClick={() => clearFunct(PlanID, thisSem.year, thisSem.season)}
+                onClick={() => clearFunct(thisSem.id)}
                 data-testid="clear_semester_button"
             >
                 Clear This Semester

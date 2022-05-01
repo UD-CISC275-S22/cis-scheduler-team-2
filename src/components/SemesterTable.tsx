@@ -22,7 +22,7 @@ export function SemesterTable({
     moveCourseToPool
 }: {
     plan: Plan;
-    clearSem: (planID: number, semYear: number, semSeas: string) => void;
+    clearSem: (semesterId: string) => void;
     deleteSemester: (semesterId: string) => void;
     courseAdder: (newCourse: Course, semID: string) => void;
     delCourseFunct: (
