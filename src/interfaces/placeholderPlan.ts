@@ -1,6 +1,7 @@
 import { Course } from "./course";
 import { Plan } from "./plan";
 import cisc from "../assets/cisc.json";
+import { v4 as uuidv4 } from "uuid";
 
 const course_keys: string[] = Object.keys(cisc.CISC);
 const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
@@ -13,7 +14,8 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         prereqs: [currCourse.preReq],
         description: currCourse.descr,
         prereqsFilled: [],
-        degreeReqsFilled: []
+        degreeReqsFilled: [],
+        courseId: uuidv4()
     };
     const newCourse: Course = {
         department: currCourse.code.substring(0, 4),
@@ -24,7 +26,8 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: [],
-        originalData: newBackupCourse
+        originalData: newBackupCourse,
+        courseId: newBackupCourse.courseId
     };
     return newCourse;
 });
@@ -46,7 +49,8 @@ const samplePlan: Plan = {
                     prereqs: ["CISC181", "CISC210"],
                     description: "Basically web development",
                     prereqsFilled: [],
-                    degreeReqsFilled: []
+                    degreeReqsFilled: [],
+                    courseId: uuidv4()
                 },
                 {
                     department: "CISC",
@@ -56,7 +60,8 @@ const samplePlan: Plan = {
                     prereqs: ["CISC181", "CISC210"],
                     description: "Computers go burr",
                     prereqsFilled: [],
-                    degreeReqsFilled: []
+                    degreeReqsFilled: [],
+                    courseId: uuidv4()
                 }
             ],
             credits: 6
@@ -74,7 +79,8 @@ const samplePlan: Plan = {
                     prereqs: ["CISC181", "CISC210"],
                     description: "SQL go burr",
                     prereqsFilled: [],
-                    degreeReqsFilled: []
+                    degreeReqsFilled: [],
+                    courseId: uuidv4()
                 },
                 {
                     department: "CISC",
@@ -84,7 +90,8 @@ const samplePlan: Plan = {
                     prereqs: ["CISC181", "CISC210"],
                     description: "Computers be thinkin",
                     prereqsFilled: [],
-                    degreeReqsFilled: []
+                    degreeReqsFilled: [],
+                    courseId: uuidv4()
                 }
             ],
             credits: 6
