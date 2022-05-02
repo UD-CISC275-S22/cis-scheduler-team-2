@@ -211,14 +211,16 @@ export function EditCourseInSemester({
     }
 
     function resetToDefault() {
-        console.log(newCourse.originalData);
+        //Resets the course information back to the default (if it exists), follows the same basic
+        //procedure as updating the fields manually and then adding the course with addCourse.
+        console.log("Original Data:");
+        console.log(newCourse.originalData); //Logging data to the console for debugging purposes
         if (newCourse.originalData) {
             const defaultCourse = {
                 ...newCourse.originalData,
                 originalData: newCourse.originalData
             };
             updateCourse(defaultCourse);
-            console.log("updated?");
             courseEditor(course, defaultCourse, semID);
             closeModal();
             //addCourse();
