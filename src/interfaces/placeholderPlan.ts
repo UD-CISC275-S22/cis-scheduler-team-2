@@ -5,7 +5,7 @@ import cisc from "../assets/cisc.json";
 const course_keys: string[] = Object.keys(cisc.CISC);
 const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
     const currCourse = cisc.CISC[key as keyof typeof cisc.CISC];
-    const newCourse: Course = {
+    const newBackupCourse: Course = {
         department: currCourse.code.substring(0, 4),
         courseCode: parseInt(currCourse.code.substring(5)),
         title: currCourse.name,
@@ -14,6 +14,17 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: []
+    };
+    const newCourse: Course = {
+        department: currCourse.code.substring(0, 4),
+        courseCode: parseInt(currCourse.code.substring(5)),
+        title: currCourse.name,
+        credits: parseInt(currCourse.credits),
+        prereqs: [currCourse.preReq],
+        description: currCourse.descr,
+        prereqsFilled: [],
+        degreeReqsFilled: [],
+        originalData: newBackupCourse
     };
     return newCourse;
 });
