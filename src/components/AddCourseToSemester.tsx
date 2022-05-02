@@ -196,9 +196,39 @@ export function AddCourseToSemester({
     }
 
     function addCourse() {
-        //adds the new course to the proper semeste
-        courseAdder(newCourse, semID);
-        closeModal();
+        //adds the new course to the proper semester
+
+        //If the course already contains an originaldata field, use it.
+        if (newCourse.originalData) {
+            updateCourse(newCourse);
+            courseAdder(newCourse, semID);
+            closeModal();
+        } else {
+            //Otherwise fill the field with a clone of itself.
+            const newestCourse = {
+                department: newCourse.department,
+                courseCode: newCourse.courseCode,
+                title: newCourse.title,
+                credits: newCourse.credits,
+                prereqs: [...newCourse.prereqs],
+                description: newCourse.description,
+                prereqsFilled: [...newCourse.prereqs],
+                degreeReqsFilled: [...newCourse.degreeReqsFilled],
+                originalData: {
+                    department: newCourse.department,
+                    courseCode: newCourse.courseCode,
+                    title: newCourse.title,
+                    credits: newCourse.credits,
+                    prereqs: [...newCourse.prereqs],
+                    description: newCourse.description,
+                    prereqsFilled: [...newCourse.prereqs],
+                    degreeReqsFilled: [...newCourse.degreeReqsFilled]
+                }
+            };
+            updateCourse(newestCourse);
+            courseAdder(newestCourse, semID);
+            closeModal();
+        }
         /*
         changeCode("");
         changeTitle("");
