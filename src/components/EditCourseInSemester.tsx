@@ -44,7 +44,8 @@ export function EditCourseInSemester({
         prereqs: [...course.prereqs],
         description: course.description,
         prereqsFilled: [...course.prereqsFilled],
-        degreeReqsFilled: [...course.degreeReqsFilled]
+        degreeReqsFilled: [...course.degreeReqsFilled],
+        originalData: course.originalData
     });
 
     //states holding the values in each of the boxes
@@ -229,8 +230,29 @@ export function EditCourseInSemester({
 
     function addCourse() {
         //adds the new course to the proper semester
+        //const newerCourse = {
+        //  ...newCourse,
+        //originalData: { ...newCourse }
+        //};
         courseEditor(course, newCourse, semID);
         closeModal();
+    }
+
+    function resetToDefault() {
+        //Resets the course information back to the default (if it exists), follows the same basic
+        //procedure as updating the fields manually and then adding the course with addCourse.
+        console.log("Original Data:");
+        console.log(newCourse.originalData); //Logging data to the console for debugging purposes
+        if (newCourse.originalData) {
+            const defaultCourse = {
+                ...newCourse.originalData,
+                originalData: newCourse.originalData
+            };
+            updateCourse(defaultCourse);
+            courseEditor(course, defaultCourse, semID);
+            closeModal();
+            //addCourse();
+        }
     }
 
     return (
@@ -386,6 +408,14 @@ export function EditCourseInSemester({
                     <div>
                         {!enableAdd() && <div>Please Fill All Fields</div>}
                     </div>
+                </Col>
+                <Col>
+                    <Button
+                        onClick={resetToDefault}
+                        data-testid="resetToDefault"
+                    >
+                        Reset To Original
+                    </Button>
                 </Col>
             </Row>
         </div>

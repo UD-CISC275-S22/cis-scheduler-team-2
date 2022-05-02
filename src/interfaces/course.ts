@@ -18,4 +18,6 @@ export interface Course {
     prereqsFilled: string[];
     /**An Array containing the College-Category that are the degree requirement(s) this course fulfills */
     degreeReqsFilled: string[];
+    /**OPTIONAL: A clone of the original course data.*/
+    originalData?: Course;
 }
