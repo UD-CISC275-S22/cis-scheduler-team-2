@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Course } from "../interfaces/course";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 //import { Semester } from "../interfaces/semester";
 //import { Plan } from "../interfaces/plan";
 
@@ -40,7 +41,8 @@ export function AddCourseToSemester({
         prereqs: [],
         description: "",
         prereqsFilled: [],
-        degreeReqsFilled: []
+        degreeReqsFilled: [],
+        courseId: uuidv4()
     });
 
     //states holding the values in each of the boxes
@@ -240,6 +242,7 @@ export function AddCourseToSemester({
                 description: newCourse.description,
                 prereqsFilled: [...newCourse.prereqs],
                 degreeReqsFilled: [...newCourse.degreeReqsFilled],
+                courseId: newCourse.courseId,
                 originalData: {
                     department: newCourse.department,
                     courseCode: newCourse.courseCode,
@@ -248,7 +251,8 @@ export function AddCourseToSemester({
                     prereqs: [...newCourse.prereqs],
                     description: newCourse.description,
                     prereqsFilled: [...newCourse.prereqs],
-                    degreeReqsFilled: [...newCourse.degreeReqsFilled]
+                    degreeReqsFilled: [...newCourse.degreeReqsFilled],
+                    courseId: newCourse.courseId
                 }
             };
             updateCourse(newestCourse);

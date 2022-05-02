@@ -20,4 +20,6 @@ export interface Course {
     degreeReqsFilled: string[];
     /**OPTIONAL: A clone of the original course data.*/
     originalData?: Course;
+    /** A unique ID representing this course object */
+    courseId: string;
 }

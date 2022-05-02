@@ -30,7 +30,7 @@ export function CourseList({
                 >
                     <ul style={{ listStyle: "none", paddingLeft: "0" }}>
                         {plan.coursePool.map((course: Course) => (
-                            <li key={course.courseCode}>
+                            <li key={course.courseId}>
                                 <CourseView
                                     course={course}
                                     plan={plan}
