@@ -29,6 +29,7 @@ export function AddCourseToSemester({
     //list of prerequisites to be added in the new course
     const [reqsList, newPre] = useState<string[]>([]);
     const [postreqsList, newPost] = useState<string[]>([]);
+    const [degreeReqsList, newDeg] = useState<string[]>([]);
 
     //state holding the new course to be added
     const [newCourse, updateCourse] = useState<Course>({
@@ -48,6 +49,7 @@ export function AddCourseToSemester({
     const [credsBox, changeCreds] = useState<string>("");
     const [reqsBox, changeReqs] = useState<string>("");
     const [fillsReqsBox, changeFillsReqs] = useState<string>("");
+    const [fillsDegBox, changeFillsDeg] = useState<string>("");
     const [descBox, changeDesc] = useState<string>("");
 
     function enableAdd() {
@@ -118,6 +120,11 @@ export function AddCourseToSemester({
         changeFillsReqs(event.target.value);
     }
 
+    function updateFillsDeg(event: ChangeEvent) {
+        //updates the fulfills degree requirements
+        changeFillsDeg(event.target.value);
+    }
+
     function addReq() {
         //adds the typed prerequisite to the list of prerequisites
         if (reqsBox.length === 7) {
@@ -152,6 +159,16 @@ export function AddCourseToSemester({
         }
     }
 
+    function addDegReq() {
+        const addReq = {
+            ...newCourse,
+            degreeReqsFilled: [...newCourse.degreeReqsFilled, fillsDegBox]
+        };
+        updateCourse(addReq);
+        newDeg([...degreeReqsList, fillsDegBox]);
+        changeFillsDeg("");
+    }
+
     function remReq(courseName: string) {
         //state setter for the course name
         const rem = newCourse.prereqs.filter(
@@ -169,6 +186,15 @@ export function AddCourseToSemester({
         const fixCourse = { ...newCourse, prereqsFilled: [...rem] };
         updateCourse(fixCourse);
         newPost([...rem]);
+    }
+
+    function remDegReq(degReqName: string) {
+        const rem = newCourse.degreeReqsFilled.filter(
+            (aReq: string): boolean => aReq !== degReqName
+        );
+        const fixCourse = { ...newCourse, degreeReqsFilled: [...rem] };
+        updateCourse(fixCourse);
+        newDeg([...rem]);
     }
 
     function isValidCode(aCode: string): boolean {
@@ -298,6 +324,38 @@ export function AddCourseToSemester({
                         )
                     )}
                 </Col>
+            </Row>
+            <hr />
+            <Row>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>
+                            Enter Degree Requirement Here: (i.e., Group A
+                            Breadth, Tech Elective, etc.)
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Degree Requirement Here"
+                            value={fillsDegBox}
+                            onChange={updateFillsDeg}
+                        />
+                    </Form.Group>
+                    <Button disabled={fillsDegBox === ""} onClick={addDegReq}>
+                        Add This Degree Requirement
+                    </Button>
+                    {degreeReqsList.map(
+                        (aReq: string): JSX.Element => (
+                            <li key={aReq} style={{ margin: "5px" }}>
+                                <span style={{ textAlign: "center" }}>
+                                    {aReq + " "}
+                                </span>
+                                <Button onClick={() => remDegReq(aReq)}>
+                                    Remove Postrequisite
+                                </Button>
+                            </li>
+                        )
+                    )}
+                </Col>
                 <Col>
                     <Form.Group>
                         <Form.Label>
@@ -331,6 +389,7 @@ export function AddCourseToSemester({
                     )}
                 </Col>
             </Row>
+            <hr />
             <Row>
                 <Col>
                     <Button variant="secondary" onClick={closeModal}>
