@@ -60,7 +60,7 @@ export function CourseTable({
                     </thead>
                     <tbody>
                         {semester.classes.map((course: Course) => (
-                            <tr key={course.courseCode}>
+                            <tr key={course.courseId}>
                                 <th>{course.credits}</th>
                                 <th>{`${course.department}${course.courseCode}`}</th>
                                 <th>{course.title}</th>
