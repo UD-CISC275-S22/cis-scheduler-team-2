@@ -116,16 +116,14 @@ function App(): JSX.Element {
         }
     }
 
-    function editCourse(oldCourse: Course, newCourse: Course, semID: string) {
-        //FIX THIS
+    function editCourse(courseID: string, newCourse: Course, semID: string) {
         const actPlan = activePlan;
         const getSem = actPlan.semesters.filter(
             (aSem: Semester): boolean => aSem.id === semID
         );
         const fixCourse = getSem[0].classes.map(
             (aCourse: Course): Course =>
-                aCourse.department === oldCourse.department &&
-                aCourse.courseCode === oldCourse.courseCode
+                aCourse.courseId === courseID
                     ? { ...newCourse }
                     : { ...aCourse }
         );

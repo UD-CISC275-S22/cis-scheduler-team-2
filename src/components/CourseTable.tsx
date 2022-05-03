@@ -23,7 +23,7 @@ export function CourseTable({
         semID: string
     ) => void;
     editCourseFunct: (
-        oldCourse: Course,
+        courseID: string,
         newCourse: Course,
         semID: string
     ) => void;
