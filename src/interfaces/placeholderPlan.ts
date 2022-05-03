@@ -1,6 +1,7 @@
 import { Course } from "./course";
 import { Plan } from "./plan";
 import cisc from "../assets/cisc.json";
+import { v4 as uuidv4 } from "uuid";
 
 const course_keys: string[] = Object.keys(cisc.CISC);
 const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
@@ -13,7 +14,8 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         prereqs: [currCourse.preReq],
         description: currCourse.descr,
         prereqsFilled: [],
-        degreeReqsFilled: []
+        degreeReqsFilled: [],
+        courseId: uuidv4()
     };
     const newCourse: Course = {
         department: currCourse.code.substring(0, 4),
@@ -24,10 +26,20 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: [],
-        originalData: newBackupCourse
+        originalData: newBackupCourse,
+        courseId: newBackupCourse.courseId
     };
     return newCourse;
 });
+
+/** Array for pre-added courses */
+const defaultCourses: Course[] = CISC_COURSES.filter(
+    (course: Course) =>
+        course.courseCode === 275 ||
+        course.courseCode === 320 ||
+        course.courseCode === 437 ||
+        course.courseCode === 482
+);
 
 const samplePlan: Plan = {
     name: "Sample Plan",
@@ -37,56 +49,14 @@ const samplePlan: Plan = {
             id: "0",
             season: "Fall",
             year: 2020,
-            classes: [
-                {
-                    department: "CISC",
-                    courseCode: 275,
-                    title: "Introduction to Software Engineering",
-                    credits: 3,
-                    prereqs: ["CISC181", "CISC210"],
-                    description: "Basically web development",
-                    prereqsFilled: [],
-                    degreeReqsFilled: []
-                },
-                {
-                    department: "CISC",
-                    courseCode: 320,
-                    title: "Introduction to Algorithms",
-                    credits: 3,
-                    prereqs: ["CISC181", "CISC210"],
-                    description: "Computers go burr",
-                    prereqsFilled: [],
-                    degreeReqsFilled: []
-                }
-            ],
+            classes: [defaultCourses[0], defaultCourses[1]],
             credits: 6
         },
         {
             id: "1",
             season: "Spring",
             year: 2020,
-            classes: [
-                {
-                    department: "CISC",
-                    courseCode: 437,
-                    title: "Introduction to Database Systems",
-                    credits: 3,
-                    prereqs: ["CISC181", "CISC210"],
-                    description: "SQL go burr",
-                    prereqsFilled: [],
-                    degreeReqsFilled: []
-                },
-                {
-                    department: "CISC",
-                    courseCode: 482,
-                    title: "Artificial Intelligence",
-                    credits: 3,
-                    prereqs: ["CISC181", "CISC210"],
-                    description: "Computers be thinkin",
-                    prereqsFilled: [],
-                    degreeReqsFilled: []
-                }
-            ],
+            classes: [defaultCourses[2], defaultCourses[3]],
             credits: 6
         }
     ],

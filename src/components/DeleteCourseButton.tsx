@@ -6,7 +6,7 @@ import { Semester } from "../interfaces/semester";
 interface DelCourseProp {
     semester: Semester;
     course: Course;
-    delFunct: (courseDept: string, courseCode: number, semID: string) => void;
+    delFunct: (courseID: string, semID: string) => void;
 }
 
 export function DeleteCourseButton({
@@ -19,9 +19,7 @@ export function DeleteCourseButton({
         <div>
             <Button
                 variant="danger"
-                onClick={() =>
-                    delFunct(course.department, course.courseCode, semester.id)
-                }
+                onClick={() => delFunct(course.courseId, semester.id)}
             >
                 Delete
             </Button>

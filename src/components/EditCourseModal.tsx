@@ -18,7 +18,7 @@ export function EditCourseModal({
     semester: Semester;
     course: Course;
     closeModal: () => void;
-    courseEditor: (oldCourse: Course, newCourse: Course, semID: string) => void;
+    courseEditor: (courseID: string, newCourse: Course, semID: string) => void;
 }): JSX.Element {
     return (
         <Modal show={showModal} onHide={closeModal} animation={false} size="lg">

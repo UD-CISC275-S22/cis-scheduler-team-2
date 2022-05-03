@@ -3,6 +3,7 @@ import { Plan } from "../interfaces/plan";
 import { Button, Form } from "react-bootstrap";
 import { Course } from "../interfaces/course";
 import cisc from "../assets/cisc.json";
+import { v4 as uuidv4 } from "uuid";
 
 //Add passer function that does [...planArray, newPlan] inside of App.tsx, this should also give the Plan an ID
 //Add functionality to clear the textboxes once the plan is added
@@ -28,7 +29,8 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         prereqs: [currCourse.preReq],
         description: currCourse.descr,
         prereqsFilled: [],
-        degreeReqsFilled: []
+        degreeReqsFilled: [],
+        courseId: uuidv4()
     };
     const newCourse: Course = {
         department: currCourse.code.substring(0, 4),
@@ -39,7 +41,8 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: [],
-        originalData: newBackupCourse
+        originalData: newBackupCourse,
+        courseId: newBackupCourse.courseId
     };
     return newCourse;
 });
