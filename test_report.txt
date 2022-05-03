@@ -54,7 +54,7 @@ All files                  |       0 |        0 |       0 |       0 |
   AddCourseButton.tsx      |       0 |      100 |       0 |       0 | 19-23             
   AddCourseModal.tsx       |       0 |      100 |       0 |       0 | 21                
   AddCourseToSemester.tsx  |       0 |        0 |       0 |       0 | 28-418            
-  AddNewPlan.tsx           |       0 |        0 |       0 |       0 | 21-174            
+  AddNewPlan.tsx           |       0 |        0 |       0 |       0 | 22-175            
   ClearAllSemesters.tsx    |       0 |        0 |       0 |       0 | 22-53             
   ClearSemester.tsx        |       0 |      100 |       0 |       0 | 17-21             
   CourseList.tsx           |       0 |        0 |       0 |       0 | 16-47             
@@ -70,16 +70,17 @@ All files                  |       0 |        0 |       0 |       0 |
   ListAllPlans.tsx         |       0 |        0 |       0 |       0 | 21-39             
   MoveCourseButton.tsx     |       0 |        0 |       0 |       0 | 30-56             
   MoveFromPool.tsx         |       0 |      100 |       0 |       0 | 19-28             
+  ParsePrereq.tsx          |       0 |        0 |       0 |       0 | 2-18              
   SemesterTable.tsx        |       0 |      100 |       0 |       0 | 41-47             
   WelcomeMessage.tsx       |       0 |      100 |       0 |       0 | 14                
  src/interfaces            |       0 |        0 |       0 |       0 |                   
   course.ts                |       0 |        0 |       0 |       0 |                   
-  placeholderPlan.ts       |       0 |        0 |       0 |       0 | 6-66              
+  placeholderPlan.ts       |       0 |        0 |       0 |       0 | 7-67              
   plan.ts                  |       0 |        0 |       0 |       0 |                   
   semester.ts              |       0 |        0 |       0 |       0 |                   
 ---------------------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 failed, 1 total
 Tests:       0 total
 Snapshots:   0 total
-Time:        3.87 s
+Time:        4.035 s
 Ran all test suites.
