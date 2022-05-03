@@ -25,13 +25,9 @@ export function SemesterTable({
     clearSem: (semesterId: string) => void;
     deleteSemester: (semesterId: string) => void;
     courseAdder: (newCourse: Course, semID: string) => void;
-    delCourseFunct: (
-        courseDept: string,
-        courseCode: number,
-        semID: string
-    ) => void;
+    delCourseFunct: (courseID: string, semID: string) => void;
     editCourseFunct: (
-        oldCourse: Course,
+        courseID: string,
         newCourse: Course,
         semID: string
     ) => void;

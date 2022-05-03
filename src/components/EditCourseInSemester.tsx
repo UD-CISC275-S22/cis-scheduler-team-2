@@ -13,7 +13,7 @@ type ChangeEvent = React.ChangeEvent<
 interface addCourseToSemesterProp {
     semID: string;
     course: Course;
-    courseEditor: (oldCourse: Course, newCourse: Course, semID: string) => void;
+    courseEditor: (courseID: string, newCourse: Course, semID: string) => void;
     closeModal: () => void;
 }
 
@@ -235,7 +235,7 @@ export function EditCourseInSemester({
         //  ...newCourse,
         //originalData: { ...newCourse }
         //};
-        courseEditor(course, newCourse, semID);
+        courseEditor(course.courseId, newCourse, semID);
         closeModal();
     }
 
@@ -250,7 +250,7 @@ export function EditCourseInSemester({
                 originalData: newCourse.originalData
             };
             updateCourse(defaultCourse);
-            courseEditor(course, defaultCourse, semID);
+            courseEditor(course.courseId, defaultCourse, semID);
             closeModal();
             //addCourse();
         }

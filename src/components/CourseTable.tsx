@@ -17,13 +17,9 @@ export function CourseTable({
 }: {
     semester: Semester;
     plan: Plan;
-    delCourseFunct: (
-        courseDept: string,
-        courseCode: number,
-        semID: string
-    ) => void;
+    delCourseFunct: (courseID: string, semID: string) => void;
     editCourseFunct: (
-        oldCourse: Course,
+        courseID: string,
         newCourse: Course,
         semID: string
     ) => void;
