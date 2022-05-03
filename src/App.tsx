@@ -204,28 +204,18 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
-    function deleteCourse(
-        courseDept: string,
-        courseCode: number,
-        semID: string
-    ) {
+    function deleteCourse(courseID: string, semID: string) {
         //deletes the specific course from the active plan, properly updating Semester credits also
         const toFix = activePlan.semesters.filter(
             (aSem: Semester): boolean => aSem.id === semID
         );
         const getClass = toFix[0].classes.filter(
-            (aCourse: Course): boolean =>
-                aCourse.department === courseDept &&
-                aCourse.courseCode === courseCode
+            (aCourse: Course): boolean => aCourse.courseId === courseID
         );
         const fixCreds =
             toFix[0].credits - getClass[0].credits * getClass.length;
         const fixCourse = toFix[0].classes.filter(
-            (aCourse: Course): boolean =>
-                !(
-                    aCourse.department === courseDept &&
-                    aCourse.courseCode === courseCode
-                )
+            (aCourse: Course): boolean => !(aCourse.courseId === courseID)
         );
         const fixedPlan = {
             ...activePlan,
@@ -258,11 +248,7 @@ function App(): JSX.Element {
         // As long as the course isn't being moved to the same semester, move it
         if (toSemester !== fromSemester) {
             addCourse(courseToMove, toSemester.id);
-            deleteCourse(
-                courseToMove.department,
-                courseToMove.courseCode,
-                fromSemester.id
-            );
+            deleteCourse(courseToMove.courseId, fromSemester.id);
         }
     }
 
