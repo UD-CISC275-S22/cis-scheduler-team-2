@@ -2,6 +2,7 @@ import { Course } from "./course";
 import { Plan } from "./plan";
 import cisc from "../assets/cisc.json";
 import { v4 as uuidv4 } from "uuid";
+import { parsePrereq } from "../components/ParsePrereq";
 
 const course_keys: string[] = Object.keys(cisc.CISC);
 const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
@@ -11,7 +12,7 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         courseCode: parseInt(currCourse.code.substring(5)),
         title: currCourse.name,
         credits: parseInt(currCourse.credits),
-        prereqs: [currCourse.preReq],
+        prereqs: [...parsePrereq(currCourse.preReq)],
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: [],
@@ -22,7 +23,7 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
         courseCode: parseInt(currCourse.code.substring(5)),
         title: currCourse.name,
         credits: parseInt(currCourse.credits),
-        prereqs: [currCourse.preReq],
+        prereqs: [...parsePrereq(currCourse.preReq)],
         description: currCourse.descr,
         prereqsFilled: [],
         degreeReqsFilled: [],
