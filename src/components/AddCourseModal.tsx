@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, ModalTitle } from "react-bootstrap";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import { AddCourseToSemester } from "./AddCourseToSemester";
 import { Course } from "../interfaces/course";
 import { Semester } from "../interfaces/semester";
@@ -20,11 +19,11 @@ export function AddCourseModal({
 }): JSX.Element {
     return (
         <Modal show={showModal} onHide={closeModal} animation={false} size="lg">
-            <ModalHeader closeButton>
+            <Modal.Header closeButton>
                 <ModalTitle>
                     Add Course to {semester.season} {semester.year}
                 </ModalTitle>
-            </ModalHeader>
+            </Modal.Header>
             <Modal.Body>
                 <AddCourseToSemester
                     semID={semester.id}

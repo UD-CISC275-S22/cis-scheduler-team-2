@@ -1,8 +1,5 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
@@ -30,12 +27,12 @@ export function MoveCourseButton({
     return (
         <div>
             <Dropdown>
-                <DropdownToggle>Move to...</DropdownToggle>
-                <DropdownMenu>
+                <Dropdown.Toggle>Move to...</Dropdown.Toggle>
+                <Dropdown.Menu>
                     {plan.semesters.map((semester: Semester) => {
                         if (semester.id !== currentSemester.id) {
                             return (
-                                <DropdownItem
+                                <Dropdown.Item
                                     onClick={() =>
                                         moveCourse(
                                             course,
@@ -47,19 +44,19 @@ export function MoveCourseButton({
                                     eventKey={semester.id}
                                 >
                                     {`${semester.season} ${semester.year}`}
-                                </DropdownItem>
+                                </Dropdown.Item>
                             );
                         }
                     })}
-                    <DropdownItem
+                    <Dropdown.Item
                         onClick={() =>
                             moveCourseToPool(course, currentSemester)
                         }
                         eventKey={"coursePool"}
                     >
                         Course Pool
-                    </DropdownItem>
-                </DropdownMenu>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
             </Dropdown>
         </div>
     );
