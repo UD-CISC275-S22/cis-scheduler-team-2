@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Semester } from "../interfaces/semester";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Col, Form, Modal, ModalTitle, Row } from "react-bootstrap";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 export function InsertSemesterModal({
     showModal,
@@ -32,9 +31,9 @@ export function InsertSemesterModal({
 
     return (
         <Modal show={showModal} onHide={closeModal} animation={false}>
-            <ModalHeader closeButton>
+            <Modal.Header closeButton>
                 <ModalTitle>Add Semester</ModalTitle>
-            </ModalHeader>
+            </Modal.Header>
             <Modal.Body>
                 <Form.Group controlId="formYear" as={Row}>
                     <Form.Label column sm={3}>

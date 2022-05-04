@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, ModalTitle } from "react-bootstrap";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 //holds the modal and brings up the welcome message in a pop-up window
 
@@ -13,9 +12,9 @@ export function WelcomeMessage({
 }): JSX.Element {
     return (
         <Modal show={showModal} onHide={closeModal} animation={false} size="lg">
-            <ModalHeader closeButton>
+            <Modal.Header closeButton>
                 <ModalTitle>Welcome to the UD scheduling app!</ModalTitle>
-            </ModalHeader>
+            </Modal.Header>
             <Modal.Body>
                 Create a new plan on the right, then add your semesters in the
                 plan viewing area on the left. Existing courses can be added to
