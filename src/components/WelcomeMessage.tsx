@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, ModalTitle } from "react-bootstrap";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 //holds the modal and brings up the welcome message in a pop-up window
 
