@@ -3,32 +3,136 @@ import { render, screen } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
 
-test("renders the course name somewhere", () => {
-    render(<App />);
-    const linkElement = screen.getByText(/CISC275/i);
-    expect(linkElement).toBeInTheDocument();
-});
-
 //Example Test Suite
-describe("App Testing Examples", () => {
+describe("Testing creation, selection, and deletion of plans", () => {
     beforeEach(() => {
         render(<App />);
     });
-    //Specific Example of testing multiple components:
-    test("User can add new plan view it delete it and return back to original starter plan", () => {
-        const select = screen.getByRole("combobox");
-        const newPlanEntryArr = screen.getAllByRole("textbox"); //Gets the 2 textboxes
-        const newPlanButton = screen.getByTestId("new_plan_button");
-        const delPlanButton = screen.getByTestId("delete_plan_button");
-        userEvent.type(newPlanEntryArr[0], "new plan");
-        userEvent.type(newPlanEntryArr[1], "4");
+    test("The default plan is the first plan in the list", () => {
+        const linkElement = screen.getByText("Active Plan: Sample Plan");
+        expect(linkElement).toBeInTheDocument();
+    });
+    test("Users can create another plan and swap to it", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
         newPlanButton.click(); //Creates the new plan
         userEvent.selectOptions(select, "new plan"); //Selects the new plan
+        expect(screen.getByText("Active Plan: new plan")).toBeInTheDocument();
+    });
+    test("Users can swap back to a previous plan", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
+        newPlanButton.click();
+        userEvent.selectOptions(select, "new plan");
+        expect(screen.getByText("Active Plan: new plan")).toBeInTheDocument();
+        userEvent.selectOptions(select, "Sample Plan");
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+    });
+    test("Users can swap freely between multiple plans", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
+        newPlanButton.click();
+        userEvent.type(newPlanName, "plan3");
+        userEvent.type(newPlanYear, "2002");
+        newPlanButton.click();
+        userEvent.selectOptions(select, "new plan");
+        expect(screen.getByText("Active Plan: new plan")).toBeInTheDocument();
+        userEvent.selectOptions(select, "Sample Plan");
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        userEvent.selectOptions(select, "plan3");
+        expect(screen.getByText("Active Plan: plan3")).toBeInTheDocument();
+        userEvent.selectOptions(select, "new plan");
+        expect(screen.getByText("Active Plan: new plan")).toBeInTheDocument();
+        userEvent.selectOptions(select, "Sample Plan");
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        userEvent.selectOptions(select, "plan3");
+        expect(screen.getByText("Active Plan: plan3")).toBeInTheDocument();
+    });
+    test("Users can't delete when there is only 1 plan", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        const delPlanButton = screen.getByTestId("delete_plan_button");
         delPlanButton.click(); //Deletes the new plan
-        expect(screen.getByText("Fall 2022")).toBeInTheDocument(); //Expects original plan's text to be in the document
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
+        newPlanButton.click();
+        userEvent.selectOptions(select, "new plan");
+        delPlanButton.click(); //Deletes the new plan
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        delPlanButton.click(); //Deletes the new plan
+        delPlanButton.click(); //Deletes the new plan
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+    });
+    test("Users can create another plan and swap to it, then delete it and return to the original", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        const delPlanButton = screen.getByTestId("delete_plan_button");
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
+        newPlanButton.click();
+        userEvent.selectOptions(select, "new plan");
+        delPlanButton.click(); //Deletes the new plan
+        const linkElement = screen.getByText("Active Plan: Sample Plan");
+        expect(linkElement).toBeInTheDocument();
+    });
+    test("Users can delete a plan and still swap between the remaining plans", () => {
+        const select = screen.getByTestId("plan_selection");
+        const newPlanName = screen.getByTestId("add_plan_name");
+        const newPlanYear = screen.getByTestId("add_plan_year");
+        const newPlanButton = screen.getByTestId("add_plan_button");
+        const delPlanButton = screen.getByTestId("delete_plan_button");
+        userEvent.type(newPlanName, "new plan");
+        userEvent.type(newPlanYear, "4");
+        newPlanButton.click();
+        userEvent.type(newPlanName, "plan3");
+        userEvent.type(newPlanYear, "2002");
+        newPlanButton.click();
+        userEvent.selectOptions(select, "new plan");
+        expect(screen.getByText("Active Plan: new plan")).toBeInTheDocument();
+        delPlanButton.click(); //Deletes the new plan
+        userEvent.selectOptions(select, "Sample Plan");
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        userEvent.selectOptions(select, "plan3");
+        expect(screen.getByText("Active Plan: plan3")).toBeInTheDocument();
+        userEvent.selectOptions(select, "Sample Plan");
+        expect(
+            screen.getByText("Active Plan: Sample Plan")
+        ).toBeInTheDocument();
+        delPlanButton.click();
+        expect(screen.getByText("Active Plan: plan3")).toBeInTheDocument();
     });
 });
-
 //Some generic test templates, non-functional
 /**
 test("Some component renders template", () => {
