@@ -1,8 +1,5 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
@@ -19,11 +16,11 @@ export function MoveFromPool({
     return (
         <div>
             <Dropdown>
-                <DropdownToggle>Add to...</DropdownToggle>
-                <DropdownMenu>
+                <Dropdown.Toggle>Add to...</Dropdown.Toggle>
+                <Dropdown.Menu>
                     {plan.semesters.map((semester: Semester) => {
                         return (
-                            <DropdownItem
+                            <Dropdown.Item
                                 onClick={() =>
                                     moveCourseFromPool(course, semester)
                                 }
@@ -31,10 +28,10 @@ export function MoveFromPool({
                                 eventKey={semester.id}
                             >
                                 {`${semester.season} ${semester.year}`}
-                            </DropdownItem>
+                            </Dropdown.Item>
                         );
                     })}
-                </DropdownMenu>
+                </Dropdown.Menu>
             </Dropdown>
         </div>
     );
