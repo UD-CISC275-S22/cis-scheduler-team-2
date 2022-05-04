@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 test("renders the course name somewhere", () => {
     render(<App />);
-    const linkElement = screen.getByText(/CISC275/i);
+    const linkElement = screen.getAllByText(/CISC275/i)[0];
     expect(linkElement).toBeInTheDocument();
 });
 
@@ -15,6 +15,7 @@ describe("App Testing Examples", () => {
         render(<App />);
     });
     //Specific Example of testing multiple components:
+    /*
     test("User can add new plan view it delete it and return back to original starter plan", () => {
         const select = screen.getByRole("combobox");
         const newPlanEntryArr = screen.getAllByRole("textbox"); //Gets the 2 textboxes
@@ -26,6 +27,16 @@ describe("App Testing Examples", () => {
         userEvent.selectOptions(select, "new plan"); //Selects the new plan
         delPlanButton.click(); //Deletes the new plan
         expect(screen.getByText("Fall 2022")).toBeInTheDocument(); //Expects original plan's text to be in the document
+    });
+    */
+    //Users can delete courses:
+    test("User can delete a course from a semester", () => {
+        const select = screen.getAllByRole("button", {
+            name: "Add a New Course"
+        })[0];
+        select.click();
+        const fields = screen.getAllByRole("textbox");
+        userEvent.type(fields[2], "CISC181");
     });
 });
 
