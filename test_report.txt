@@ -2,85 +2,76 @@
 > react-typescript-starter@0.1.0 test
 > react-scripts test "--coverage"
 
-FAIL src/App.test.tsx
-  ● Test suite failed to run
+  console.log
+    Original Data:
 
-    Jest encountered an unexpected token
+      at resetToDefault (src/components/EditCourseInSemester.tsx:245:17)
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+  console.log
+    {
+      department: 'CISC',
+      courseCode: 275,
+      title: 'Introduction to Software Engineering',
+      credits: 3,
+      prereqs: [ 'CISC181', 'CISC220' ],
+      description: 'Object oriented software design and development through use of an object oriented programming language. Topics include team programming, design patterns, graphical user interfaces, software engineering tools (e.g., integrated development environments, version control, build management, bug tracking, automated testing).',
+      prereqsFilled: [],
+      degreeReqsFilled: [],
+      courseId: 'd9629c36-d215-4893-998a-17376723a70b'
+    }
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+      at resetToDefault (src/components/EditCourseInSemester.tsx:246:17)
 
-    By default "node_modules" folder is ignored by transformers.
+PASS src/App.test.tsx (12.339 s)
+  Testing creation, selection, and deletion of plans
+    ✓ The default plan is the first plan in the list (517 ms)
+    ✓ Users can create another plan and swap to it (789 ms)
+    ✓ Users can swap back to a previous plan (751 ms)
+    ✓ Users can swap freely between multiple plans (1335 ms)
+    ✓ Users can't delete when there is only 1 plan (643 ms)
+    ✓ Users can create another plan and swap to it, then delete it and return to the original (565 ms)
+    ✓ Users can delete a plan and still swap between the remaining plans (1156 ms)
+    ✓ User can delete a course from a semester (399 ms)
+    ✓ User can edit and revert changes to a course (2088 ms)
+    ✓ User can create a custom course in a semester (1041 ms)
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
-
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
-
-    Details:
-
-    /home/runner/work/cis-scheduler-team-2/cis-scheduler-team-2/node_modules/react-bootstrap/esm/DropdownItem.js:1
-    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import classNames from 'classnames';
-                                                                                      ^^^^^^
-
-    SyntaxError: Cannot use import statement outside a module
-
-      1 | import React from "react";
-      2 | import { Dropdown } from "react-bootstrap";
-    > 3 | import DropdownItem from "react-bootstrap/esm/DropdownItem";
-        | ^
-      4 | import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-      5 | import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
-      6 | import { Course } from "../interfaces/course";
-
-      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
-      at Object.<anonymous> (src/components/MoveFromPool.tsx:3:1)
-
----------------------------|---------|----------|---------|---------|-------------------
-File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
----------------------------|---------|----------|---------|---------|-------------------
-All files                  |       0 |        0 |       0 |       0 |                   
- src                       |       0 |        0 |       0 |       0 |                   
-  App.tsx                  |       0 |        0 |       0 |       0 | 20-324            
- src/components            |       0 |        0 |       0 |       0 |                   
-  AddCourseButton.tsx      |       0 |      100 |       0 |       0 | 19-23             
-  AddCourseModal.tsx       |       0 |      100 |       0 |       0 | 21                
-  AddCourseToSemester.tsx  |       0 |        0 |       0 |       0 | 28-418            
-  AddNewPlan.tsx           |       0 |        0 |       0 |       0 | 22-175            
-  ClearAllSemesters.tsx    |       0 |        0 |       0 |       0 | 22-53             
-  ClearSemester.tsx        |       0 |      100 |       0 |       0 | 17-21             
-  CourseList.tsx           |       0 |        0 |       0 |       0 | 16-47             
-  CourseTable.tsx          |       0 |        0 |       0 |       0 | 33-59             
-  CourseView.tsx           |       0 |        0 |       0 |       0 | 17-23             
-  DeleteCourseButton.tsx   |       0 |      100 |       0 |       0 | 18-22             
-  DeletePlan.tsx           |       0 |      100 |       0 |       0 | 12-16             
-  DeleteSemesterButton.tsx |       0 |      100 |       0 |       0 | 12-14             
-  EditCourseButton.tsx     |       0 |      100 |       0 |       0 | 21-25             
-  EditCourseInSemester.tsx |       0 |        0 |       0 |       0 | 27-390            
-  EditCourseModal.tsx      |       0 |      100 |       0 |       0 | 23                
-  InsertSemesterModal.tsx  |       0 |        0 |       0 |       0 | 16-61             
-  ListAllPlans.tsx         |       0 |        0 |       0 |       0 | 21-39             
-  MoveCourseButton.tsx     |       0 |        0 |       0 |       0 | 30-56             
-  MoveFromPool.tsx         |       0 |      100 |       0 |       0 | 19-28             
-  ParsePrereq.tsx          |       0 |        0 |       0 |       0 | 2-18              
-  SemesterTable.tsx        |       0 |      100 |       0 |       0 | 41-47             
-  WelcomeMessage.tsx       |       0 |      100 |       0 |       0 | 14                
- src/interfaces            |       0 |        0 |       0 |       0 |                   
-  course.ts                |       0 |        0 |       0 |       0 |                   
-  placeholderPlan.ts       |       0 |        0 |       0 |       0 | 7-67              
-  plan.ts                  |       0 |        0 |       0 |       0 |                   
-  semester.ts              |       0 |        0 |       0 |       0 |                   
----------------------------|---------|----------|---------|---------|-------------------
-Test Suites: 1 failed, 1 total
-Tests:       0 total
+---------------------------|---------|----------|---------|---------|-----------------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s           
+---------------------------|---------|----------|---------|---------|-----------------------------
+All files                  |   67.68 |    64.63 |   58.86 |   67.85 |                             
+ src                       |   36.69 |    26.47 |   30.23 |   37.73 |                             
+  App.tsx                  |   36.69 |    26.47 |   30.23 |   37.73 | 56-91,161-321               
+ src/components            |   77.59 |    72.95 |   68.75 |    77.3 |                             
+  AddCourseButton.tsx      |     100 |      100 |     100 |     100 |                             
+  AddCourseModal.tsx       |     100 |      100 |     100 |     100 |                             
+  AddCourseToSemester.tsx  |   77.65 |    74.41 |   65.38 |   77.65 | 176-199,231-233,354,386,418 
+  AddNewPlan.tsx           |   89.18 |       75 |   88.88 |   89.18 | 94-97                       
+  ClearAllSemesters.tsx    |    5.55 |        0 |   14.28 |    5.55 | 22-49                       
+  ClearSemester.tsx        |      50 |      100 |      50 |      50 | 21                          
+  CourseList.tsx           |      75 |       50 |     100 |      75 | 47                          
+  CourseTable.tsx          |      75 |      100 |   66.66 |      75 | 36                          
+  CourseView.tsx           |   66.66 |       50 |      50 |   66.66 | 20                          
+  DeleteCourseButton.tsx   |      50 |      100 |      50 |      50 | 22                          
+  DeletePlan.tsx           |     100 |      100 |     100 |     100 |                             
+  DeleteSemesterButton.tsx |      50 |      100 |      50 |      50 | 14                          
+  EditCourseButton.tsx     |     100 |      100 |     100 |     100 |                             
+  EditCourseInSemester.tsx |   87.36 |    81.39 |   77.77 |   87.36 | 191-205,358,390             
+  EditCourseModal.tsx      |     100 |      100 |     100 |     100 |                             
+  InsertSemesterModal.tsx  |   42.85 |        0 |      25 |   42.85 | 22-29,47-60                 
+  ListAllPlans.tsx         |     100 |       75 |     100 |     100 | 24                          
+  MoveCourseButton.tsx     |      60 |      100 |      50 |      60 | 37-53                       
+  MoveFromPool.tsx         |       0 |      100 |       0 |       0 | 16-25                       
+  ParsePrereq.tsx          |     100 |      100 |     100 |     100 |                             
+  SemesterTable.tsx        |     100 |      100 |     100 |     100 |                             
+  WelcomeMessage.tsx       |     100 |      100 |     100 |     100 |                             
+ src/interfaces            |     100 |      100 |     100 |     100 |                             
+  course.ts                |       0 |        0 |       0 |       0 |                             
+  placeholderPlan.ts       |     100 |      100 |     100 |     100 |                             
+  plan.ts                  |       0 |        0 |       0 |       0 |                             
+  semester.ts              |       0 |        0 |       0 |       0 |                             
+---------------------------|---------|----------|---------|---------|-----------------------------
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
 Snapshots:   0 total
-Time:        4.035 s
+Time:        12.966 s
 Ran all test suites.
