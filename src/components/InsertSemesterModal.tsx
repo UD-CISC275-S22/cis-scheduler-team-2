@@ -24,7 +24,7 @@ export function InsertSemesterModal({
     const [year, setYear] = useState<number>(2022);
     const [season, setSeason] = useState<string>("Fall");
 
-    const [warningModal, setWarningModal] = useState<boolean>(false);
+    const [warningMessage, setWarningMessage] = useState<boolean>(false);
 
     const target = useRef(null);
 
@@ -43,7 +43,7 @@ export function InsertSemesterModal({
         ) {
             closeModal();
         } else {
-            setWarningModal(!warningModal);
+            setWarningMessage(!warningMessage);
         }
     }
 
@@ -95,9 +95,9 @@ export function InsertSemesterModal({
                 <Overlay
                     placement="right"
                     target={target.current}
-                    show={warningModal}
+                    show={warningMessage}
                 >
-                    <Tooltip show={warningModal}>
+                    <Tooltip show={warningMessage}>
                         Semester with this year and season already exists
                     </Tooltip>
                 </Overlay>
