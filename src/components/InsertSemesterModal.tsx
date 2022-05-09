@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Semester } from "../interfaces/semester";
 import { v4 as uuidv4 } from "uuid";
-import { Button, Col, Form, Modal, ModalTitle, Row } from "react-bootstrap";
+import {
+    Button,
+    Col,
+    Form,
+    Modal,
+    ModalTitle,
+    Overlay,
+    Row,
+    Tooltip
+} from "react-bootstrap";
 
 export function InsertSemesterModal({
     showModal,
@@ -10,23 +19,32 @@ export function InsertSemesterModal({
 }: {
     showModal: boolean;
     closeModal: () => void;
-    addSemester: (newSemester: Semester) => void;
+    addSemester: (newSemester: Semester) => boolean;
 }): JSX.Element {
     const [year, setYear] = useState<number>(2022);
     const [season, setSeason] = useState<string>("Fall");
+
+    const [warningModal, setWarningModal] = useState<boolean>(false);
+
+    const target = useRef(null);
 
     /**
      * Passes a new semester into the addSemester function and closes the modal view
      */
     function saveChanges() {
-        addSemester({
-            id: uuidv4(),
-            year: year,
-            season: season,
-            classes: [],
-            credits: 0
-        });
-        closeModal();
+        if (
+            addSemester({
+                id: uuidv4(),
+                year: year,
+                season: season,
+                classes: [],
+                credits: 0
+            })
+        ) {
+            closeModal();
+        } else {
+            setWarningModal(!warningModal);
+        }
     }
 
     return (
@@ -71,9 +89,18 @@ export function InsertSemesterModal({
                 <Button variant="secondary" onClick={closeModal}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={saveChanges}>
+                <Button ref={target} variant="primary" onClick={saveChanges}>
                     Save Changes
                 </Button>
+                <Overlay
+                    placement="right"
+                    target={target.current}
+                    show={warningModal}
+                >
+                    <Tooltip show={warningModal}>
+                        Semester with this year and season already exists
+                    </Tooltip>
+                </Overlay>
             </Modal.Footer>
         </Modal>
     );

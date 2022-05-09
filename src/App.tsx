@@ -13,6 +13,7 @@ import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
 import { WelcomeMessage } from "./components/WelcomeMessage";
+import { act } from "react-dom/test-utils";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
@@ -156,13 +157,18 @@ function App(): JSX.Element {
      *
      * @param newSemester The semester that will be added to the plan
      */
-    function addSemester(newSemester: Semester): void {
+    function addSemester(newSemester: Semester): boolean {
         // Checking if the new semester already exists
         const existing = activePlan.semesters.find(
             (semester: Semester): boolean => semester.id === newSemester.id
         );
+        const existsByTerm = activePlan.semesters.find(
+            (semester: Semester): boolean =>
+                semester.year === newSemester.year &&
+                semester.season === newSemester.season
+        );
         // If the semester doesn't exist, crete a new plan with an updated semesters array
-        if (existing === undefined) {
+        if (existing === undefined && existsByTerm === undefined) {
             const fixedPlan = {
                 id: activePlan.id,
                 name: activePlan.name,
@@ -176,8 +182,10 @@ function App(): JSX.Element {
             // Updating the active plan and the plan list to both contain the updated plan that contains the new semester
             setActivePlan(fixedPlan);
             updatePlans(fixedPlanList);
+            return true;
+        } else {
+            return false;
         }
-        return;
     }
 
     /**
