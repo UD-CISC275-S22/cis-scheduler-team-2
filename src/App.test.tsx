@@ -133,6 +133,25 @@ describe("Testing creation, selection, and deletion of plans", () => {
         expect(screen.getByText("Active Plan: plan3")).toBeInTheDocument();
     });
 });
+
+describe("Adding and removing semester tests", () => {
+    beforeEach(() => {
+        render(<App />);
+    });
+    test("User can add a semester", () => {
+        const closeButton = screen.getByRole("button", { name: /close/i });
+        closeButton.click();
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(screen.getByText("Semester: Fall 2022")).not.toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        //const typeSemesterYear = screen.getByTestId("add_semester_year");
+        //const semesterSeason = screen.getByTestId("add_semester_season");
+        //userEvent.type(typeSemesterYear, "1900");
+        saveSemester.click();
+        expect(screen.getByText("Semester: Fall 2022")).toBeInTheDocument();
+    });
+});
 //Some generic test templates, non-functional
 /**
 test("Some component renders template", () => {

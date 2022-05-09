@@ -45,6 +45,7 @@ export function InsertSemesterModal({
                             onChange={(
                                 event: React.ChangeEvent<HTMLInputElement>
                             ) => setYear(parseInt(event.target.value) || 0)}
+                            data-testid="add_semester_year"
                         ></Form.Control>
                     </Col>
                 </Form.Group>
@@ -58,6 +59,7 @@ export function InsertSemesterModal({
                             onChange={(
                                 event: React.ChangeEvent<HTMLSelectElement>
                             ) => setSeason(event.target.value)}
+                            data-testid="add_semester_season"
                         >
                             <option value="Fall">Fall</option>
                             <option value="Spring">Spring</option>
@@ -68,10 +70,18 @@ export function InsertSemesterModal({
                 </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={closeModal}>
+                <Button
+                    variant="secondary"
+                    onClick={closeModal}
+                    data-testid="close_semester_modal"
+                >
                     Close
                 </Button>
-                <Button variant="primary" onClick={saveChanges}>
+                <Button
+                    variant="primary"
+                    onClick={saveChanges}
+                    data-testid="save_semester"
+                >
                     Save Changes
                 </Button>
             </Modal.Footer>
