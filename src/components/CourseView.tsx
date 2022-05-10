@@ -32,8 +32,11 @@ export function CourseView({
                                     onClick={flipVis}
                                     style={{ cursor: "pointer" }}
                                 >
-                                    {course.department} {course.courseCode}:{" "}
-                                    {course.title}
+                                    {course.department}{" "}
+                                    {course.courseCode
+                                        .toString()
+                                        .padStart(3, "0")}
+                                    : {course.title}
                                 </h4>
                             </Row>
                             <Row>
