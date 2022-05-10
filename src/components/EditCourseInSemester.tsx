@@ -51,8 +51,9 @@ export function EditCourseInSemester({
 
     //states holding the values in each of the boxes
     const [codeBox, changeCode] = useState<string>(
-        course.department + course.courseCode
+        course.department + course.courseCode.toString().padStart(3, "0")
     );
+
     const [titleBox, changeTitle] = useState<string>(course.title);
     const [credsBox, changeCreds] = useState<string>(String(course.credits));
     const [reqsBox, changeReqs] = useState<string>("");
@@ -68,6 +69,7 @@ export function EditCourseInSemester({
             titleBox !== "" &&
             credsBox !== "" &&
             !isNaN(Number(credsBox)) &&
+            credsBox.replaceAll(" ", "").length > 0 &&
             descBox !== "" &&
             codeBox.length === 7 &&
             !specialChars.test(dept) &&

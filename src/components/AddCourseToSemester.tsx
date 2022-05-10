@@ -62,6 +62,7 @@ export function AddCourseToSemester({
             titleBox !== "" &&
             credsBox !== "" &&
             !isNaN(Number(credsBox)) &&
+            credsBox.replaceAll(" ", "").length > 0 &&
             descBox !== "" &&
             codeBox.length === 7 &&
             !specialChars.test(dept) &&
