@@ -13,7 +13,6 @@ import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
 import { WelcomeMessage } from "./components/WelcomeMessage";
-import { act } from "react-dom/test-utils";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
