@@ -3,6 +3,7 @@ import { Course } from "../interfaces/course";
 import { Plan } from "../interfaces/plan";
 import { Semester } from "../interfaces/semester";
 import { CourseView } from "./CourseView";
+import { Virtuoso } from "react-virtuoso";
 
 export function CourseList({
     plan,
@@ -28,17 +29,17 @@ export function CourseList({
                         borderColor: "gray"
                     }}
                 >
-                    <ul style={{ listStyle: "none", paddingLeft: "0" }}>
-                        {plan.coursePool.map((course: Course) => (
-                            <li key={course.courseId}>
-                                <CourseView
-                                    course={course}
-                                    plan={plan}
-                                    moveCourseFromPool={moveCourseFromPool}
-                                ></CourseView>
-                            </li>
-                        ))}
-                    </ul>
+                    <Virtuoso
+                        style={{ height: "100%" }}
+                        totalCount={plan.coursePool.length}
+                        itemContent={(index) => (
+                            <CourseView
+                                course={plan.coursePool[index]}
+                                plan={plan}
+                                moveCourseFromPool={moveCourseFromPool}
+                            ></CourseView>
+                        )}
+                    ></Virtuoso>
                 </div>
             </div>
         );

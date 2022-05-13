@@ -3,6 +3,7 @@ import { Plan } from "../interfaces/plan";
 import { Button, Form } from "react-bootstrap";
 import { Course } from "../interfaces/course";
 import cisc from "../assets/cisc.json";
+import catalog from "../assets/catalog.json";
 import { v4 as uuidv4 } from "uuid";
 import { parsePrereq } from "./ParsePrereq";
 
@@ -48,6 +49,43 @@ const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
     return newCourse;
 });
 
+const coursePool = Object.entries(catalog).map(
+    ([departmentId, courses]: [
+        string,
+        Record<string, Record<string, string>>
+    ]) =>
+        Object.entries(courses).map(
+            ([courseNum, course]: [string, Record<string, string>]) => {
+                const backupCourse: Course = {
+                    department: departmentId,
+                    courseCode: parseInt(courseNum.substring(5)),
+                    title: course.name,
+                    credits: parseInt(course.credits),
+                    prereqs: [...parsePrereq(course.preReq)],
+                    description: course.descr,
+                    prereqsFilled: [],
+                    degreeReqsFilled: [],
+                    courseId: uuidv4()
+                };
+                const newCourse: Course = {
+                    department: departmentId,
+                    courseCode: parseInt(courseNum.substring(5)),
+                    title: course.name,
+                    credits: parseInt(course.credits),
+                    prereqs: [...parsePrereq(course.preReq)],
+                    description: course.descr,
+                    prereqsFilled: [],
+                    degreeReqsFilled: [],
+                    originalData: backupCourse,
+                    courseId: backupCourse.courseId
+                };
+                return newCourse;
+            }
+        )
+);
+
+const flattenedPool = coursePool.flat();
+
 export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
     const seasons = ["Fall", "Winter", "Spring", "Summer"];
 
@@ -58,7 +96,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
         ],
         //remember to auto-update the id
         id: 0,
-        coursePool: [...CISC_COURSES]
+        coursePool: [...flattenedPool]
     });
 
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
@@ -126,7 +164,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     }
                 ],
                 id: 0,
-                coursePool: [...CISC_COURSES]
+                coursePool: [...flattenedPool]
             });
         }
     }
