@@ -249,18 +249,114 @@ describe("Adding and removing semester tests", () => {
     beforeEach(() => {
         render(<App />);
     });
+    test("User can delete a semester", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+        expect(screen.getByText("Semester: Fall 2020")).toBeInTheDocument();
+        const deleteSemesterButtons = screen.getAllByText("Delete Semester");
+        deleteSemesterButtons[0].click();
+        expect(
+            screen.queryByText("Semester: Fall 2020")
+        ).not.toBeInTheDocument();
+    });
     test("User can add a semester", () => {
-        const closeButton = screen.getByRole("button", { name: /close/i });
-        closeButton.click();
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+
         const addSemester = screen.getByTestId("add_semester_button");
-        expect(screen.getByText("Semester: Fall 2022")).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Semester: Fall 1900")
+        ).not.toBeInTheDocument();
         addSemester.click();
         const saveSemester = screen.getByTestId("save_semester");
-        //const typeSemesterYear = screen.getByTestId("add_semester_year");
-        //const semesterSeason = screen.getByTestId("add_semester_season");
-        //userEvent.type(typeSemesterYear, "1900");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "1900");
         saveSemester.click();
-        expect(screen.getByText("Semester: Fall 2022")).toBeInTheDocument();
+        expect(screen.getByText("Semester: Fall 1900")).toBeInTheDocument();
+    });
+    test("User can delete a semester they added", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(
+            screen.queryByText("Semester: Fall 1900")
+        ).not.toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "1900");
+        saveSemester.click();
+        expect(screen.getByText("Semester: Fall 1900")).toBeInTheDocument();
+        const deleteSemesterButtons = screen.getAllByText("Delete Semester");
+        deleteSemesterButtons[2].click();
+        expect(
+            screen.queryByText("Semester: Fall 1900")
+        ).not.toBeInTheDocument();
+    });
+    test("Typing a non-numeric semester is disallowed & keeps only the numeric component", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(
+            screen.queryByText("Semester: Fall 1900")
+        ).not.toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "h3i");
+        expect(screen.queryByText("hi")).not.toBeInTheDocument();
+        saveSemester.click();
+        expect(screen.getByText("Semester: Fall 3")).toBeInTheDocument();
+    });
+    test("User can add multiple semesters and semesters in any season", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(
+            screen.queryByText("Semester: Fall 1900")
+        ).not.toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        const selectSemesterSeason = screen.getByTestId("add_semester_season");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "1900");
+        userEvent.selectOptions(selectSemesterSeason, "Spring");
+        saveSemester.click();
+        expect(screen.getByText("Semester: Spring 1900"));
+        addSemester.click();
+        const saveSemester2 = screen.getByTestId("save_semester");
+        const typeSemesterYear2 = screen.getByTestId("add_semester_year");
+        const selectSemesterSeason2 = screen.getByTestId("add_semester_season");
+        userEvent.clear(typeSemesterYear2);
+        userEvent.type(typeSemesterYear2, "1901");
+        userEvent.selectOptions(selectSemesterSeason2, "Winter");
+        saveSemester2.click();
+        expect(screen.getByText("Semester: Winter 1901")).toBeInTheDocument();
+        addSemester.click();
+        const saveSemester3 = screen.getByTestId("save_semester");
+        const typeSemesterYear3 = screen.getByTestId("add_semester_year");
+        const selectSemesterSeason3 = screen.getByTestId("add_semester_season");
+        userEvent.clear(typeSemesterYear3);
+        userEvent.type(typeSemesterYear3, "1902");
+        userEvent.selectOptions(selectSemesterSeason3, "Summer");
+        saveSemester3.click();
+        expect(screen.getByText("Semester: Summer 1902")).toBeInTheDocument();
     });
 });
 //Some generic test templates, non-functional
