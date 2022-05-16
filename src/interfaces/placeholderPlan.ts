@@ -108,7 +108,8 @@ const samplePlan: Plan = {
             course.courseCode !== 320 &&
             course.courseCode !== 437 &&
             course.courseCode !== 482
-    )
+    ),
+    degree: ["CISC181, CISC210"]
 };
 
 export { samplePlan };

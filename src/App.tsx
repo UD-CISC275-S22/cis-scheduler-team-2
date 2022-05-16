@@ -72,7 +72,8 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: fixedSemesters,
-            coursePool: [...modifiedCoursePool]
+            coursePool: [...modifiedCoursePool],
+            degree: activePlan.degree
         };
         /** Array of plans that replaces the current active plan with the fixed plan */
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -164,7 +165,8 @@ function App(): JSX.Element {
                 id: activePlan.id,
                 name: activePlan.name,
                 semesters: [...activePlan.semesters, newSemester],
-                coursePool: activePlan.coursePool
+                coursePool: activePlan.coursePool,
+                degree: activePlan.degree
             };
             // Creating a list that replaces the active plan with the fixed plan
             const fixedPlanList = planList.map((plan: Plan) =>
@@ -192,7 +194,8 @@ function App(): JSX.Element {
             semesters: activePlan.semesters.filter(
                 (semester: Semester): boolean => semester.id !== semesterId
             ),
-            coursePool: activePlan.coursePool
+            coursePool: activePlan.coursePool,
+            degree: activePlan.degree
         };
         // Creating a list of plans that replaces the active plan with the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -277,7 +280,8 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: activePlan.semesters,
-            coursePool: [...newCoursePool]
+            coursePool: [...newCoursePool],
+            degree: activePlan.degree
         };
         // Creating a new plan list that contains the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -311,7 +315,8 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: fixedSemesters,
-            coursePool: [...newCoursePool]
+            coursePool: [...newCoursePool],
+            degree: activePlan.degree
         };
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }

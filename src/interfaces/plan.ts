@@ -13,4 +13,6 @@ export interface Plan {
     id: number;
     /** Pool of courses for this plan */
     coursePool: Course[];
+    /** Array of requirements, represented as strings */
+    degree: string[];
 }
