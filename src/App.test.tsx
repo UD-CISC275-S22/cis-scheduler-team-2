@@ -359,6 +359,101 @@ describe("Adding and removing semester tests", () => {
         expect(screen.getByText("Semester: Summer 1902")).toBeInTheDocument();
     });
 });
+describe("Testing moving and deleting courses", () => {
+    beforeEach(() => {
+        render(<App />);
+    });
+    test("The user has the option to move a course to one of the other semesters or the course pool", () => {
+        //Fix Not Wrapped in act?
+        expect(screen.queryByText("Spring 2020")).not.toBeInTheDocument();
+        expect(screen.getAllByText("Course Pool").length === 1);
+        const moveCourseButtons = screen.getAllByText("Move to...");
+        moveCourseButtons[0].click();
+        expect(screen.getAllByText("Spring 2020").length === 1);
+        expect(screen.queryByText("Fall 2020")).not.toBeInTheDocument();
+        expect(screen.getAllByText("Course Pool").length === 2);
+        moveCourseButtons[3].click();
+        expect(screen.getAllByText("Spring 2020").length === 1);
+        expect(screen.getAllByText("Fall 2020").length === 1);
+        expect(screen.getAllByText("Course Pool").length === 3);
+    });
+    test("Moving the course to the course pool actually moves it there", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        const moveCourseButtons = screen.getAllByText("Move to...");
+        moveCourseButtons[0].click();
+        const moveToPool = screen.getAllByText("Course Pool");
+        moveToPool[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+    });
+    test("Deleting a single course from a semester works", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const deleteButtons = screen.getAllByText("Delete");
+        deleteButtons[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        deleteButtons[4].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).not.toBeInTheDocument();
+    });
+    test("Clearing a single semesters removes only the courses in that semester", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Algorithms")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const clearSemesterButtons = screen.getAllByText("Clear This Semester");
+        clearSemesterButtons[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Algorithms")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+    });
+    //Clear All Semesters below
+    test("Clearing All Semesters removes all the semesters", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const deleteAllCourses = screen.getByText(
+            "Clear Courses From All Semesters"
+        );
+        deleteAllCourses.click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).not.toBeInTheDocument();
+    });
+});
 //Some generic test templates, non-functional
 /**
 test("Some component renders template", () => {
