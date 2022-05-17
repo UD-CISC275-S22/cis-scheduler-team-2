@@ -245,7 +245,7 @@ describe("Testing creation, selection, and deletion of plans", () => {
     });
 });
 
-describe("Adding and removing semester tests", () => {
+describe("Semester tests", () => {
     beforeEach(() => {
         render(<App />);
     });
@@ -278,6 +278,27 @@ describe("Adding and removing semester tests", () => {
         userEvent.type(typeSemesterYear, "1900");
         saveSemester.click();
         expect(screen.getByText("Semester: Fall 1900")).toBeInTheDocument();
+    });
+    test("User cannot add a duplicate semester", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(screen.queryByText("Semester: Fall 2020")).toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "2020");
+        saveSemester.click();
+        expect(
+            screen.getByText(
+                "Semester with this year and season already exists"
+            )
+        ).toBeInTheDocument();
+        expect(screen.getAllByText("Semester: Fall 2020").length === 1);
     });
     test("User can delete a semester they added", () => {
         const closeWelcomeButton = screen.getByRole("button", {
