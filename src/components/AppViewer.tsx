@@ -34,7 +34,9 @@ export function AppViewer({
     //deleteCourseFromPool,
     showModal,
     addSemester,
-    handleCloseInsertSemesterModal
+    handleCloseInsertSemesterModal,
+    requirementsVisible,
+    swapVisibility
 }: {
     showWelcome: boolean;
     handleCloseWelcomeModal: () => void;
@@ -61,6 +63,8 @@ export function AppViewer({
     showModal: boolean;
     addSemester: (newSemester: Semester) => boolean;
     handleCloseInsertSemesterModal: () => void;
+    requirementsVisible: boolean;
+    swapVisibility: () => void;
 }): JSX.Element {
     return (
         <div className="App">
@@ -71,77 +75,86 @@ export function AppViewer({
                 showModal={showWelcome}
                 closeModal={handleCloseWelcomeModal}
             ></WelcomeMessage>
-            <div>
-                Requirements Viewer
-                <DegreeViewer
-                    filledRequirements={activePlan.filledRequirements}
-                    degreeRequirements={activePlan.degree}
-                ></DegreeViewer>
-            </div>
-            <Row>
-                <Col>
-                    <ListAllPlans
-                        allPlans={planList}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></ListAllPlans>
-                    Active Plan: {activePlan.name}
-                    <DeletePlanButton
-                        PlanList={planList}
-                        deleteFunct={deletePlan}
-                    ></DeletePlanButton>
-                </Col>
-                <Col>
-                    <AddNewPlan addPlan={addPlan}></AddNewPlan>
-                </Col>
-            </Row>
-            <hr></hr>
-            <Row>
-                <Col sm={8}>
-                    <SemesterTable
-                        plan={activePlan}
-                        clearSem={clearSemester}
-                        deleteSemester={deleteSemester}
-                        courseAdder={addCourse}
-                        delCourseFunct={deleteCourse}
-                        editCourseFunct={editCourse}
-                        moveCourse={moveCourse}
-                        moveCourseToPool={moveCourseToPool}
-                    ></SemesterTable>
-                    <hr />
-                    <Button
-                        onClick={handleShowInsertSemesterModal}
-                        data-testid="add_semester_button"
-                    >
-                        Add Semester
-                    </Button>
-                    <hr />
-                    <EmptySemestersButton
-                        allPlans={planList}
-                        updatePlans={updatePlans}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></EmptySemestersButton>
-                </Col>
-                <Col sm={4}>
-                    <CourseList
-                        plan={activePlan}
-                        moveCourseFromPool={moveCourseFromPool}
-                        moveCourseToPool={moveCourseToPool}
-                    ></CourseList>
-                </Col>
-            </Row>
-            <hr></hr>
-            <p>
-                Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
-                Nicholls
-            </p>
-            <hr></hr>
-            <InsertSemesterModal
-                showModal={showModal}
-                addSemester={addSemester}
-                closeModal={handleCloseInsertSemesterModal}
-            ></InsertSemesterModal>
+            <Button onClick={() => swapVisibility()}>
+                Swap To Requirement View
+            </Button>
+            {requirementsVisible && (
+                <div>
+                    Requirements Viewer
+                    <DegreeViewer
+                        filledRequirements={activePlan.filledRequirements}
+                        degreeRequirements={activePlan.degree}
+                    ></DegreeViewer>
+                </div>
+            )}
+            {!requirementsVisible && (
+                <div>
+                    <Row>
+                        <Col>
+                            <ListAllPlans
+                                allPlans={planList}
+                                activePlan={activePlan}
+                                setActivePlan={setActivePlan}
+                            ></ListAllPlans>
+                            Active Plan: {activePlan.name}
+                            <DeletePlanButton
+                                PlanList={planList}
+                                deleteFunct={deletePlan}
+                            ></DeletePlanButton>
+                        </Col>
+                        <Col>
+                            <AddNewPlan addPlan={addPlan}></AddNewPlan>
+                        </Col>
+                    </Row>
+                    <hr></hr>
+                    <Row>
+                        <Col sm={8}>
+                            <SemesterTable
+                                plan={activePlan}
+                                clearSem={clearSemester}
+                                deleteSemester={deleteSemester}
+                                courseAdder={addCourse}
+                                delCourseFunct={deleteCourse}
+                                editCourseFunct={editCourse}
+                                moveCourse={moveCourse}
+                                moveCourseToPool={moveCourseToPool}
+                            ></SemesterTable>
+                            <hr />
+                            <Button
+                                onClick={handleShowInsertSemesterModal}
+                                data-testid="add_semester_button"
+                            >
+                                Add Semester
+                            </Button>
+                            <hr />
+                            <EmptySemestersButton
+                                allPlans={planList}
+                                updatePlans={updatePlans}
+                                activePlan={activePlan}
+                                setActivePlan={setActivePlan}
+                            ></EmptySemestersButton>
+                        </Col>
+                        <Col sm={4}>
+                            <CourseList
+                                plan={activePlan}
+                                moveCourseFromPool={moveCourseFromPool}
+                                moveCourseToPool={moveCourseToPool}
+                            ></CourseList>
+                        </Col>
+                    </Row>
+                    <hr></hr>
+                    <p>
+                        Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
+                        Nicholls
+                    </p>
+                    <hr></hr>
+                    <InsertSemesterModal
+                        showModal={showModal}
+                        addSemester={addSemester}
+                        closeModal={handleCloseInsertSemesterModal}
+                    ></InsertSemesterModal>
+                </div>
+            )}
         </div>
     );
 }

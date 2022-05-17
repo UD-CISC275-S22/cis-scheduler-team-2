@@ -361,6 +361,13 @@ function App(): JSX.Element {
         console.log(filteredRequirements);
         return filteredRequirements;
     }
+    const [requirementsVisible, setRequirementsVisible] =
+        useState<boolean>(false);
+
+    function swapVisibility() {
+        setRequirementsVisible(!requirementsVisible);
+        console.log(requirementsVisible);
+    }
     return (
         <div>
             <AppViewer
@@ -384,6 +391,8 @@ function App(): JSX.Element {
                 showModal={showModal}
                 addSemester={addSemester}
                 handleCloseInsertSemesterModal={handleCloseInsertSemesterModal}
+                requirementsVisible={requirementsVisible}
+                swapVisibility={swapVisibility}
             ></AppViewer>
         </div>
     );
