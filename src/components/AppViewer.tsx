@@ -12,6 +12,8 @@ import { Semester } from "../interfaces/semester";
 import { Course } from "../interfaces/course";
 import { WelcomeMessage } from "../components/WelcomeMessage";
 import { DegreeViewer } from "./DegreeViewer";
+import { ExportCSVFile } from "../components/ExportCSVFile";
+import { ImportCSVFile } from "../components/ImportCSVFile";
 
 export function AppViewer({
     showWelcome,
@@ -36,7 +38,8 @@ export function AppViewer({
     addSemester,
     handleCloseInsertSemesterModal,
     requirementsVisible,
-    swapVisibility
+    swapVisibility,
+    importPlan
 }: {
     showWelcome: boolean;
     handleCloseWelcomeModal: () => void;
@@ -65,6 +68,7 @@ export function AppViewer({
     handleCloseInsertSemesterModal: () => void;
     requirementsVisible: boolean;
     swapVisibility: () => void;
+    importPlan: (thePlan: Plan) => void;
 }): JSX.Element {
     return (
         <div className="App">
@@ -97,6 +101,12 @@ export function AppViewer({
                                 setActivePlan={setActivePlan}
                             ></ListAllPlans>
                             Active Plan: {activePlan.name}
+                            <ExportCSVFile thePlan={activePlan}></ExportCSVFile>
+                            <br />
+                            <ImportCSVFile
+                                importPlan={importPlan}
+                            ></ImportCSVFile>
+                            <br />
                             <DeletePlanButton
                                 PlanList={planList}
                                 deleteFunct={deletePlan}
