@@ -5,6 +5,7 @@ import { samplePlan } from "./interfaces/placeholderPlan";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
 import { AppViewer } from "./components/AppViewer";
+import { flattenedPool } from "./components/AddNewPlan";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
@@ -320,6 +321,12 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
+    function importPlan(thePlan: Plan) {
+        const fixPol = { ...thePlan, coursePool: flattenedPool };
+        addPlan(fixPol);
+        setActivePlan(fixPol);
+    }
+
     return (
         <AppViewer
             showWelcome={showWelcome}
@@ -342,6 +349,7 @@ function App(): JSX.Element {
             showModal={showModal}
             addSemester={addSemester}
             handleCloseInsertSemesterModal={handleCloseInsertSemesterModal}
+            importPlan={importPlan}
         ></AppViewer>
     );
 }
