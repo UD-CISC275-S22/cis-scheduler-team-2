@@ -2,8 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
+import { CourseView } from "./components/CourseView";
+import { samplePlan } from "./interfaces/placeholderPlan";
 
-//Example Test Suite
+//Plan Tests
 describe("Testing creation, selection, and deletion of plans", () => {
     beforeEach(() => {
         render(<App />);
@@ -245,7 +247,8 @@ describe("Testing creation, selection, and deletion of plans", () => {
     });
 });
 
-describe("Semester tests", () => {
+//Semester tests
+describe("Semester tests: deleting, adding, etc.", () => {
     beforeEach(() => {
         render(<App />);
     });
@@ -380,6 +383,8 @@ describe("Semester tests", () => {
         expect(screen.getByText("Semester: Summer 1902")).toBeInTheDocument();
     });
 });
+
+//Course Tests
 describe("Testing moving and deleting courses", () => {
     beforeEach(() => {
         render(<App />);
@@ -473,6 +478,30 @@ describe("Testing moving and deleting courses", () => {
         expect(
             screen.queryByText("Introduction to Human-Computer Interaction")
         ).not.toBeInTheDocument();
+    });
+});
+
+//CourseView.tsx tests
+describe("Testing courseview", () => {
+    beforeEach(() => {
+        render(
+            <CourseView
+                course={samplePlan.coursePool[0]}
+                plan={samplePlan}
+                moveCourseFromPool={() => true}
+            ></CourseView>
+        );
+    });
+    test("CourseView renders the course passed in", () => {
+        expect(
+            screen.getByText("ACCT 166: SPECIAL PROBLEM")
+        ).toBeInTheDocument();
+    });
+    test("Clicking the course name reveals a button to move the course to a semester", () => {
+        expect(screen.queryByText("Add to...")).not.toBeInTheDocument();
+        const clickableName = screen.getByText("ACCT 166: SPECIAL PROBLEM");
+        clickableName.click();
+        expect(screen.getByText("Add to...")).toBeInTheDocument();
     });
 });
 //Some generic test templates, non-functional
