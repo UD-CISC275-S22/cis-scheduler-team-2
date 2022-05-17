@@ -11,6 +11,7 @@ import { EmptySemestersButton } from "../components/ClearAllSemesters";
 import { Semester } from "../interfaces/semester";
 import { Course } from "../interfaces/course";
 import { WelcomeMessage } from "../components/WelcomeMessage";
+import { DegreeViewer } from "./DegreeViewer";
 
 export function AppViewer({
     showWelcome,
@@ -70,6 +71,13 @@ export function AppViewer({
                 showModal={showWelcome}
                 closeModal={handleCloseWelcomeModal}
             ></WelcomeMessage>
+            <div>
+                Requirements Viewer
+                <DegreeViewer
+                    filledRequirements={activePlan.filledRequirements}
+                    degreeRequirements={activePlan.degree}
+                ></DegreeViewer>
+            </div>
             <Row>
                 <Col>
                     <ListAllPlans

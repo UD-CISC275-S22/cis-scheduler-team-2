@@ -5,8 +5,6 @@ import { samplePlan } from "./interfaces/placeholderPlan";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
 import { AppViewer } from "./components/AppViewer";
-import { Button } from "react-bootstrap";
-//"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
     //this is the state containing the list of plans
@@ -365,13 +363,6 @@ function App(): JSX.Element {
     }
     return (
         <div>
-            <Button onClick={() => getAllRequirements(activePlan)}>
-                Test the new functions!
-            </Button>
-            <div>
-                Requirements Viewer
-                <h3>{activePlan.filledRequirements}</h3>
-            </div>
             <AppViewer
                 showWelcome={showWelcome}
                 handleCloseWelcomeModal={handleCloseWelcomeModal}
