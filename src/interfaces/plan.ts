@@ -15,4 +15,6 @@ export interface Plan {
     coursePool: Course[];
     /** Array of requirements, represented as strings */
     degree: string[];
+    /** Array of fulfilled requirements, represented as strings */
+    filledRequirements: string[];
 }
