@@ -2,8 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
+import { CourseView } from "./components/CourseView";
+import { samplePlan } from "./interfaces/placeholderPlan";
 
-//Example Test Suite
+//Plan Tests
 describe("Testing creation, selection, and deletion of plans", () => {
     beforeEach(() => {
         render(<App />);
@@ -245,7 +247,8 @@ describe("Testing creation, selection, and deletion of plans", () => {
     });
 });
 
-describe("Adding and removing semester tests", () => {
+//Semester tests
+describe("Semester tests: deleting, adding, etc.", () => {
     beforeEach(() => {
         render(<App />);
     });
@@ -278,6 +281,27 @@ describe("Adding and removing semester tests", () => {
         userEvent.type(typeSemesterYear, "1900");
         saveSemester.click();
         expect(screen.getByText("Semester: Fall 1900")).toBeInTheDocument();
+    });
+    test("User cannot add a duplicate semester", () => {
+        const closeWelcomeButton = screen.getByRole("button", {
+            name: /close/i
+        });
+        closeWelcomeButton.click();
+
+        const addSemester = screen.getByTestId("add_semester_button");
+        expect(screen.queryByText("Semester: Fall 2020")).toBeInTheDocument();
+        addSemester.click();
+        const saveSemester = screen.getByTestId("save_semester");
+        const typeSemesterYear = screen.getByTestId("add_semester_year");
+        userEvent.clear(typeSemesterYear);
+        userEvent.type(typeSemesterYear, "2020");
+        saveSemester.click();
+        expect(
+            screen.getByText(
+                "Semester with this year and season already exists"
+            )
+        ).toBeInTheDocument();
+        expect(screen.getAllByText("Semester: Fall 2020").length === 1);
     });
     test("User can delete a semester they added", () => {
         const closeWelcomeButton = screen.getByRole("button", {
@@ -357,6 +381,127 @@ describe("Adding and removing semester tests", () => {
         userEvent.selectOptions(selectSemesterSeason3, "Summer");
         saveSemester3.click();
         expect(screen.getByText("Semester: Summer 1902")).toBeInTheDocument();
+    });
+});
+
+//Course Tests
+describe("Testing moving and deleting courses", () => {
+    beforeEach(() => {
+        render(<App />);
+    });
+    test("The user has the option to move a course to one of the other semesters or the course pool", () => {
+        //Fix Not Wrapped in act?
+        expect(screen.queryByText("Spring 2020")).not.toBeInTheDocument();
+        expect(screen.getAllByText("Course Pool").length === 1);
+        const moveCourseButtons = screen.getAllByText("Move to...");
+        moveCourseButtons[0].click();
+        expect(screen.getAllByText("Spring 2020").length === 1);
+        expect(screen.queryByText("Fall 2020")).not.toBeInTheDocument();
+        expect(screen.getAllByText("Course Pool").length === 2);
+        moveCourseButtons[3].click();
+        expect(screen.getAllByText("Spring 2020").length === 1);
+        expect(screen.getAllByText("Fall 2020").length === 1);
+        expect(screen.getAllByText("Course Pool").length === 3);
+    });
+    test("Moving the course to the course pool actually moves it there", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        const moveCourseButtons = screen.getAllByText("Move to...");
+        moveCourseButtons[0].click();
+        const moveToPool = screen.getAllByText("Course Pool");
+        moveToPool[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+    });
+    test("Deleting a single course from a semester works", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const deleteButtons = screen.getAllByText("Delete");
+        deleteButtons[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        deleteButtons[4].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).not.toBeInTheDocument();
+    });
+    test("Clearing a single semesters removes only the courses in that semester", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Algorithms")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const clearSemesterButtons = screen.getAllByText("Clear This Semester");
+        clearSemesterButtons[0].click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Algorithms")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+    });
+    //Clear All Semesters below
+    test("Clearing All Semesters removes all the semesters", () => {
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).toBeInTheDocument();
+        const deleteAllCourses = screen.getByText(
+            "Clear Courses From All Semesters"
+        );
+        deleteAllCourses.click();
+        expect(
+            screen.queryByText("Introduction to Software Engineering")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Introduction to Human-Computer Interaction")
+        ).not.toBeInTheDocument();
+    });
+});
+
+//CourseView.tsx tests
+describe("Testing courseview", () => {
+    beforeEach(() => {
+        render(
+            <CourseView
+                course={samplePlan.coursePool[0]}
+                plan={samplePlan}
+                moveCourseFromPool={() => true}
+            ></CourseView>
+        );
+    });
+    test("CourseView renders the course passed in", () => {
+        expect(
+            screen.getByText("ACCT 166: SPECIAL PROBLEM")
+        ).toBeInTheDocument();
+    });
+    test("Clicking the course name reveals a button to move the course to a semester", () => {
+        expect(screen.queryByText("Add to...")).not.toBeInTheDocument();
+        const clickableName = screen.getByText("ACCT 166: SPECIAL PROBLEM");
+        clickableName.click();
+        expect(screen.getByText("Add to...")).toBeInTheDocument();
     });
 });
 //Some generic test templates, non-functional

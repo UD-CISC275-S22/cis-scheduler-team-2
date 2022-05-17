@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
-import { CourseList } from "./components/CourseList";
 import { Plan } from "./interfaces/plan";
-import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
-import { DeletePlanButton } from "./components/DeletePlan";
-import { ListAllPlans } from "./components/ListAllPlans";
-import { Button, Col, Row } from "react-bootstrap";
-import { SemesterTable } from "./components/SemesterTable";
-import { InsertSemesterModal } from "./components/InsertSemesterModal";
-import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
-import { WelcomeMessage } from "./components/WelcomeMessage";
+import { AppViewer } from "./components/AppViewer";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
@@ -329,79 +321,28 @@ function App(): JSX.Element {
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
-                UD CISC275 with React Hooks and TypeScript
-            </header>
-            <WelcomeMessage
-                showModal={showWelcome}
-                closeModal={handleCloseWelcomeModal}
-            ></WelcomeMessage>
-            <Row>
-                <Col>
-                    <ListAllPlans
-                        allPlans={planList}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></ListAllPlans>
-                    Active Plan: {activePlan.name}
-                    <DeletePlanButton
-                        PlanList={planList}
-                        deleteFunct={deletePlan}
-                    ></DeletePlanButton>
-                </Col>
-                <Col>
-                    <AddNewPlan addPlan={addPlan}></AddNewPlan>
-                </Col>
-            </Row>
-            <hr></hr>
-            <Row>
-                <Col sm={8}>
-                    <SemesterTable
-                        plan={activePlan}
-                        clearSem={clearSemester}
-                        deleteSemester={deleteSemester}
-                        courseAdder={addCourse}
-                        delCourseFunct={deleteCourse}
-                        editCourseFunct={editCourse}
-                        moveCourse={moveCourse}
-                        moveCourseToPool={moveCourseToPool}
-                    ></SemesterTable>
-                    <hr />
-                    <Button
-                        onClick={handleShowInsertSemesterModal}
-                        data-testid="add_semester_button"
-                    >
-                        Add Semester
-                    </Button>
-                    <hr />
-                    <EmptySemestersButton
-                        allPlans={planList}
-                        updatePlans={updatePlans}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></EmptySemestersButton>
-                </Col>
-                <Col sm={4}>
-                    <CourseList
-                        plan={activePlan}
-                        moveCourseFromPool={moveCourseFromPool}
-                        moveCourseToPool={moveCourseToPool}
-                    ></CourseList>
-                </Col>
-            </Row>
-            <hr></hr>
-            <p>
-                Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
-                Nicholls
-            </p>
-            <hr></hr>
-            <InsertSemesterModal
-                showModal={showModal}
-                addSemester={addSemester}
-                closeModal={handleCloseInsertSemesterModal}
-            ></InsertSemesterModal>
-        </div>
+        <AppViewer
+            showWelcome={showWelcome}
+            handleCloseWelcomeModal={handleCloseWelcomeModal}
+            planList={planList}
+            activePlan={activePlan}
+            setActivePlan={setActivePlan}
+            deletePlan={deletePlan}
+            addPlan={addPlan}
+            clearSemester={clearSemester}
+            deleteSemester={deleteSemester}
+            addCourse={addCourse}
+            deleteCourse={deleteCourse}
+            editCourse={editCourse}
+            moveCourse={moveCourse}
+            moveCourseToPool={moveCourseToPool}
+            handleShowInsertSemesterModal={handleShowInsertSemesterModal}
+            updatePlans={updatePlans}
+            moveCourseFromPool={moveCourseFromPool}
+            showModal={showModal}
+            addSemester={addSemester}
+            handleCloseInsertSemesterModal={handleCloseInsertSemesterModal}
+        ></AppViewer>
     );
 }
 
