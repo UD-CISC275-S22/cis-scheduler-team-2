@@ -96,7 +96,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
         ],
         //remember to auto-update the id
         id: 0,
-        coursePool: [...flattenedPool]
+        coursePool: [...flattenedPool],
+        degree: [],
+        filledRequirements: []
     });
 
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
@@ -164,7 +166,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                     }
                 ],
                 id: 0,
-                coursePool: [...flattenedPool]
+                coursePool: [...flattenedPool],
+                degree: [],
+                filledRequirements: []
             });
         }
     }
