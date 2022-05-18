@@ -84,11 +84,53 @@ export function AppViewer({
             </Button>
             {requirementsVisible && (
                 <div>
-                    Requirements Viewer
-                    <DegreeViewer
-                        filledRequirements={activePlan.filledRequirements}
-                        degreeRequirements={activePlan.degree}
-                    ></DegreeViewer>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-evenly"
+                        }}
+                    >
+                        <div
+                            style={{
+                                width: "90%",
+                                margin: "5%"
+                            }}
+                        >
+                            <SemesterTable
+                                plan={activePlan}
+                                clearSem={clearSemester}
+                                deleteSemester={deleteSemester}
+                                courseAdder={addCourse}
+                                delCourseFunct={deleteCourse}
+                                editCourseFunct={editCourse}
+                                moveCourse={moveCourse}
+                                moveCourseToPool={moveCourseToPool}
+                            ></SemesterTable>
+                        </div>
+                        <div
+                            style={{
+                                margin: "5%"
+                            }}
+                        >
+                            <DegreeViewer
+                                filledRequirements={
+                                    activePlan.filledRequirements
+                                }
+                                degreeRequirements={activePlan.degree}
+                            ></DegreeViewer>
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            width: "100%"
+                        }}
+                    >
+                        <CourseList
+                            plan={activePlan}
+                            moveCourseFromPool={moveCourseFromPool}
+                            moveCourseToPool={moveCourseToPool}
+                        ></CourseList>
+                    </div>
                 </div>
             )}
             {!requirementsVisible && (
