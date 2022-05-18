@@ -523,34 +523,3 @@ describe("Testing requirement view", () => {
         expect(screen.getAllByText("✅").length === 1);
     });
 });
-
-//Some generic test templates, non-functional
-/**
-test("Some component renders template", () => {
-    expect(screen.getByText("Text Only In That Component")).toBeInTheDocument();
-});
-
-test("Interacting with dropdown menu template", () => {
-    const select = screen.getByTestId("testid"); //makes a select object so we can reference this dropdown menu
-    userEvent.selectOptions(select, "some_selection"); //Requires import: import userEvent from "@testing-library/user-event";
-    expect(
-        screen.getByText(
-            "Some Text That Displays When some_selection is chosen"
-        )
-    ).toBeInTheDocument();
-});
-
-test("Inteacting with a button template", () => {
-    const button = screen.getByRole("button"); //Gets the first button it finds. Use ID if there are multiple buttons
-    button.click(); //Simulates button click
-    expect(
-        screen.getByText("Result of pushing the button")
-    ).toBeInTheDocument();
-});
-
-test("Interacting with a text entry box", () => {
-    const textbox = screen.getByRole("textbox");
-    userEvent.type(textbox, "stuff to enter in textbox");
-    expect(textbox);
-});
-*/

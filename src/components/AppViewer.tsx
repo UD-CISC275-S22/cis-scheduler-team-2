@@ -17,6 +17,7 @@ import { ImportCSVFile } from "../components/ImportCSVFile";
 
 export function AppViewer({
     showWelcome,
+    setShowWelcome,
     handleCloseWelcomeModal,
     planList,
     activePlan,
@@ -44,6 +45,7 @@ export function AppViewer({
     importPlan
 }: {
     showWelcome: boolean;
+    setShowWelcome: () => void;
     handleCloseWelcomeModal: () => void;
     planList: Plan[];
     activePlan: Plan;
@@ -83,6 +85,7 @@ export function AppViewer({
                 showModal={showWelcome}
                 closeModal={handleCloseWelcomeModal}
             ></WelcomeMessage>
+            <Button onClick={setShowWelcome}>Show Instructions</Button>
             {!requirementsVisible && (
                 <Button onClick={() => swapVisibility()}>
                     Swap To Requirement View
