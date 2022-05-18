@@ -38,6 +38,8 @@ export function AppViewer({
     showModal,
     addSemester,
     handleCloseInsertSemesterModal,
+    filterByCourseNumber,
+    filterByDeptID,
     requirementsVisible,
     swapVisibility,
     importPlan
@@ -68,6 +70,8 @@ export function AppViewer({
     showModal: boolean;
     addSemester: (newSemester: Semester) => boolean;
     handleCloseInsertSemesterModal: () => void;
+    filterByCourseNumber: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    filterByDeptID: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     requirementsVisible: boolean;
     swapVisibility: () => void;
     importPlan: (thePlan: Plan) => void;
@@ -139,6 +143,8 @@ export function AppViewer({
                             plan={activePlan}
                             moveCourseFromPool={moveCourseFromPool}
                             moveCourseToPool={moveCourseToPool}
+                            filterByCourseNumber={filterByCourseNumber}
+                            filterByDeptID={filterByDeptID}
                         ></CourseList>
                     </div>
                 </div>
@@ -201,6 +207,8 @@ export function AppViewer({
                                 plan={activePlan}
                                 moveCourseFromPool={moveCourseFromPool}
                                 moveCourseToPool={moveCourseToPool}
+                                filterByCourseNumber={filterByCourseNumber}
+                                filterByDeptID={filterByDeptID}
                             ></CourseList>
                         </Col>
                     </Row>

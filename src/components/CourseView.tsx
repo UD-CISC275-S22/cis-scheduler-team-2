@@ -22,7 +22,7 @@ export function CourseView({
 
     return (
         <div style={{ justifyContent: "center", display: "flex" }}>
-            <div style={{ width: "90%" }}>
+            <div style={{ width: "90%", margin: "0" }}>
                 <hr></hr>
                 <Container>
                     <Row>
