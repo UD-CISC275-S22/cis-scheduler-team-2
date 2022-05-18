@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-import { CourseList } from "./components/CourseList";
 import { Plan } from "./interfaces/plan";
-import { AddNewPlan } from "./components/AddNewPlan";
 import { samplePlan } from "./interfaces/placeholderPlan";
-import { DeletePlanButton } from "./components/DeletePlan";
-import { ListAllPlans } from "./components/ListAllPlans";
-import { Button, Col, Row } from "react-bootstrap";
-import { SemesterTable } from "./components/SemesterTable";
-import { InsertSemesterModal } from "./components/InsertSemesterModal";
-import { EmptySemestersButton } from "./components/ClearAllSemesters";
 import { Semester } from "./interfaces/semester";
 import { Course } from "./interfaces/course";
-import { WelcomeMessage } from "./components/WelcomeMessage";
+import { AppViewer } from "./components/AppViewer";
+import { flattenedPool } from "./components/AddNewPlan";
 //"Add semester" button test id: add_semester_button
 
 function App(): JSX.Element {
@@ -34,6 +27,7 @@ function App(): JSX.Element {
             id: planList[planList.length - 1].id + 1,
             semesters: [...newPlan.semesters]
         };
+        setActivePlan(fixId);
         updatePlans([...planList, fixId]);
     }
 
@@ -80,8 +74,14 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: fixedSemesters,
-            coursePool: [...modifiedCoursePool]
+            coursePool: [...modifiedCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
+            degree: activePlan.degree,
+            filledRequirements: []
         };
+        fixedPlan.filledRequirements = getAllRequirements(fixedPlan);
         /** Array of plans that replaces the current active plan with the fixed plan */
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
@@ -106,6 +106,7 @@ function App(): JSX.Element {
                     aSem.id === semID ? { ...actSems[0] } : { ...aSem }
             );
             actPlan.semesters = replaceSem;
+            actPlan.filledRequirements = getAllRequirements(actPlan);
             const fixedList = planList.map(
                 (aPlan: Plan): Plan =>
                     aPlan.id === actPlan.id ? { ...actPlan } : { ...aPlan }
@@ -135,6 +136,7 @@ function App(): JSX.Element {
                     aSem.id === semID ? { ...getSem[0] } : { ...aSem }
             )
         };
+        fixPlan.filledRequirements = getAllRequirements(fixPlan);
         const fixedList = planList.map(
             (aPlan: Plan): Plan =>
                 aPlan.id === fixPlan.id ? { ...fixPlan } : { ...aPlan }
@@ -148,7 +150,7 @@ function App(): JSX.Element {
     const handleCloseInsertSemesterModal = () => setShowModal(false);
 
     // Opens and closes the welcome message modal view
-    //const handleShowWelcomeModal = () => setShowWelcome(true);
+    const handleShowWelcomeModal = () => setShowWelcome(true);
     const handleCloseWelcomeModal = () => setShowWelcome(false);
 
     /**
@@ -156,19 +158,30 @@ function App(): JSX.Element {
      *
      * @param newSemester The semester that will be added to the plan
      */
-    function addSemester(newSemester: Semester): void {
+    function addSemester(newSemester: Semester): boolean {
         // Checking if the new semester already exists
         const existing = activePlan.semesters.find(
             (semester: Semester): boolean => semester.id === newSemester.id
         );
+        const existsByTerm = activePlan.semesters.find(
+            (semester: Semester): boolean =>
+                semester.year === newSemester.year &&
+                semester.season === newSemester.season
+        );
         // If the semester doesn't exist, crete a new plan with an updated semesters array
-        if (existing === undefined) {
+        if (existing === undefined && existsByTerm === undefined) {
             const fixedPlan = {
                 id: activePlan.id,
                 name: activePlan.name,
                 semesters: [...activePlan.semesters, newSemester],
-                coursePool: activePlan.coursePool
+                coursePool: activePlan.coursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: activePlan.activeFilters,
+                currentDeptFilter: activePlan.currentDeptFilter,
+                degree: activePlan.degree,
+                filledRequirements: [""]
             };
+            fixedPlan.filledRequirements = getAllRequirements(fixedPlan);
             // Creating a list that replaces the active plan with the fixed plan
             const fixedPlanList = planList.map((plan: Plan) =>
                 plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
@@ -176,8 +189,10 @@ function App(): JSX.Element {
             // Updating the active plan and the plan list to both contain the updated plan that contains the new semester
             setActivePlan(fixedPlan);
             updatePlans(fixedPlanList);
+            return true;
+        } else {
+            return false;
         }
-        return;
     }
 
     /**
@@ -193,8 +208,14 @@ function App(): JSX.Element {
             semesters: activePlan.semesters.filter(
                 (semester: Semester): boolean => semester.id !== semesterId
             ),
-            coursePool: activePlan.coursePool
+            coursePool: activePlan.coursePool,
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
+            degree: activePlan.degree,
+            filledRequirements: [""]
         };
+        fixedPlan.filledRequirements = getAllRequirements(fixedPlan);
         // Creating a list of plans that replaces the active plan with the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
@@ -226,6 +247,7 @@ function App(): JSX.Element {
                         : { ...aSem }
             )
         };
+        fixedPlan.filledRequirements = getAllRequirements(fixedPlan);
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
         );
@@ -278,7 +300,12 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: activePlan.semesters,
-            coursePool: [...newCoursePool]
+            coursePool: [...newCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
+            degree: activePlan.degree,
+            filledRequirements: getAllRequirements(activePlan)
         };
         // Creating a new plan list that contains the updated plan
         const fixedPlanList = planList.map((plan: Plan) =>
@@ -312,7 +339,12 @@ function App(): JSX.Element {
             id: activePlan.id,
             name: activePlan.name,
             semesters: fixedSemesters,
-            coursePool: [...newCoursePool]
+            coursePool: [...newCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
+            filledRequirements: activePlan.filledRequirements,
+            degree: activePlan.degree
         };
         const fixedPlanList = planList.map((plan: Plan) =>
             plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
@@ -321,79 +353,200 @@ function App(): JSX.Element {
         updatePlans(fixedPlanList);
     }
 
+    function filterByCourseNumber(event: React.ChangeEvent<HTMLInputElement>) {
+        // Checking which filters have already been applied to the data
+        let localFilterCopy: string[];
+        if (activePlan.activeFilters.includes(event.target.value)) {
+            localFilterCopy = activePlan.activeFilters.filter(
+                (currFilter: string) => currFilter !== event.target.value
+            );
+        } else {
+            localFilterCopy = [...activePlan.activeFilters, event.target.value];
+        }
+
+        localFilterCopy.sort(
+            (a: string, b: string) => parseInt(a) - parseInt(b)
+        );
+
+        const minCourseNo = localFilterCopy.at(0);
+        const maxCourseNo = localFilterCopy.at(-1);
+        console.log(
+            `Min course no: ${minCourseNo}, max course no: ${maxCourseNo}`
+        );
+
+        // If there are currently filters selected:
+        if (localFilterCopy.length > 0) {
+            // Getting the unmodified CouresPool & finding courses that meet the current filter condititons
+            const originalCoursePool: Course[] = [
+                ...activePlan.originalCoursePool
+            ];
+            const alreadyFilteredCourses: Course[][] = localFilterCopy.map(
+                (courseNo: string) =>
+                    originalCoursePool.filter(
+                        (course: Course) =>
+                            course.courseCode >= parseInt(courseNo) &&
+                            course.courseCode < parseInt(courseNo) + 100 &&
+                            course.department ===
+                                activePlan.currentDeptFilter.toLocaleUpperCase()
+                    )
+            );
+            console.log(alreadyFilteredCourses);
+
+            // Merging the filtered results into one long array
+            const flattenedCoursePool = alreadyFilteredCourses.flat();
+            flattenedCoursePool.sort((a: Course, b: Course) => {
+                if (a.department === b.department) {
+                    return 0;
+                } else if (a.department < b.department) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+            const updatedCoursePool: Course[] = [...flattenedCoursePool];
+
+            console.log(flattenedCoursePool);
+
+            // Need a check for if there aren't currently filters applied
+            // Need to make sure that when a box is unchecked (i.e., no longer in localFilterCopy) then the inverse
+            //  of the filter conditions should be met
+
+            const fixedPlan: Plan = {
+                id: activePlan.id,
+                name: activePlan.name,
+                semesters: activePlan.semesters,
+                coursePool: updatedCoursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: [...localFilterCopy],
+                currentDeptFilter: activePlan.currentDeptFilter,
+                degree: activePlan.degree,
+                filledRequirements: activePlan.filledRequirements
+            };
+            const fixedPlanList = planList.map((plan: Plan) =>
+                plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+            );
+            console.log(`Currently applied filters: ${localFilterCopy}`);
+            setActivePlan(fixedPlan);
+            updatePlans(fixedPlanList);
+        } else {
+            // If no filters are currently selected:
+            const originalCoursePool: Course[] = [
+                ...activePlan.originalCoursePool
+            ];
+            const fixedPlan: Plan = {
+                id: activePlan.id,
+                name: activePlan.name,
+                semesters: activePlan.semesters,
+                coursePool: originalCoursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: [...localFilterCopy],
+                currentDeptFilter: activePlan.currentDeptFilter,
+                degree: activePlan.degree,
+                filledRequirements: activePlan.filledRequirements
+            };
+            const fixedPlanList = planList.map((plan: Plan) =>
+                plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+            );
+            console.log(`Currently APPLIED filters: ${localFilterCopy}`);
+            setActivePlan(fixedPlan);
+            updatePlans(fixedPlanList);
+        }
+    }
+
+    function filterByDeptID(event: React.ChangeEvent<HTMLSelectElement>): void {
+        const deptId: string = event.target.value;
+        // If no filters are currently applied:
+        const originalCoursePool: Course[] = [...activePlan.coursePool];
+
+        const updatedCoursePool: Course[] = originalCoursePool.filter(
+            (course: Course) => course.department === deptId.toUpperCase()
+        );
+        console.log(updatedCoursePool);
+
+        const fixedPlan: Plan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: activePlan.semesters,
+            coursePool: updatedCoursePool,
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: deptId,
+            degree: activePlan.degree,
+            filledRequirements: [""]
+        };
+        fixedPlan.filledRequirements = getAllRequirements(fixedPlan);
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+    function getSemesterReqs(semester: Semester): string[] {
+        const basicRequirements = semester.classes.map(
+            (course: Course): string =>
+                course.department + course.courseCode.toString()
+        );
+        const specialRequirements = semester.classes.map(
+            (course: Course): string => course.degreeReqsFilled.toString()
+        );
+        const semesterRequirements =
+            basicRequirements.concat(specialRequirements);
+        return semesterRequirements;
+    }
+    function getAllRequirements(plan: Plan): string[] {
+        let allRequirements: string[] = [];
+        plan.semesters.forEach(
+            (semester: Semester) =>
+                (allRequirements = allRequirements.concat(
+                    getSemesterReqs(semester)
+                ))
+        );
+        const filteredRequirements = allRequirements.filter(
+            (string: string) => string !== ""
+        );
+        return filteredRequirements;
+    }
+    const [requirementsVisible, setRequirementsVisible] =
+        useState<boolean>(false);
+
+    function swapVisibility() {
+        setRequirementsVisible(!requirementsVisible);
+    }
+    function importPlan(thePlan: Plan) {
+        const fixPol = { ...thePlan, coursePool: flattenedPool };
+        addPlan(fixPol);
+        setActivePlan(fixPol);
+    }
     return (
-        <div className="App">
-            <header className="App-header">
-                UD CISC275 with React Hooks and TypeScript
-            </header>
-            <WelcomeMessage
-                showModal={showWelcome}
-                closeModal={handleCloseWelcomeModal}
-            ></WelcomeMessage>
-            <Row>
-                <Col>
-                    <ListAllPlans
-                        allPlans={planList}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></ListAllPlans>
-                    Active Plan: {activePlan.name}
-                    <DeletePlanButton
-                        PlanList={planList}
-                        deleteFunct={deletePlan}
-                    ></DeletePlanButton>
-                </Col>
-                <Col>
-                    <AddNewPlan addPlan={addPlan}></AddNewPlan>
-                </Col>
-            </Row>
-            <hr></hr>
-            <Row>
-                <Col sm={8}>
-                    <SemesterTable
-                        plan={activePlan}
-                        clearSem={clearSemester}
-                        deleteSemester={deleteSemester}
-                        courseAdder={addCourse}
-                        delCourseFunct={deleteCourse}
-                        editCourseFunct={editCourse}
-                        moveCourse={moveCourse}
-                        moveCourseToPool={moveCourseToPool}
-                    ></SemesterTable>
-                    <hr />
-                    <Button
-                        onClick={handleShowInsertSemesterModal}
-                        data-testid="add_semester_button"
-                    >
-                        Add Semester
-                    </Button>
-                    <hr />
-                    <EmptySemestersButton
-                        allPlans={planList}
-                        updatePlans={updatePlans}
-                        activePlan={activePlan}
-                        setActivePlan={setActivePlan}
-                    ></EmptySemestersButton>
-                </Col>
-                <Col sm={4}>
-                    <CourseList
-                        plan={activePlan}
-                        moveCourseFromPool={moveCourseFromPool}
-                        moveCourseToPool={moveCourseToPool}
-                    ></CourseList>
-                </Col>
-            </Row>
-            <hr></hr>
-            <p>
-                Group Members: <br></br>Ryan Evans, Craig Barber, Joshua
-                Nicholls
-            </p>
-            <hr></hr>
-            <InsertSemesterModal
+        <div>
+            <AppViewer
+                showWelcome={showWelcome}
+                setShowWelcome={handleShowWelcomeModal}
+                handleCloseWelcomeModal={handleCloseWelcomeModal}
+                planList={planList}
+                activePlan={activePlan}
+                setActivePlan={setActivePlan}
+                deletePlan={deletePlan}
+                addPlan={addPlan}
+                clearSemester={clearSemester}
+                deleteSemester={deleteSemester}
+                addCourse={addCourse}
+                deleteCourse={deleteCourse}
+                editCourse={editCourse}
+                moveCourse={moveCourse}
+                moveCourseToPool={moveCourseToPool}
+                handleShowInsertSemesterModal={handleShowInsertSemesterModal}
+                updatePlans={updatePlans}
+                moveCourseFromPool={moveCourseFromPool}
                 showModal={showModal}
                 addSemester={addSemester}
-                closeModal={handleCloseInsertSemesterModal}
-            ></InsertSemesterModal>
+                handleCloseInsertSemesterModal={handleCloseInsertSemesterModal}
+                requirementsVisible={requirementsVisible}
+                swapVisibility={swapVisibility}
+                importPlan={importPlan}
+                filterByCourseNumber={filterByCourseNumber}
+                filterByDeptID={filterByDeptID}
+            ></AppViewer>
         </div>
     );
 }

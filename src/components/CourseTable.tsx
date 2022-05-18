@@ -58,7 +58,9 @@ export function CourseTable({
                         {semester.classes.map((course: Course) => (
                             <tr key={course.courseId}>
                                 <th>{course.credits}</th>
-                                <th>{`${course.department}${course.courseCode}`}</th>
+                                <th>{`${course.department}${course.courseCode
+                                    .toString()
+                                    .padStart(3, "0")}`}</th>
                                 <th>{course.title}</th>
                                 <th>
                                     <Row sm={3}>

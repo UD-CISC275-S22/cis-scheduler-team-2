@@ -22,7 +22,7 @@ export function CourseView({
 
     return (
         <div style={{ justifyContent: "center", display: "flex" }}>
-            <div style={{ width: "90%" }}>
+            <div style={{ width: "90%", margin: "0" }}>
                 <hr></hr>
                 <Container>
                     <Row>
@@ -32,8 +32,11 @@ export function CourseView({
                                     onClick={flipVis}
                                     style={{ cursor: "pointer" }}
                                 >
-                                    {course.department} {course.courseCode}:{" "}
-                                    {course.title}
+                                    {course.department}{" "}
+                                    {course.courseCode
+                                        .toString()
+                                        .padStart(3, "0")}
+                                    : {course.title}
                                 </h4>
                             </Row>
                             <Row>

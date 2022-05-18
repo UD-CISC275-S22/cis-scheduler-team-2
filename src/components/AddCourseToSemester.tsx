@@ -62,6 +62,7 @@ export function AddCourseToSemester({
             titleBox !== "" &&
             credsBox !== "" &&
             !isNaN(Number(credsBox)) &&
+            credsBox.replaceAll(" ", "").length > 0 &&
             descBox !== "" &&
             codeBox.length === 7 &&
             !specialChars.test(dept) &&
@@ -132,13 +133,14 @@ export function AddCourseToSemester({
         if (reqsBox.length === 7) {
             const dept = reqsBox.substring(0, 4);
             const code = reqsBox.substring(4);
+            const final = dept.toUpperCase() + code;
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
                 const addReq = {
                     ...newCourse,
-                    prereqs: [...newCourse.prereqs, reqsBox]
+                    prereqs: [...newCourse.prereqs, final]
                 };
                 updateCourse(addReq);
-                newPre([...reqsList, reqsBox]);
+                newPre([...reqsList, final]);
                 changeReqs("");
             }
         }
@@ -149,13 +151,14 @@ export function AddCourseToSemester({
         if (fillsReqsBox.length === 7) {
             const dept = fillsReqsBox.substring(0, 4);
             const code = fillsReqsBox.substring(4);
+            const final = dept.toUpperCase() + code;
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
                 const addReq = {
                     ...newCourse,
-                    prereqsFilled: [...newCourse.prereqsFilled, fillsReqsBox]
+                    prereqsFilled: [...newCourse.prereqsFilled, final]
                 };
                 updateCourse(addReq);
-                newPost([...postreqsList, fillsReqsBox]);
+                newPost([...postreqsList, final]);
                 changeFillsReqs("");
             }
         }
@@ -201,7 +204,7 @@ export function AddCourseToSemester({
 
     function isValidCode(aCode: string): boolean {
         //checks if the course code is a valid string for a course, i.e., CISC275
-        if (aCode.length === 7) {
+        if (aCode.replaceAll(" ", "").length === 7 && aCode.length === 7) {
             const dept = aCode.substring(0, 4);
             const code = aCode.substring(4);
             if (!specialChars.test(dept) && !isNaN(Number(code))) {

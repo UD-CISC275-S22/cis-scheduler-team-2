@@ -51,8 +51,9 @@ export function EditCourseInSemester({
 
     //states holding the values in each of the boxes
     const [codeBox, changeCode] = useState<string>(
-        course.department + course.courseCode
+        course.department + course.courseCode.toString().padStart(3, "0")
     );
+
     const [titleBox, changeTitle] = useState<string>(course.title);
     const [credsBox, changeCreds] = useState<string>(String(course.credits));
     const [reqsBox, changeReqs] = useState<string>("");
@@ -68,6 +69,7 @@ export function EditCourseInSemester({
             titleBox !== "" &&
             credsBox !== "" &&
             !isNaN(Number(credsBox)) &&
+            credsBox.replaceAll(" ", "").length > 0 &&
             descBox !== "" &&
             codeBox.length === 7 &&
             !specialChars.test(dept) &&
@@ -138,13 +140,14 @@ export function EditCourseInSemester({
         if (reqsBox.length === 7) {
             const dept = reqsBox.substring(0, 4);
             const code = reqsBox.substring(4);
+            const final = dept.toUpperCase() + code;
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
                 const addReq = {
                     ...newCourse,
-                    prereqs: [...newCourse.prereqs, reqsBox]
+                    prereqs: [...newCourse.prereqs, final]
                 };
                 updateCourse(addReq);
-                newPre([...reqsList, reqsBox]);
+                newPre([...reqsList, final]);
                 changeReqs("");
             }
         }
@@ -155,13 +158,14 @@ export function EditCourseInSemester({
         if (fillsReqsBox.length === 7) {
             const dept = fillsReqsBox.substring(0, 4);
             const code = fillsReqsBox.substring(4);
+            const final = dept.toUpperCase() + code;
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
                 const addReq = {
                     ...newCourse,
-                    prereqsFilled: [...newCourse.prereqsFilled, fillsReqsBox]
+                    prereqsFilled: [...newCourse.prereqsFilled, final]
                 };
                 updateCourse(addReq);
-                newPost([...postreqsList, fillsReqsBox]);
+                newPost([...postreqsList, final]);
                 changeFillsReqs("");
             }
         }
@@ -207,7 +211,7 @@ export function EditCourseInSemester({
 
     function isValidCode(aCode: string): boolean {
         //checks if the course code is a valid string for a course, i.e., CISC275
-        if (aCode.length === 7) {
+        if (aCode.replaceAll(" ", "").length === 7 && aCode.length === 7) {
             const dept = aCode.substring(0, 4);
             const code = aCode.substring(4);
             if (!specialChars.test(dept) && !isNaN(Number(code))) {
@@ -242,8 +246,6 @@ export function EditCourseInSemester({
     function resetToDefault() {
         //Resets the course information back to the default (if it exists), follows the same basic
         //procedure as updating the fields manually and then adding the course with addCourse.
-        console.log("Original Data:");
-        console.log(newCourse.originalData); //Logging data to the console for debugging purposes
         if (newCourse.originalData) {
             const defaultCourse = {
                 ...newCourse.originalData,

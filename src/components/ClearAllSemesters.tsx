@@ -42,10 +42,7 @@ export function EmptySemestersButton({
             (plan: Plan) => plan.id === activePlan.id
         );
         if (currentPlanIndex != -1) {
-            console.log(clearedPlanList);
             updatePlans(clearedPlanList);
-            console.log(currentPlanIndex);
-            console.log(allPlans);
             setActivePlan(clearedPlanList[currentPlanIndex]);
         }
     }
