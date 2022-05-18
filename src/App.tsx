@@ -74,6 +74,9 @@ function App(): JSX.Element {
             name: activePlan.name,
             semesters: fixedSemesters,
             coursePool: [...modifiedCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
             degree: activePlan.degree,
             filledRequirements: []
         };
@@ -171,6 +174,9 @@ function App(): JSX.Element {
                 name: activePlan.name,
                 semesters: [...activePlan.semesters, newSemester],
                 coursePool: activePlan.coursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: activePlan.activeFilters,
+                currentDeptFilter: activePlan.currentDeptFilter,
                 degree: activePlan.degree,
                 filledRequirements: [""]
             };
@@ -202,6 +208,9 @@ function App(): JSX.Element {
                 (semester: Semester): boolean => semester.id !== semesterId
             ),
             coursePool: activePlan.coursePool,
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
             degree: activePlan.degree,
             filledRequirements: [""]
         };
@@ -291,6 +300,9 @@ function App(): JSX.Element {
             name: activePlan.name,
             semesters: activePlan.semesters,
             coursePool: [...newCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
             degree: activePlan.degree,
             filledRequirements: getAllRequirements(activePlan)
         };
@@ -327,6 +339,137 @@ function App(): JSX.Element {
             name: activePlan.name,
             semesters: fixedSemesters,
             coursePool: [...newCoursePool],
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: activePlan.currentDeptFilter,
+            filledRequirements: activePlan.filledRequirements,
+            degree: activePlan.degree
+        };
+        const fixedPlanList = planList.map((plan: Plan) =>
+            plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+        );
+        setActivePlan(fixedPlan);
+        updatePlans(fixedPlanList);
+    }
+
+    function filterByCourseNumber(event: React.ChangeEvent<HTMLInputElement>) {
+        // Checking which filters have already been applied to the data
+        let localFilterCopy: string[];
+        if (activePlan.activeFilters.includes(event.target.value)) {
+            localFilterCopy = activePlan.activeFilters.filter(
+                (currFilter: string) => currFilter !== event.target.value
+            );
+        } else {
+            localFilterCopy = [...activePlan.activeFilters, event.target.value];
+        }
+
+        localFilterCopy.sort(
+            (a: string, b: string) => parseInt(a) - parseInt(b)
+        );
+
+        const minCourseNo = localFilterCopy.at(0);
+        const maxCourseNo = localFilterCopy.at(-1);
+        console.log(
+            `Min course no: ${minCourseNo}, max course no: ${maxCourseNo}`
+        );
+
+        // If there are currently filters selected:
+        if (localFilterCopy.length > 0) {
+            // Getting the unmodified CouresPool & finding courses that meet the current filter condititons
+            const originalCoursePool: Course[] = [
+                ...activePlan.originalCoursePool
+            ];
+            const alreadyFilteredCourses: Course[][] = localFilterCopy.map(
+                (courseNo: string) =>
+                    originalCoursePool.filter(
+                        (course: Course) =>
+                            course.courseCode >= parseInt(courseNo) &&
+                            course.courseCode < parseInt(courseNo) + 100 &&
+                            course.department ===
+                                activePlan.currentDeptFilter.toLocaleUpperCase()
+                    )
+            );
+            console.log(alreadyFilteredCourses);
+
+            // Merging the filtered results into one long array
+            const flattenedCoursePool = alreadyFilteredCourses.flat();
+            flattenedCoursePool.sort((a: Course, b: Course) => {
+                if (a.department === b.department) {
+                    return 0;
+                } else if (a.department < b.department) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+            const updatedCoursePool: Course[] = [...flattenedCoursePool];
+
+            console.log(flattenedCoursePool);
+
+            // Need a check for if there aren't currently filters applied
+            // Need to make sure that when a box is unchecked (i.e., no longer in localFilterCopy) then the inverse
+            //  of the filter conditions should be met
+
+            const fixedPlan: Plan = {
+                id: activePlan.id,
+                name: activePlan.name,
+                semesters: activePlan.semesters,
+                coursePool: updatedCoursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: [...localFilterCopy],
+                currentDeptFilter: activePlan.currentDeptFilter,
+                degree: activePlan.degree,
+                filledRequirements: activePlan.filledRequirements
+            };
+            const fixedPlanList = planList.map((plan: Plan) =>
+                plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+            );
+            console.log(`Currently applied filters: ${localFilterCopy}`);
+            setActivePlan(fixedPlan);
+            updatePlans(fixedPlanList);
+        } else {
+            // If no filters are currently selected:
+            const originalCoursePool: Course[] = [
+                ...activePlan.originalCoursePool
+            ];
+            const fixedPlan: Plan = {
+                id: activePlan.id,
+                name: activePlan.name,
+                semesters: activePlan.semesters,
+                coursePool: originalCoursePool,
+                originalCoursePool: activePlan.originalCoursePool,
+                activeFilters: [],
+                currentDeptFilter: activePlan.currentDeptFilter,
+                degree: activePlan.degree,
+                filledRequirements: activePlan.filledRequirements
+            };
+            const fixedPlanList = planList.map((plan: Plan) =>
+                plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
+            );
+            console.log(`Currently applied filters: ${localFilterCopy}`);
+            setActivePlan(fixedPlan);
+            updatePlans(fixedPlanList);
+        }
+    }
+
+    function filterByDeptID(event: React.ChangeEvent<HTMLSelectElement>): void {
+        const deptId: string = event.target.value;
+        // If no filters are currently applied:
+        const originalCoursePool: Course[] = [...activePlan.coursePool];
+
+        const updatedCoursePool: Course[] = originalCoursePool.filter(
+            (course: Course) => course.department === deptId.toUpperCase()
+        );
+        console.log(updatedCoursePool);
+
+        const fixedPlan: Plan = {
+            id: activePlan.id,
+            name: activePlan.name,
+            semesters: activePlan.semesters,
+            coursePool: updatedCoursePool,
+            originalCoursePool: activePlan.originalCoursePool,
+            activeFilters: activePlan.activeFilters,
+            currentDeptFilter: deptId,
             degree: activePlan.degree,
             filledRequirements: [""]
         };
@@ -399,6 +542,8 @@ function App(): JSX.Element {
                 requirementsVisible={requirementsVisible}
                 swapVisibility={swapVisibility}
                 importPlan={importPlan}
+                filterByCourseNumber={filterByCourseNumber}
+                filterByDeptID={filterByDeptID}
             ></AppViewer>
         </div>
     );

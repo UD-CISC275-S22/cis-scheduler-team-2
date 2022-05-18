@@ -129,6 +129,9 @@ const samplePlan: Plan = {
             course.courseCode !== 437 &&
             course.courseCode !== 482
     ),
+    originalCoursePool: flattenedPool,
+    activeFilters: [],
+    currentDeptFilter: "",
     degree: defaultDegree,
     filledRequirements: ["CISC275", "CISC320", "CISC437", "CISC482"]
 };

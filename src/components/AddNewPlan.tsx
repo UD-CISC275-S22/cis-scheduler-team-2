@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Plan } from "../interfaces/plan";
 import { Button, Form } from "react-bootstrap";
 import { Course } from "../interfaces/course";
-import cisc from "../assets/cisc.json";
 import catalog from "../assets/catalog.json";
 import { v4 as uuidv4 } from "uuid";
 import { parsePrereq } from "./ParsePrereq";
@@ -19,35 +18,6 @@ type ChangeEvent = React.ChangeEvent<
 interface addPlanProp {
     addPlan: (newPlan: Plan) => void;
 }
-
-const course_keys: string[] = Object.keys(cisc.CISC);
-const CISC_COURSES: Course[] = course_keys.map(function (key: string) {
-    const currCourse = cisc.CISC[key as keyof typeof cisc.CISC];
-    const newBackupCourse: Course = {
-        department: currCourse.code.substring(0, 4),
-        courseCode: parseInt(currCourse.code.substring(5)),
-        title: currCourse.name,
-        credits: parseInt(currCourse.credits),
-        prereqs: [...parsePrereq(currCourse.preReq)],
-        description: currCourse.descr,
-        prereqsFilled: [],
-        degreeReqsFilled: [],
-        courseId: uuidv4()
-    };
-    const newCourse: Course = {
-        department: currCourse.code.substring(0, 4),
-        courseCode: parseInt(currCourse.code.substring(5)),
-        title: currCourse.name,
-        credits: parseInt(currCourse.credits),
-        prereqs: [...parsePrereq(currCourse.preReq)],
-        description: currCourse.descr,
-        prereqsFilled: [],
-        degreeReqsFilled: [],
-        originalData: newBackupCourse,
-        courseId: newBackupCourse.courseId
-    };
-    return newCourse;
-});
 
 const coursePool = Object.entries(catalog).map(
     ([departmentId, courses]: [
@@ -97,6 +67,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
         //remember to auto-update the id
         id: 0,
         coursePool: [...flattenedPool],
+        originalCoursePool: [...flattenedPool],
+        activeFilters: [],
+        currentDeptFilter: "",
         degree: [],
         filledRequirements: []
     });
@@ -167,6 +140,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                 ],
                 id: 0,
                 coursePool: [...flattenedPool],
+                originalCoursePool: [...flattenedPool],
+                activeFilters: [],
+                currentDeptFilter: "",
                 degree: [],
                 filledRequirements: []
             });
