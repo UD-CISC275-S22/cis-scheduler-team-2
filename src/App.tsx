@@ -27,6 +27,7 @@ function App(): JSX.Element {
             id: planList[planList.length - 1].id + 1,
             semesters: [...newPlan.semesters]
         };
+        setActivePlan(fixId);
         updatePlans([...planList, fixId]);
     }
 
