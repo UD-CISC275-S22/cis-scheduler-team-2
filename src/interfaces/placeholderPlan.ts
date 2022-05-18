@@ -108,7 +108,10 @@ const samplePlan: Plan = {
             course.courseCode !== 320 &&
             course.courseCode !== 437 &&
             course.courseCode !== 482
-    )
+    ),
+    originalCoursePool: flattenedPool,
+    activeFilters: [],
+    currentDeptFilter: ""
 };
 
 export { samplePlan };

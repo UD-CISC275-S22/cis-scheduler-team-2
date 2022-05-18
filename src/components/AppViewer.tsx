@@ -33,7 +33,9 @@ export function AppViewer({
     //deleteCourseFromPool,
     showModal,
     addSemester,
-    handleCloseInsertSemesterModal
+    handleCloseInsertSemesterModal,
+    filterByCourseNumber,
+    filterByDeptID
 }: {
     showWelcome: boolean;
     handleCloseWelcomeModal: () => void;
@@ -60,6 +62,8 @@ export function AppViewer({
     showModal: boolean;
     addSemester: (newSemester: Semester) => boolean;
     handleCloseInsertSemesterModal: () => void;
+    filterByCourseNumber: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    filterByDeptID: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }): JSX.Element {
     return (
         <div className="App">
@@ -120,6 +124,8 @@ export function AppViewer({
                         plan={activePlan}
                         moveCourseFromPool={moveCourseFromPool}
                         moveCourseToPool={moveCourseToPool}
+                        filterByCourseNumber={filterByCourseNumber}
+                        filterByDeptID={filterByDeptID}
                     ></CourseList>
                 </Col>
             </Row>
