@@ -79,9 +79,16 @@ export function AppViewer({
                 showModal={showWelcome}
                 closeModal={handleCloseWelcomeModal}
             ></WelcomeMessage>
-            <Button onClick={() => swapVisibility()}>
-                Swap To Requirement View
-            </Button>
+            {!requirementsVisible && (
+                <Button onClick={() => swapVisibility()}>
+                    Swap To Requirement View
+                </Button>
+            )}
+            {requirementsVisible && (
+                <Button onClick={() => swapVisibility()}>
+                    Swap To Planning View
+                </Button>
+            )}
             {requirementsVisible && (
                 <div>
                     <div

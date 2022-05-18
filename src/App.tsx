@@ -360,7 +360,6 @@ function App(): JSX.Element {
         const filteredRequirements = allRequirements.filter(
             (string: string) => string !== ""
         );
-        console.log(filteredRequirements);
         return filteredRequirements;
     }
     const [requirementsVisible, setRequirementsVisible] =
@@ -368,7 +367,6 @@ function App(): JSX.Element {
 
     function swapVisibility() {
         setRequirementsVisible(!requirementsVisible);
-        console.log(requirementsVisible);
     }
     function importPlan(thePlan: Plan) {
         const fixPol = { ...thePlan, coursePool: flattenedPool };
