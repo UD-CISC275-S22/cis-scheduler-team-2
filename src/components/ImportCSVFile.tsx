@@ -8,6 +8,7 @@ export function ImportCSVFile({
     importPlan: (thePlan: Plan) => void;
 }): JSX.Element {
     const [contents, setContents] = useState<string>("");
+    const [view, toggleView] = useState<boolean>(false);
     function importFile(event: React.ChangeEvent<HTMLInputElement>) {
         // Might have removed the file, need to check that the files exist
         if (event.target.files && event.target.files.length) {
@@ -28,7 +29,12 @@ export function ImportCSVFile({
         }
     }
 
+    function changeToggle() {
+        toggleView(true);
+    }
+
     function makeChange() {
+        toggleView(false);
         const makePlan = JSON.parse(contents);
         importPlan(makePlan);
         setContents("");
@@ -36,11 +42,16 @@ export function ImportCSVFile({
 
     return (
         <div>
-            <Form.Group controlId="exampleForm">
-                <Form.Label>Upload a Degree Plan</Form.Label>
-                <Form.Control type="file" onChange={importFile} />
-            </Form.Group>
-            <Button onClick={makeChange}>Add Selected File</Button>
+            {!view && <Button onClick={changeToggle}>Import a Plan</Button>}
+            {view && (
+                <div>
+                    <Form.Group controlId="exampleForm">
+                        <Form.Label>Upload a Degree Plan</Form.Label>
+                        <Form.Control type="file" onChange={importFile} />
+                    </Form.Group>
+                    <Button onClick={makeChange}>Add Selected File</Button>
+                </div>
+            )}
         </div>
     );
 }
