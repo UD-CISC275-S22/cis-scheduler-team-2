@@ -439,7 +439,7 @@ function App(): JSX.Element {
                 semesters: activePlan.semesters,
                 coursePool: originalCoursePool,
                 originalCoursePool: activePlan.originalCoursePool,
-                activeFilters: [],
+                activeFilters: [...localFilterCopy],
                 currentDeptFilter: activePlan.currentDeptFilter,
                 degree: activePlan.degree,
                 filledRequirements: activePlan.filledRequirements
@@ -447,7 +447,7 @@ function App(): JSX.Element {
             const fixedPlanList = planList.map((plan: Plan) =>
                 plan.id === activePlan.id ? { ...fixedPlan } : { ...plan }
             );
-            console.log(`Currently applied filters: ${localFilterCopy}`);
+            console.log(`Currently APPLIED filters: ${localFilterCopy}`);
             setActivePlan(fixedPlan);
             updatePlans(fixedPlanList);
         }

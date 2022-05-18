@@ -131,7 +131,7 @@ const samplePlan: Plan = {
     ),
     originalCoursePool: flattenedPool,
     activeFilters: [],
-    currentDeptFilter: "",
+    currentDeptFilter: "CISC",
     degree: defaultDegree,
     filledRequirements: ["CISC275", "CISC320", "CISC437", "CISC482"]
 };

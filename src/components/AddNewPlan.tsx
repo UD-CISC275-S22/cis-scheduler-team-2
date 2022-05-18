@@ -69,7 +69,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
         coursePool: [...flattenedPool],
         originalCoursePool: [...flattenedPool],
         activeFilters: [],
-        currentDeptFilter: "",
+        currentDeptFilter: "CISC",
         degree: [],
         filledRequirements: []
     });
@@ -142,7 +142,7 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                 coursePool: [...flattenedPool],
                 originalCoursePool: [...flattenedPool],
                 activeFilters: [],
-                currentDeptFilter: "",
+                currentDeptFilter: "CISC",
                 degree: [],
                 filledRequirements: []
             });
