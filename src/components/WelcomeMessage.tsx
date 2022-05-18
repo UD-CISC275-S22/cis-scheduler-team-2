@@ -25,6 +25,11 @@ export function WelcomeMessage({
                 Compare against a list of degree requirements in the requirement
                 view, swap back and forth between the two views with the [Swap
                 To...] buttons!
+                <h3>Exporting and Importing</h3>
+                Export your currently active plan to CSV using the [Export to
+                CSV] button, which will download it onto your computer! Import
+                it back in with the [Import a Plan] button, which will add it to
+                your plans and make it your active plan!
             </Modal.Body>
             <Modal.Footer>
                 <h2>Making a Course</h2>A new course can also be created and
