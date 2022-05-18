@@ -82,6 +82,26 @@ const defaultCourses: Course[] = CISC_COURSES.filter(
         course.courseCode === 482
 );
 
+const defaultDegree = [
+    "CISC108",
+    "CISC181",
+    "CISC210",
+    "CISC220",
+    "CISC275",
+    "CISC303",
+    "CISC320",
+    "CISC498",
+    "CISC499",
+    "MATH241",
+    "ENGL110",
+    "ENGL312",
+    "EGGG101",
+    "BGA3",
+    "BGB3",
+    "BGC3",
+    "BGD3"
+];
+
 const samplePlan: Plan = {
     name: "Sample Plan",
     id: 0,
@@ -111,7 +131,9 @@ const samplePlan: Plan = {
     ),
     originalCoursePool: flattenedPool,
     activeFilters: [],
-    currentDeptFilter: ""
+    currentDeptFilter: "",
+    degree: defaultDegree,
+    filledRequirements: ["CISC275", "CISC320", "CISC437", "CISC482"]
 };
 
 export { samplePlan };

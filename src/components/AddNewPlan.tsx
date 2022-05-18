@@ -54,7 +54,7 @@ const coursePool = Object.entries(catalog).map(
         )
 );
 
-const flattenedPool = coursePool.flat();
+export const flattenedPool = coursePool.flat();
 
 export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
     const seasons = ["Fall", "Winter", "Spring", "Summer"];
@@ -69,7 +69,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
         coursePool: [...flattenedPool],
         originalCoursePool: [...flattenedPool],
         activeFilters: [],
-        currentDeptFilter: ""
+        currentDeptFilter: "",
+        degree: [],
+        filledRequirements: []
     });
 
     const [startSeason, changeSeason] = useState<string>(seasons[0]);
@@ -140,7 +142,9 @@ export function AddNewPlan({ addPlan }: addPlanProp): JSX.Element {
                 coursePool: [...flattenedPool],
                 originalCoursePool: [...flattenedPool],
                 activeFilters: [],
-                currentDeptFilter: ""
+                currentDeptFilter: "",
+                degree: [],
+                filledRequirements: []
             });
         }
     }

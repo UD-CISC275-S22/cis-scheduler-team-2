@@ -117,6 +117,7 @@ export function FilterCoursePool({
                                             type="text"
                                             placeholder="Ex. CISC, MATH, ENGL ..."
                                             onChange={updateUserSearch}
+                                            maxLength={2}
                                         ></Form.Control>
                                     </Row>
                                     <Row
@@ -133,7 +134,7 @@ export function FilterCoursePool({
                                                 (deptCode: string) => {
                                                     if (
                                                         deptCode.startsWith(
-                                                            userSearch
+                                                            userSearch.toUpperCase()
                                                         )
                                                     ) {
                                                         return (

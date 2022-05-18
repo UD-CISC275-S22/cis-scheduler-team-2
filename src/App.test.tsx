@@ -504,6 +504,26 @@ describe("Testing courseview", () => {
         expect(screen.getByText("Add to...")).toBeInTheDocument();
     });
 });
+
+//Requirement Tests
+describe("Testing requirement view", () => {
+    beforeEach(() => {
+        render(<App />);
+    });
+    test("The default plan meets 2 of the default requirements", () => {
+        const swapViewButton = screen.getByText("Swap To Requirement View");
+        swapViewButton.click();
+        expect(screen.getAllByText("✅").length === 2);
+    });
+    test("Deleting 275 makes it only meet 1 requirement", () => {
+        const swapViewButton = screen.getByText("Swap To Requirement View");
+        swapViewButton.click();
+        const deleteCourseButtons = screen.getAllByText("Delete");
+        deleteCourseButtons[0].click();
+        expect(screen.getAllByText("✅").length === 1);
+    });
+});
+
 //Some generic test templates, non-functional
 /**
 test("Some component renders template", () => {
