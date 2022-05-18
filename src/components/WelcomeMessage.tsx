@@ -16,14 +16,20 @@ export function WelcomeMessage({
                 <ModalTitle>Welcome to the UD scheduling app!</ModalTitle>
             </Modal.Header>
             <Modal.Body>
+                <h3>Making A Plan:</h3>
                 Create a new plan on the right, then add your semesters in the
                 plan viewing area on the left. Existing courses can be added to
                 semesters from the pool on the left at anytime clicking on the
                 name of the course and then clicking [Add to...]
+                <h3>Requirement View</h3>
+                Compare against a list of degree requirements in the requirement
+                view, swap back and forth between the two views with the [Swap
+                To...] buttons!
             </Modal.Body>
             <Modal.Footer>
-                A new course can also be created and added to any semester using
-                the add course button in the semester view
+                <h2>Making a Course</h2>A new course can also be created and
+                added to any semester using the add course button in the
+                semester view
             </Modal.Footer>
         </Modal>
     );

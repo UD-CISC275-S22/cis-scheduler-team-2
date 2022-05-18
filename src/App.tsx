@@ -146,7 +146,7 @@ function App(): JSX.Element {
     const handleCloseInsertSemesterModal = () => setShowModal(false);
 
     // Opens and closes the welcome message modal view
-    //const handleShowWelcomeModal = () => setShowWelcome(true);
+    const handleShowWelcomeModal = () => setShowWelcome(true);
     const handleCloseWelcomeModal = () => setShowWelcome(false);
 
     /**
@@ -377,6 +377,7 @@ function App(): JSX.Element {
         <div>
             <AppViewer
                 showWelcome={showWelcome}
+                setShowWelcome={handleShowWelcomeModal}
                 handleCloseWelcomeModal={handleCloseWelcomeModal}
                 planList={planList}
                 activePlan={activePlan}
