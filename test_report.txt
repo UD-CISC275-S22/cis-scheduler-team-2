@@ -233,37 +233,37 @@
       at fn (node_modules/@restart/ui/cjs/usePopper.js:128:7)
       at Object.forceUpdate (node_modules/@restart/ui/cjs/popper.js:1757:21)
 
-PASS src/App.test.tsx (15.906 s)
+PASS src/App.test.tsx (11.023 s)
   Testing creation, selection, and deletion of plans
-    ✓ The default plan is the first plan in the list (291 ms)
-    ✓ Users can create another plan and swap to it (344 ms)
-    ✓ Users can swap back to a previous plan (392 ms)
-    ✓ Users can swap freely between multiple plans (751 ms)
-    ✓ Users can't delete when there is only 1 plan (311 ms)
-    ✓ Users can create another plan and swap to it, then delete it and return to the original (287 ms)
-    ✓ Users can delete a plan and still swap between the remaining plans (601 ms)
-    ✓ User can delete a course from a semester (411 ms)
-    ✓ User can edit and revert changes to a course (2316 ms)
-    ✓ User can create a custom course in a semester (1267 ms)
+    ✓ The default plan is the first plan in the list (204 ms)
+    ✓ Users can create another plan and swap to it (240 ms)
+    ✓ Users can swap back to a previous plan (265 ms)
+    ✓ Users can swap freely between multiple plans (511 ms)
+    ✓ Users can't delete when there is only 1 plan (195 ms)
+    ✓ Users can create another plan and swap to it, then delete it and return to the original (186 ms)
+    ✓ Users can delete a plan and still swap between the remaining plans (404 ms)
+    ✓ User can delete a course from a semester (278 ms)
+    ✓ User can edit and revert changes to a course (1511 ms)
+    ✓ User can create a custom course in a semester (865 ms)
   Semester tests: deleting, adding, etc.
-    ✓ User can delete a semester (253 ms)
-    ✓ User can add a semester (349 ms)
-    ✓ User cannot add a duplicate semester (468 ms)
-    ✓ User can delete a semester they added (376 ms)
-    ✓ Typing a non-numeric semester is disallowed & keeps only the numeric component (354 ms)
-    ✓ User can add multiple semesters and add semesters in any season (659 ms)
+    ✓ User can delete a semester (175 ms)
+    ✓ User can add a semester (244 ms)
+    ✓ User cannot add a duplicate semester (324 ms)
+    ✓ User can delete a semester they added (248 ms)
+    ✓ Typing a non-numeric semester is disallowed & keeps only the numeric component (235 ms)
+    ✓ User can add multiple semesters and add semesters in any season (438 ms)
   Testing moving and deleting courses
-    ✓ The user has the option to move a course to one of the other semesters or the course pool (902 ms)
-    ✓ Moving the course to the course pool actually moves it there (198 ms)
-    ✓ Deleting a single course from a semester works (158 ms)
-    ✓ Clearing a single semesters removes only the courses in that semester (157 ms)
-    ✓ Clearing All Semesters removes all the semesters (124 ms)
+    ✓ The user has the option to move a course to one of the other semesters or the course pool (598 ms)
+    ✓ Moving the course to the course pool actually moves it there (131 ms)
+    ✓ Deleting a single course from a semester works (98 ms)
+    ✓ Clearing a single semesters removes only the courses in that semester (83 ms)
+    ✓ Clearing All Semesters removes all the semesters (72 ms)
   Testing courseview
-    ✓ CourseView renders the course passed in (5 ms)
-    ✓ Clicking the course name reveals a button to move the course to a semester (11 ms)
+    ✓ CourseView renders the course passed in (3 ms)
+    ✓ Clicking the course name reveals a button to move the course to a semester (7 ms)
   Testing requirement view
-    ✓ The default plan meets 2 of the default requirements (173 ms)
-    ✓ Deleting 275 makes it only meet 1 requirement (178 ms)
+    ✓ The default plan meets 2 of the default requirements (112 ms)
+    ✓ Deleting 275 makes it only meet 1 requirement (114 ms)
 
 ---------------------------|---------|----------|---------|---------|-----------------------------
 File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s           
@@ -308,5 +308,5 @@ All files                  |   76.31 |    70.69 |   76.11 |   76.14 |
 Test Suites: 1 passed, 1 total
 Tests:       25 passed, 25 total
 Snapshots:   0 total
-Time:        16.761 s
+Time:        11.634 s
 Ran all test suites.
